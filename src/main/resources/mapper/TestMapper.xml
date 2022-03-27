@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.summer.popin.global.mapper.TestMapper">
+    <select id="getTime" resultType="string">
+        select sysdate from dual
+    </select>
+    <select id="getHouseKind" resultType="string">
+        select kind from house_kind where no=0
+    </select>
+</mapper>
