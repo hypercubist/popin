@@ -6,7 +6,7 @@
     <select id="getTime" resultType="string">
         select sysdate from dual
     </select>
-    <select id="getHouseKind" resultType="string">
-        select kind from house_kind where no=0
+    <select id="getPlaceKind" resultType="string">
+        select kind from place_kind where no=0
     </select>
 </mapper>

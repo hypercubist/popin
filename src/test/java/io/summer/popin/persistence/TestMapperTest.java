@@ -19,7 +19,7 @@ public class TestMapperTest {
     }
 
     @Test
-    public void testGetHouseKind(){
-        log.info("TEST: HOUSE-KIND NO.1 = {}", testMapper.getHouseKind());
+    public void testGetPlaceKind(){
+        log.info("TEST: PLACE-KIND NO.1 = {}", testMapper.getPlaceKind());
     }
 }
