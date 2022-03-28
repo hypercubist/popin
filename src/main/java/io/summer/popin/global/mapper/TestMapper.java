@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface TestMapper {
 
     public String getTime();
-    public String getHouseKind();
+    public String getPlaceKind();
 }
