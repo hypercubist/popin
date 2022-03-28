@@ -1,0 +1,5 @@
+package io.summer.popin.domain.model;
+
+public enum PlaceKind {
+    APT, HOUSE, GUESTHOUSE, PENSION, LIGHTHOUSE, KITCHEN, LECTUREROOM, STUDIO, PARTYROOM, CAMPINGCAR, IGLOO, PRACTICEROOM
+}
