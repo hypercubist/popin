@@ -1,9 +1,10 @@
 package io.summer.popin.domain.place.controller;
 
-import io.summer.popin.domain.place.service.PlaceListService;
+import io.summer.popin.domain.place.service.PlacesServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/places")
 public class PlaceController {
 
-    private final PlaceListService placeListService;
-    @GetMapping
-    public String placeList(){
 
-        log.info("PLACE LIST={}", placeListService.search());
+    @GetMapping
+    public String placeList(Model model){
+
         return "place-list";
     }
 }
