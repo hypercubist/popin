@@ -1,9 +1,9 @@
 package io.summer.popin.domain.place.dto;
 
-import lombok.Data;
+import lombok.Setter;
 
-@Data
-public class PlaceListDTO {
+@Setter
+public class PlacesResponseDTO {
 
     private String placeName;
     private String location;
