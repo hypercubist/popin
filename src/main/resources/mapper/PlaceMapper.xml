@@ -3,9 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.place.dao.PlaceMapper">
+<!--
 
     <select id="getPlaceList" resultType="PlaceListContentDTO">
         select p.name, m.name from place p left outer join member m on p.host_no = m.no
     </select>
+-->
 
 </mapper>
