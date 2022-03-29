@@ -1,6 +1,5 @@
 package io.summer.popin.domain.statistics.vo;
 
-import lombok.Builder;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
