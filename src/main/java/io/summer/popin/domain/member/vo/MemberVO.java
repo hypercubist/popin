@@ -12,12 +12,12 @@ public class MemberVO {
     private String email;
     private String phoneNumber;
     private Date joinDate;
-    private Long classCode;
-    private Long socialKakao;
-    private Long socialGitHub;
-    private Long socialGoogle;
-    private Long certificatedEmail;
-    private Long certificatedPhone;
+    private Integer classCode;
+    private Integer socialKakao;
+    private Integer socialGitHub;
+    private Integer socialGoogle;
+    private Integer emailCertificated;
+    private Integer phoneCertificated;
 
 
 
