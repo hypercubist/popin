@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface StatisticsService {
 
-    public List<StatisticsVO> showStatistics(int hostNo);
+    public List<StatisticsVO> showStatistics(Integer hostNo);
 
-    public StatisticsVO statisticsChart();
+    public StatisticsVO getChartData(Integer hostNo);
 
 }

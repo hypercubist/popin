@@ -13,10 +13,12 @@ public class StatisticsApiController {
 
     private final StatisticsService statisticsService;
 
+
     @ResponseBody
     @RequestMapping("/chart")
-    public StatisticsVO chartTest(){
-        return statisticsService.statisticsChart();
+    public StatisticsVO getChartData(int hostNo){
+
+        return statisticsService.getChartData(1);
     }
 
 

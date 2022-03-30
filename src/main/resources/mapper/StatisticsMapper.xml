@@ -14,11 +14,11 @@
     <select id="statisticsChart" resultType="StatisticsVO">
         <![CDATA[
           select
-                distinct to_char(sysdate,'yyMMdd') as record_date,host_no, (select sum(income) from statistics where to_char(record_date) <= sysdate and host_no = 1)as income
+                distinct to_char(sysdate,'yyMMdd') as record_date,host_no, (select sum(income) from statistics where to_char(record_date) <= sysdate and host_no = #{hostNo})as income
           from
                 statistics
           where
-                host_no=1 and to_char(record_date) <= sysdate
+                host_no=#{hostNo} and to_char(record_date) <= sysdate
         ]]>
     </select>
 </mapper>

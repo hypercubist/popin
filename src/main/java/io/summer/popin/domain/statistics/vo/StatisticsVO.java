@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class StatisticsVO {
-    private int hostNo;
+    private Integer hostNo;
     private int placeNo;
     private int guestCount;
     private int income;

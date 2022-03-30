@@ -16,7 +16,7 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
-    @GetMapping("/")
+    @GetMapping("/juntest")
     public List<StatisticsVO> individualStatistics(){
         List<StatisticsVO> list =  statisticsService.showStatistics(1);
         for (StatisticsVO i : list){

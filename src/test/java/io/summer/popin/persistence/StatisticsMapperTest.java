@@ -30,7 +30,7 @@ public class StatisticsMapperTest {
 
     @Test
     public void chartTest(){
-        StatisticsVO statisticsVO = statisticsService.statisticsChart();
+        StatisticsVO statisticsVO = statisticsService.getChartData(1);
             log.info("호스트 번호"+statisticsVO.getHostNo());
             log.info("현재까지 총 수입"+statisticsVO.getIncome());
             log.info("현재 날짜"+statisticsVO.getRecordDate());
