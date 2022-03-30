@@ -1,6 +1,7 @@
 package io.summer.popin.domain.place.dao;
 
-import io.summer.popin.domain.place.dto.PlaceListContentDTO;
+import io.summer.popin.domain.place.dto.PlaceSearchRequestDTO;
+import io.summer.popin.domain.place.dto.PlacesResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -8,5 +9,5 @@ import java.util.ArrayList;
 @Mapper
 public interface PlaceMapper {
 
-    public ArrayList<PlaceListContentDTO> getPlaceList();
+    public ArrayList<PlacesResponseDTO> placesSearch(PlaceSearchRequestDTO requestDTO);
 }
