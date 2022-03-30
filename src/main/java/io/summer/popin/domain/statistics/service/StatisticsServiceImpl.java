@@ -13,8 +13,13 @@ public class StatisticsServiceImpl implements StatisticsService{
 
     private final StatisticsMapper statisticsMapper;
 
-    public List<StatisticsVO> showStatistics(int hostNo){
+    public List<StatisticsVO> showStatistics(Integer hostNo){
       return statisticsMapper.showStatisticsByHostNo(hostNo);
-    };
+    }
+
+    @Override
+    public StatisticsVO getChartData(Integer hostNo) {
+        return statisticsMapper.statisticsChart(hostNo);
+    }
 
 }

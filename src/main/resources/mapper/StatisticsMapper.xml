@@ -3,12 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.statistics.dao.StatisticsMapper">
-    <select id="showStatisticsByHostNo" parameterType="int" resultType="Statistics">
+    <select id="showStatisticsByHostNo" parameterType="int" resultType="StatisticsVO">
         select
             *
         from
             statistics
         where
             HOST_NO = #{hostNo}
+    </select>
+    <select id="statisticsChart" resultType="StatisticsVO">
+        <![CDATA[
+          select
+                distinct to_char(sysdate,'yyMMdd') as record_date,host_no, (select sum(income) from statistics where to_char(record_date) <= sysdate and host_no = #{hostNo})as income
+          from
+                statistics
+          where
+                host_no=#{hostNo} and to_char(record_date) <= sysdate
+        ]]>
     </select>
 </mapper>

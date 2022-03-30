@@ -16,8 +16,7 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
-    @GetMapping("/statistics")
-//    @Scheduled(cron = "1 * * * * 2022") //초 분 시 일 월 요일 년(선택)에 해당 메서드 호출
+    @GetMapping("/juntest")
     public List<StatisticsVO> individualStatistics(){
         List<StatisticsVO> list =  statisticsService.showStatistics(1);
         for (StatisticsVO i : list){
@@ -30,4 +29,5 @@ public class StatisticsController {
     public String test(){
         return "test";
     }
+
 }

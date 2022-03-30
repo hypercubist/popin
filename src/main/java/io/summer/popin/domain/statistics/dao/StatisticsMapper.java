@@ -8,6 +8,8 @@ import java.util.List;
 @Mapper
 public interface StatisticsMapper {
 
-    public List<StatisticsVO> showStatisticsByHostNo(int hostNo);
+    public List<StatisticsVO> showStatisticsByHostNo(Integer hostNo);
+
+    public StatisticsVO statisticsChart(Integer hostNo);
 
 }
