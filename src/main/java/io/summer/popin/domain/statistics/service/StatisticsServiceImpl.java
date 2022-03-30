@@ -1,7 +1,7 @@
 package io.summer.popin.domain.statistics.service;
 
 import io.summer.popin.domain.statistics.dao.StatisticsMapper;
-import io.summer.popin.domain.statistics.vo.StatisticsVO;
+import io.summer.popin.domain.statistics.vo.StatisticsHostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ public class StatisticsServiceImpl implements StatisticsService{
 
     private final StatisticsMapper statisticsMapper;
 
-    public List<StatisticsVO> showStatistics(Integer hostNo){
+    public List<StatisticsHostVO> showStatistics(Integer hostNo){
       return statisticsMapper.showStatisticsByHostNo(hostNo);
     }
 
     @Override
-    public StatisticsVO getChartData(Integer hostNo) {
+    public StatisticsHostVO getChartData(Integer hostNo) {
         return statisticsMapper.statisticsChart(hostNo);
     }
 

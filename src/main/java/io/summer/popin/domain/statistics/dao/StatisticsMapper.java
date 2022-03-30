@@ -1,6 +1,6 @@
 package io.summer.popin.domain.statistics.dao;
 
-import io.summer.popin.domain.statistics.vo.StatisticsVO;
+import io.summer.popin.domain.statistics.vo.StatisticsHostVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface StatisticsMapper {
 
-    public List<StatisticsVO> showStatisticsByHostNo(Integer hostNo);
+    public List<StatisticsHostVO> showStatisticsByHostNo(Integer hostNo);
 
-    public StatisticsVO statisticsChart(Integer hostNo);
+    public StatisticsHostVO statisticsChart(Integer hostNo);
 
 }

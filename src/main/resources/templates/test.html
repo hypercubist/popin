@@ -11,10 +11,10 @@
 
       $(function(){
             $.ajax({
-                url : "/chart",
+                url : "/statistics",
                 method : "post"
             }).done(function(rst){
-                    console.log(rst.income);
+                    console.log(rst.incomeToday);
             });
       });
 
