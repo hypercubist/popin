@@ -2,8 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.summer.popin.domain.dao.MemberMapper">
-    <select id="findByNo" resultType="MemberVO" parameterType="Long">
-        select * from member where no=#{no}
+<mapper namespace="io.summer.popin.domain.member.dao.MemberMapper">
+    <select id="findByNo" resultType="ProfileDTO">   <!-- 특정 멤버 프로필 조회 -->
+        select
+            m.no, name, email, phone_Number as phoneNumber, mc.class as className, email_Certificated as emailCertificated,
+            phone_Certificated as phoneCertificated, extract(year from join_date) as joinYear
+        from member m left outer join member_class mc on m.class_code = mc.no
+        where m.no = #{no}
     </select>
 </mapper>
