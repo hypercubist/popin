@@ -10,4 +10,6 @@ public interface StatisticsMapper {
 
     public List<StatisticsVO> showStatisticsByHostNo(int hostNo);
 
+    public StatisticsVO statisticsChart();
+
 }
