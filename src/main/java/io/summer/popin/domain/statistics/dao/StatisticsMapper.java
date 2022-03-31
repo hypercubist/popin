@@ -10,6 +10,6 @@ public interface StatisticsMapper {
 
     public List<StatisticsHostVO> showStatisticsByHostNo(Integer hostNo);
 
-    public List<StatisticsHostVO> statisticsChart(Integer hostNo);
+    public StatisticsHostVO statisticsChart(Integer hostNo);
 
 }

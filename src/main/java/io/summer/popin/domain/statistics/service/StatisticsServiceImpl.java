@@ -18,7 +18,7 @@ public class StatisticsServiceImpl implements StatisticsService{
     }
 
     @Override
-    public List<StatisticsHostVO> getChartData(Integer hostNo) {
+    public StatisticsHostVO getChartData(Integer hostNo) {
         return statisticsMapper.statisticsChart(hostNo);
     }
 

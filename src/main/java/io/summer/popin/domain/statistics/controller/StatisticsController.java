@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -20,12 +21,9 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
-    @GetMapping("/juntest")
-    public List<StatisticsHostVO> individualStatistics(){
-        List<StatisticsHostVO> list =  statisticsService.showStatistics(1);
-        for (StatisticsHostVO i : list){
-            log.info(String.valueOf(i));
-        }
+    @GetMapping("/juntest/{hostNo}")
+    public List<StatisticsHostVO> individualStatistics(@PathVariable Integer hostNo){
+        List<StatisticsHostVO> list =  statisticsService.showStatistics(hostNo);
         return statisticsService.showStatistics(1);
     }
 

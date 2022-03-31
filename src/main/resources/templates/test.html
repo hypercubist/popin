@@ -10,17 +10,16 @@
 <script>
 const ctx = document.getElementById('myChart');
 $.ajax({
-
+    url : "/statistics/1", //1대신에 호스트 번호가 들어와야한다
+    method : "post"
 }).done(function(rst){
     const myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: ['hostNo', 'reservationCountToday', 'reservationCountTotal', 'incomeToday', 'incomeTotal', 'recordDate'],
+            labels: ['호스트번호', '금일 예약자 수', '내 예약자 전체', '금일 수입', '오늘까지 수입', '기록날짜'],
             datasets: [{
                 label: 'information',
-                console.log(rst[0].hostNo),
-                    data:  rst.data // [65, 59, 80, 81, 56, 40],
-
+                    data:   [rst.hostNo ,rst.reservationCountToday , rst.reservationCountTotal, rst.incomeToday, rst.incomeTotal, rst.recordDate],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)'
@@ -37,8 +36,6 @@ $.ajax({
         }
     });
 });
-
-
 </script>
 </body>
 </html>

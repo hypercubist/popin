@@ -24,7 +24,7 @@ public class StatisticsMapperTest {
     @DisplayName("개인별 통계")
     @Test
     public void test(){
-        List<StatisticsHostVO> list =  statisticsController.individualStatistics();
+        List<StatisticsHostVO> list =  statisticsController.individualStatistics(1);
         for (StatisticsHostVO i : list){
             log.info(String.valueOf(i));
         }
