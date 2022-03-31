@@ -9,6 +9,6 @@ public interface StatisticsService {
 
     public List<StatisticsHostVO> showStatistics(Integer hostNo);
 
-    public StatisticsHostVO getChartData(Integer hostNo);
+    public List<StatisticsHostVO> getChartData(Integer hostNo);
 
 }

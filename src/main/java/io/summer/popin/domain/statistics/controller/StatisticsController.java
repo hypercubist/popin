@@ -27,7 +27,7 @@ public class StatisticsController {
         return statisticsService.showStatistics(1);
     }
 
-    @GetMapping("/test")
+    @GetMapping("/statistics")
     public String test(){
         return "test";
     }

@@ -5,37 +5,72 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
-<canvas id="myChart" width="400" height="400"></canvas>
+<div id="curve_chart" style="width: 300px; height: 300px">
+    <button id="weekData">주별 데이터 보기</button>
+    <button id="monthData">월별 데이터 보기</button>
+    <canvas id="myChart" width="300px" height="300px" ></canvas>
+    <canvas id="myChart2" width="300px" height="300px"></canvas>
+</div>
 <script>
-const ctx = document.getElementById('myChart');
-$.ajax({
-    url : "/statistics/1", //1대신에 호스트 번호가 들어와야한다
-    method : "post"
-}).done(function(rst){
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['호스트번호', '금일 예약자 수', '내 예약자 전체', '금일 수입', '오늘까지 수입', '기록날짜'],
-            datasets: [{
-                label: 'information',
-                    data:   [rst.hostNo ,rst.reservationCountToday , rst.reservationCountTotal, rst.incomeToday, rst.incomeTotal, rst.recordDate],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    $('#weekData').on('click',function(){
+        const ctx = document.getElementById('myChart');
+        $.ajax({
+            url : "/statistics/1", //1대신에 호스트 번호가 들어와야한다
+            method : "post"
+        }).done(function(rst){
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['금일 수입', '금일 누적 수입'],
+                    datasets: [{
+                        label: 'information',
+                            data:  [rst[0].incomeToday, rst[0].incomeTotal],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
-            }
-        }
+            });
+        });
+
+         const ctx2= document.getElementById('myChart2');
+        $.ajax({
+            url : "/statistics/1", //1대신에 호스트 번호가 들어와야한다
+            method : "post"
+        }).done(function(rst){
+            const myChart2 = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: [ '금일 예약자 수', '금일 예약자 전체'],
+                    datasets: [{
+                        label: 'information',
+                            data:   [rst.reservationCountToday , rst.reservationCountTotal],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
     });
-});
 </script>
 </body>
 </html>

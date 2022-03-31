@@ -11,12 +11,14 @@
         where
             HOST_NO = #{hostNo}
     </select>
-    <select id="statisticsChart" resultType="StatisticsHostVO" >
-          select
-                *
-          from
-                statistics_host
-          where
-                host_no=#{hostNo}
+    <select id="statisticsChart" resultType="StatisticsHostVO">
+        <![CDATA[
+        select
+            distinct host_no, reservation_count_today, reservation_count_total, income_today, income_total, to_char(record_date,'yyMMdd') as record_date
+        from
+            statistics_host
+        where
+            host_no=#{hostNo} and to_char(sysdate,'yyMMdd')-to_char(record_date,'yyMMdd') <7
+        ]]>
     </select>
 </mapper>
