@@ -33,10 +33,10 @@ public class StatisticsMapperTest {
     @DisplayName("차트에 표시 할 데이터")
     @Test
     public void chartTest(){
-        StatisticsHostVO statisticsVO = statisticsService.getChartData(1);
-            log.info("호스트 번호"+statisticsVO.getHostNo());
-            log.info("현재까지 총 수입"+statisticsVO.getIncomeTotal());
-            log.info("현재 날짜"+statisticsVO.getRecordDate());
+//        StatisticsHostVO statisticsVO = statisticsService.getChartData(1);
+//            log.info("호스트 번호"+statisticsVO.getHostNo());
+//            log.info("현재까지 총 수입"+statisticsVO.getIncomeTotal());
+//            log.info("현재 날짜"+statisticsVO.getRecordDate());
     }
 
 

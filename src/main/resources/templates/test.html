@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      $(function(){
-            $.ajax({
-                url : "/statistics",
-                method : "post"
-            }).done(function(rst){
-                    console.log(rst.incomeToday);
-            });
-      });
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
-        var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-        chart.draw(data, options);
-      }
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div id="curve_chart" style="width: 900px; height: 500px"></div>
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+const ctx = document.getElementById('myChart');
+$.ajax({
+
+}).done(function(rst){
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['hostNo', 'reservationCountToday', 'reservationCountTotal', 'incomeToday', 'incomeTotal', 'recordDate'],
+            datasets: [{
+                label: 'information',
+                console.log(rst[0].hostNo),
+                    data:  rst.data // [65, 59, 80, 81, 56, 40],
+
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+});
+
+
+</script>
 </body>
 </html>

@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class StatisticsApiController {
@@ -15,8 +17,8 @@ public class StatisticsApiController {
     private final StatisticsService statisticsService;
 
     @PostMapping("/statistics")
-    public ResponseEntity<StatisticsHostVO> chartInfo(Integer hostNo){
-        return new ResponseEntity<StatisticsHostVO>(statisticsService.getChartData(1), HttpStatus.OK) ;
+    public ResponseEntity<List<StatisticsHostVO>> chartInfo(Integer hostNo){
+        return new ResponseEntity<List<StatisticsHostVO>>(statisticsService.getChartData(1), HttpStatus.OK) ;
     }
 
 
