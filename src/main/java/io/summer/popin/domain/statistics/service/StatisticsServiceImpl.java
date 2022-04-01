@@ -22,4 +22,6 @@ public class StatisticsServiceImpl implements StatisticsService{
         return statisticsMapper.statisticsChart(hostNo);
     }
 
+
+
 }

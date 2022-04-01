@@ -5,7 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<div id="curve_chart" style="width: 300px; height: 300px">
+<div id="curve_chart" style="width: 600px; height: 600px">
     <button id="weekData">주별 데이터 보기</button>
     <button id="monthData">월별 데이터 보기</button>
     <canvas id="myChart" width="300px" height="300px" ></canvas>
@@ -19,15 +19,24 @@
             method : "post"
         }).done(function(rst){
             const myChart = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
-                    labels: ['금일 수입', '금일 누적 수입'],
-                    datasets: [{
-                        label: 'information',
-                            data:  [rst[0].incomeToday, rst[0].incomeTotal],
+                    labels:  rst.map(data =>  [data.recordDay+'요일']),
+                    datasets: [
+                    {
+                        label: '당일 예약자 수',
+                            data:  rst.map(data =>  data.reservationCountToday),
                         borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)'
+                            'rgba(111, 89, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }
+                    ,
+                    {
+                        label: '누적 예약자 수',
+                            data:  rst.map(data =>  data.reservationCountTotal),
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -50,13 +59,22 @@
             const myChart2 = new Chart(ctx2, {
                 type: 'bar',
                 data: {
-                    labels: [ '금일 예약자 수', '금일 예약자 전체'],
-                    datasets: [{
-                        label: 'information',
-                            data:   [rst.reservationCountToday , rst.reservationCountTotal],
+                    labels:  rst.map(data =>  [data.recordDay+'요일']),
+                    datasets: [
+                    {
+                        label: '요일별 수입',
+                            data:  rst.map(data =>  data.incomeToday),
                         borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)'
+                            'rgba(111, 89, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }
+                    ,
+                    {
+                        label: '누적수입',
+                            data:  rst.map(data =>  data.incomeTotal),
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)'
                         ],
                         borderWidth: 1
                     }]

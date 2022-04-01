@@ -11,5 +11,6 @@ public class StatisticsHostVO {
     private Integer incomeToday;
     private Integer incomeTotal;
     private String recordDate;
+    private String recordDay;
 }
 

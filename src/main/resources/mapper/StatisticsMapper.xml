@@ -13,12 +13,31 @@
     </select>
     <select id="statisticsChart" resultType="StatisticsHostVO">
         <![CDATA[
-        select
-            distinct host_no, reservation_count_today, reservation_count_total, income_today, income_total, to_char(record_date,'yyMMdd') as record_date
-        from
-            statistics_host
-        where
-            host_no=#{hostNo} and to_char(sysdate,'yyMMdd')-to_char(record_date,'yyMMdd') <7
+          select
+                distinct host_no, reservation_count_today, reservation_count_total, income_today, income_total, to_char(record_date,'yyMMdd') as record_date, to_char(record_date , 'DY') as record_day
+          from
+                statistics_host
+          where
+                host_no=#{hostNo} and sysdate-record_date < 7
+          order by
+                record_date
         ]]>
     </select>
+    <select id="statisticsHostList" resultType="StatisticsHostVO">
+        select
+            distinct host_no
+        from
+            reservation
+    </select>
+    <insert id="statisticsScheduler" parameterType="StatisticsHostVO">
+        <![CDATA[
+        insert into statistics_host values
+            (#{hostNo},
+            (select sum(guest_count) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') = to_char(sysdate,'yyMMdd')),
+            (select sum(guest_count) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') <= to_char(sysdate,'yyMMdd')),
+            (select sum(price) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') = to_char(sysdate,'yyMMdd')),
+            (select sum(price) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') <= to_char(sysdate,'yyMMdd')),
+            sysdate)
+        ]]>
+    </insert>
 </mapper>

@@ -4,8 +4,6 @@ import io.summer.popin.domain.statistics.service.StatisticsService;
 import io.summer.popin.domain.statistics.vo.StatisticsHostVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 
-@EnableScheduling // 스케줄링 관련
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -33,9 +31,5 @@ public class StatisticsController {
     }
 
 
-    @Scheduled(cron = "59 59 23 * * *" , zone = "Asia/Seoul")
-    public void scheduleTest() throws Exception{
-        log.info("test"  + System.currentTimeMillis()/1000);
-    }
 
 }

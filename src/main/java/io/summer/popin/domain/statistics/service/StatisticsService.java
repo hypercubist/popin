@@ -11,4 +11,6 @@ public interface StatisticsService {
 
     public List<StatisticsHostVO> getChartData(Integer hostNo);
 
+
+
 }
