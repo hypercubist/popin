@@ -1,5 +1,6 @@
 package io.summer.popin.domain.place.controller;
 
+import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
 import io.summer.popin.domain.place.service.PlaceService;
 import io.summer.popin.domain.place.service.PlacesServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -27,8 +30,12 @@ public class PlaceController {
     @GetMapping("/{placeNo}")
     public String placeDetail(@PathVariable Integer placeNo, Model model){
 
-
-        model.addAttribute("place", placeService.getPlaceDetail(placeNo));
+        PlaceDetailResponseDTO place = placeService.getPlaceDetail(placeNo);
+        List<String> imageUrls = placeService.getImageUrls(placeNo);
+        log.info("placeNo = {}", placeNo);
+        log.info("PLACE = {}", place);
+        model.addAttribute("place", place);
+        model.addAttribute("imageUrls", imageUrls);
 
         return "place-detail";
     }

@@ -1,12 +1,14 @@
 package io.summer.popin.domain.place.dto;
 
-import java.sql.Date;
+import io.summer.popin.domain.review.dto.ReviewResponseDTO;
+import lombok.Data;
 
+@Data
 public class PlaceDetailResponseDTO {
 
     //place
     private String name;
-    private String hostName; //join
+    private String hostName;
     private String placeKind;
     private String description;
     private Integer priceHigh;
@@ -26,12 +28,10 @@ public class PlaceDetailResponseDTO {
     private String buildingName;
     private Integer roomCount;
     private Integer bathroomCount;
-    private Integer singleBed;
-    private Integer superSingleBed;
-    private Integer doubleBed;
-    private Integer queenBed;
-    private Integer kingBed;
-    private Integer largeKingBed;
+    private Integer bedSingle;
+    private Integer bedDouble;
+    private Integer bedQueen;
+    private Integer bedKing;
     private Integer kitchen;
     private Integer parking;
     private Integer wifi;
@@ -49,14 +49,8 @@ public class PlaceDetailResponseDTO {
     private Integer diningTable;
     private Integer lamp;
     private Integer kitchenTools;
-
-    //url
-    private String[] imageUrl;
-
-    //review
-    private Double ratingAverage;
-    private Integer reviewCount; //join
-    private ReviewResponseDTO[] reviewList;
-
+    private Integer maxGuest;
+    private Double rating;
+    private Integer reviewCount;
 
 }
