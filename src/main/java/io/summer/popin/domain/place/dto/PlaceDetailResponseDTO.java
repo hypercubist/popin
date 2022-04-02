@@ -6,7 +6,7 @@ public class PlaceDetailResponseDTO {
 
     //place
     private String name;
-    private String hostName; //join
+    private String hostName;
     private String placeKind;
     private String description;
     private Integer priceHigh;
