@@ -23,15 +23,17 @@
                 record_date
         ]]>
     </select>
-    <select id="statisticsHostList" resultType="StatisticsHostVO">
+    <select id="statisticsHostList" resultType="String">
         select
             distinct host_no
         from
             reservation
     </select>
-    <insert id="statisticsScheduler" parameterType="StatisticsHostVO">
+    <insert id="statisticsScheduler" parameterType="String">
         <![CDATA[
-        insert into statistics_host values
+        insert into statistics_host
+            (HOST_NO,RESERVATION_COUNT_TODAY,RESERVATION_COUNT_TOTAL,INCOME_TODAY,INCOME_TOTAL,RECORD_DATE)
+         values
             (#{hostNo},
             (select sum(guest_count) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') = to_char(sysdate,'yyMMdd')),
             (select sum(guest_count) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') <= to_char(sysdate,'yyMMdd')),
