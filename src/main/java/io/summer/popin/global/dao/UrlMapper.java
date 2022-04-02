@@ -8,4 +8,6 @@ import java.util.List;
 public interface UrlMapper {
 
     public List<String> findListByNo(int placeNo);
+
+    public String findOneByMemberNo(Long memberNo);
 }
