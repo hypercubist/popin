@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:object="${place}">
+<h1>place detail</h1>
+<h2 th:text="|*{region1depth}의 *{name}|">region1depth의 place-name</h2>
+<div th:text="*{rating}">평점</div>
+<div th:text="|*{region1depth}, *{region2depth}, *{region3depth}|">광주광역시, 서구, 동천동</div>
+<div th:each="url : {imageUrls}">
+    <div th:text="${url}">imageUrl</div>
+</div>
+<div th:text="|*{hostName}이 호스팅하는 *{placeKind}|">host-name이 호스팅하는 place-kind</div>
+<div th:text="|최대인원*{maxGuest}명|">최대 인원 1명, 침실 1개, 침대 1개, 욕실 1개</div>
+<div th:text="*{description}">장소 설명</div>
+<div>편의시설</div>
+</body>
+</html>
