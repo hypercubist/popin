@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.summer.popin.domain.member.dao.MemberMapper">
-    <select id="findListByNo" resultType="string">
+<mapper namespace="io.summer.popin.global.dao.UrlMapper">
+    <select id="findListByPlaceNo" resultType="string">
         select
             url
         from

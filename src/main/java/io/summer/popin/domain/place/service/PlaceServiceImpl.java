@@ -1,7 +1,11 @@
 package io.summer.popin.domain.place.service;
 
 import io.summer.popin.domain.place.dao.PlaceMapper;
+import io.summer.popin.domain.place.dto.BookedDateResponseDTO;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
+import io.summer.popin.domain.reservation.dao.ReservationMapper;
+import io.summer.popin.domain.review.dao.ReviewMapper;
+import io.summer.popin.domain.review.dto.ReviewResponseDTO;
 import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,8 @@ public class PlaceServiceImpl implements PlaceService{
 
     private final PlaceMapper placeMapper;
     private final UrlMapper urlMapper;
+    private final ReviewMapper reviewMapper;
+    private final ReservationMapper reservationMapper;
 
     @Override
     public PlaceDetailResponseDTO getPlaceDetail(int placeNo) {
@@ -22,6 +28,16 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Override
     public List<String> getImageUrls(int placeNo) {
-        return urlMapper.findListByNo(placeNo);
+        return urlMapper.findListByPlaceNo(placeNo);
+    }
+
+    @Override
+    public List<ReviewResponseDTO> getReviewList(int placeNo) {
+        return reviewMapper.findListByPlaceNo(placeNo);
+    }
+
+    @Override
+    public List<BookedDateResponseDTO> getBookedDateList(int placeNo) {
+        return reservationMapper.findDateListByPlaceNo(placeNo);
     }
 }

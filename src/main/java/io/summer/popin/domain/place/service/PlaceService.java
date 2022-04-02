@@ -1,13 +1,19 @@
 package io.summer.popin.domain.place.service;
 
+import io.summer.popin.domain.place.dto.BookedDateResponseDTO;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
+import io.summer.popin.domain.review.dto.ReviewResponseDTO;
 
 import java.util.List;
 
 
 public interface PlaceService {
 
-    public PlaceDetailResponseDTO getPlaceDetail(int placeNo);
+    PlaceDetailResponseDTO getPlaceDetail(int placeNo);
 
-    public List<String> getImageUrls(int placeNo);
+    List<String> getImageUrls(int placeNo);
+
+    List<ReviewResponseDTO> getReviewList(int placeNo);
+
+    List<BookedDateResponseDTO> getBookedDateList(int placeNo);
 }

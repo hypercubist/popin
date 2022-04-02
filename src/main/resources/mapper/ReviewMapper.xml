@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.summer.popin.domain.review.dao.ReviewMapper">
+    <select id="findListByPlaceNo" resultType="ReviewResponseDTO">
+        select
+            (select name from member where no = guest_no) as guest,
+            writing_date,
+            content
+        from
+            review
+        where
+            place_no = #{placeNo}
+    </select>
+
+
+</mapper>

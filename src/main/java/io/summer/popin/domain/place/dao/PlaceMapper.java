@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface PlaceMapper {
 
-    public List<PlacesResponseDTO> placesSearch(PlaceSearchRequestDTO requestDTO);
+    public List<PlacesResponseDTO> placesSearch(PlaceSearchRequestDTO requestDTO); //검색 도메인으로 옮겨야함
 
     public PlaceDetailResponseDTO findOneByNo(int placeNo);
 
