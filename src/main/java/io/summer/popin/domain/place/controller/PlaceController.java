@@ -2,7 +2,6 @@ package io.summer.popin.domain.place.controller;
 
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
 import io.summer.popin.domain.place.service.PlaceService;
-import io.summer.popin.domain.place.service.PlacesServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -27,6 +26,7 @@ public class PlaceController {
         return "place-list";
     }
 
+
     @GetMapping("/{placeNo}")
     public String placeDetail(@PathVariable Integer placeNo, Model model){
 
@@ -39,4 +39,5 @@ public class PlaceController {
 
         return "place-detail";
     }
+
 }

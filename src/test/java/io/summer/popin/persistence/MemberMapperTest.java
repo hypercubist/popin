@@ -16,6 +16,8 @@ public class MemberMapperTest {
 
     @Test
     public void testFindByNo(){
-        log.info("TEST: MemberVO = {}", memberMapper.findByNo(1L));
+        log.info("TEST: MemberVO = {}", memberMapper.profileFindByNo(1L));
     }
+
+
 }
