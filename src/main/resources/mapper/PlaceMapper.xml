@@ -11,5 +11,60 @@
             place p left outer join place_kind pk on p.place_kind_code = pk.no
     </select>
 
+    <select id="findOneByNo" resultType="PlaceDetailResponseDTO">
+        select
+            p.name,
+            m.name as host_name,
+            pk.kind as place_kind,
+            p.description,
+            p.price_High,
+            p.checkin_Time_Start,
+            p.checkin_Time_End,
+            p.checkout_Time_Start,
+            p.checkout_Time_End,
+            p.address_Name,
+            p.coord_X,
+            p.coord_Y,
+            p.region_1depth,
+            p.region_2depth,
+            p.region_3depth,
+            p.road_Name,
+            p.main_Building_No,
+            p.sub_Building_No,
+            p.building_Name,
+            p.room_Count,
+            p.bathroom_Count,
+            p.bed_Single,
+            p.bed_Double,
+            p.bed_Queen,
+            p.bed_King,
+            p.kitchen,
+            p.parking,
+            p.wifi,
+            p.balcony,
+            p.pool,
+            p.air_Conditioner,
+            p.bathtub,
+            p.crib,
+            p.tv,
+            p.coffee_Machine,
+            p.pc,
+            p.black_Board,
+            p.beam_Project,
+            p.balloon,
+            p.dining_Table,
+            p.lamp,
+            p.kitchen_Tools,
+            p.rating,
+            (select count(*) from review where place_no = p.no) as reviewCount
+        from place p
+            left outer join member m on (p.host_no = m.no)
+            left outer join place_kind pk on (p.place_kind_code = pk.no)
+        where p.no = #{placeNo}
+    </select>
+    <select id="findListByNo">
+
+    </select>
+
 
 </mapper>
