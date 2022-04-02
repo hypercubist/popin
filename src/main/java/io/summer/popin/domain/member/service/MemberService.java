@@ -1,12 +1,9 @@
 package io.summer.popin.domain.member.service;
 
-import io.summer.popin.domain.member.dto.ProfileDTO;
-import io.summer.popin.domain.member.vo.MemberVO;
-
-import java.lang.reflect.Member;
+import io.summer.popin.domain.member.dto.ProfileResponseDTO;
 
 public interface MemberService {
 
-    public ProfileDTO profileFindByNo(Long MemberNo);
+    public ProfileResponseDTO profileFindByNo(Long MemberNo);
 
 }

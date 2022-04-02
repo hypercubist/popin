@@ -11,5 +11,8 @@
             place p left outer join place_kind pk on p.place_kind_code = pk.no
     </select>
 
+<!--    <select id="getCountByNo" resultType="ReservationCountResponseDTO">-->
+
+<!--    </select>-->
 
 </mapper>
