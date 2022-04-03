@@ -1,6 +1,6 @@
 package io.summer.popin.domain.statistics.dao;
 
-import io.summer.popin.domain.statistics.vo.StatisticsHostVO;
+import io.summer.popin.domain.statistics.dto.StatisticsDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,10 +9,10 @@ import java.util.List;
 public interface StatisticsMapper {
 
     //호스트 통계 테이블에서 개인정보
-    public List<StatisticsHostVO> showStatisticsByHostNo(Integer hostNo);
+    public List<StatisticsDTO> showStatisticsByHostNo(Integer hostNo);
 
     //통계 낼때 필요한 데이터
-    public List<StatisticsHostVO> statisticsChart(Integer hostNo);
+    public List<StatisticsDTO> statisticsChart(Integer hostNo);
 
     //호스트가 있는지 조회
     public List<String> statisticsHostList();

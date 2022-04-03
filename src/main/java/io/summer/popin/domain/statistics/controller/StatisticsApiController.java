@@ -1,7 +1,7 @@
 package io.summer.popin.domain.statistics.controller;
 
+import io.summer.popin.domain.statistics.dto.StatisticsDTO;
 import io.summer.popin.domain.statistics.service.StatisticsService;
-import io.summer.popin.domain.statistics.vo.StatisticsHostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,8 @@ public class StatisticsApiController {
     private final StatisticsService statisticsService;
 
     @PostMapping("/statistics/{hostNo}")
-    public ResponseEntity<List<StatisticsHostVO>> chartInfo(@PathVariable Integer hostNo, Model model){
-        return new ResponseEntity<List<StatisticsHostVO>>(statisticsService.getChartData(hostNo), HttpStatus.OK);
+    public ResponseEntity<List<StatisticsDTO>> chartInfo(@PathVariable Integer hostNo, Model model){
+        return new ResponseEntity<List<StatisticsDTO>>(statisticsService.getChartData(hostNo), HttpStatus.OK);
     }
 
 

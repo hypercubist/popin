@@ -1,7 +1,7 @@
 package io.summer.popin.domain.statistics.controller;
 
+import io.summer.popin.domain.statistics.dto.StatisticsDTO;
 import io.summer.popin.domain.statistics.service.StatisticsService;
-import io.summer.popin.domain.statistics.vo.StatisticsHostVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,8 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping("/juntest/{hostNo}")
-    public List<StatisticsHostVO> individualStatistics(@PathVariable Integer hostNo){
-        List<StatisticsHostVO> list =  statisticsService.showStatistics(hostNo);
+    public List<StatisticsDTO> individualStatistics(@PathVariable Integer hostNo){
+        List<StatisticsDTO> list =  statisticsService.showStatistics(hostNo);
         return statisticsService.showStatistics(1);
     }
 
