@@ -29,14 +29,37 @@
     <div th:text="${#temporals.format(bookedDate.checkinDate, 'yyyy-MM-dd')}"></div>
     <div th:text="${#temporals.format(bookedDate.checkoutDate, 'yyyy-MM-dd')}"></div>
 </div>
+<form action="">
+    <input type="text" id="date">
+</form>
 
 
-
-<script type="text/javascript" src="/js/daterangepicker/moment-with-locales.js"></script> //언어 파일
+<script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript">
+  moment.locale('ko');
+  $('#date').daterangepicker(
+    {
+      timePicker: false,
+      timePicker24Hour: true,
+      timePickerSeconds: true,
+      singleDatePicker: false,
+      isInvalidDate: function(ele) {
+    var currDate = moment(ele._d).format('YY-MM-DD');
+    return ["22-04-20","22-04-21"].indexOf(currDate) != -1;
+},
+      locale :{
+        format: 'YYYY-MM-DD',
+        separator: ' ~ ',
+        applyLabel: "적용",
+        cancelLabel: "닫기"
+      },
+    });
+</script>
+
 </body>
 </html>

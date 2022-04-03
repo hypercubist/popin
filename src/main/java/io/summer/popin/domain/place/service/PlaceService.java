@@ -13,7 +13,7 @@ public interface PlaceService {
 
     List<String> getImageUrls(int placeNo);
 
-    List<ReviewResponseDTO> getReviewList(int placeNo);
+    List<ReviewResponseDTO> getReviews(int placeNo);
 
-    List<BookedDateResponseDTO> getBookedDateList(int placeNo);
+    List<BookedDateResponseDTO> getBookedDates(int placeNo);
 }

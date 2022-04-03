@@ -34,8 +34,8 @@ public class PlaceController {
 
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
-        model.addAttribute("reviews", placeService.getReviewList(placeNo));
-        model.addAttribute("bookedDates", placeService.getBookedDateList(placeNo));
+        model.addAttribute("reviews", placeService.getReviews(placeNo));
+        model.addAttribute("bookedDates", placeService.getBookedDates(placeNo));
         //달력api에서 어떤 형태의 데이터를 필요로하는지 확인 후 반환 api컨트롤러로 위치 바꿔야할 수 있음.
         //즐겨찾기 했는지 여부 : 로그인되었는지 먼저 확인 후 찾기 -> 판단하여 비어있는 하트 또는 채워진 하트 표시
         //

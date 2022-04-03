@@ -32,12 +32,12 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public List<ReviewResponseDTO> getReviewList(int placeNo) {
+    public List<ReviewResponseDTO> getReviews(int placeNo) {
         return reviewMapper.findListByPlaceNo(placeNo);
     }
 
     @Override
-    public List<BookedDateResponseDTO> getBookedDateList(int placeNo) {
+    public List<BookedDateResponseDTO> getBookedDates(int placeNo) {
         return reservationMapper.findDateListByPlaceNo(placeNo);
     }
 }
