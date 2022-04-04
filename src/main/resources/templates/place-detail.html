@@ -41,58 +41,81 @@
         href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
 />
 <script th:inline="javascript">
-      const today = new Date();
-        const checkinDate = [[${#temporals.format(searchDTO.checkinDate, 'yyyy-MM-dd')}]];
-        const checkoutDate = [[${#temporals.format(searchDTO.checkoutDate, 'yyyy-MM-dd')}]];
-      const invalidDates = [
-        {
-          checkinDate: new Date(2022, 03, 10),
-          checkoutDate: new Date(2022, 03, 15),
-        },
-        {
-          checkinDate: new Date(2022, 04, 1),
-          checkoutDate: new Date(2022, 04, 8),
-        },
-      ];
-      const setInvalidDate = (date) => {
-        return !invalidDates.every(
-          (bookedDate) =>
-            date._d < bookedDate.checkinDate ||
-            date._d >= bookedDate.checkoutDate
+  const today = new Date();
+  const oneDay = 1000 * 60 * 60 * 24;
+  const checkinDate = [[${#temporals.format(searchDTO.checkinDate, 'yyyy-MM-dd')}]];
+  const checkoutDate = [[${#temporals.format(searchDTO.checkoutDate, 'yyyy-MM-dd')}]];
+  const invalidDates = [
+    {
+      checkinDate: new Date(2022, 03, 10),
+      checkoutDate: new Date(2022, 03, 15),
+    },
+    {
+      checkinDate: new Date(2022, 04, 1),
+      checkoutDate: new Date(2022, 04, 8),
+    },
+  ];
+  const bookedDateCheck = (date) => {
+    return invalidDates.every(
+      (bookedDate) =>
+        date < bookedDate.checkinDate || date >= bookedDate.checkoutDate
+    );
+  };
+  const setInvalidDate = (date) => {
+    return !invalidDates.every(
+      (bookedDate) =>
+        date._d < bookedDate.checkinDate || date._d >= bookedDate.checkoutDate
+    );
+  };
+  const getPeriod = (startDate, endDate) => {
+    return (endDate.getTime() - startDate.getTime()) / oneDay;
+  };
+  const handlePick = function(ev, picker){
+    const period = getPeriod(picker.startDate._d, picker.endDate._d);
+    for (i = 0; i < period; i++) {
+      const date = new Date(picker.startDate._d.getTime() + oneDay * i);
+      if (!bookedDateCheck(date)) {
+        $("#date").val("");
+        alert(
+          "예약할 수 없는 날짜가 포함되어 있습니다. 일정을 다시 선택해주세요."
         );
-      };
-      $("#date").daterangepicker({
-        alwaysShowCalendars: true,
-        minDate: today,
-        isInvalidDate: setInvalidDate,
-        startDate: checkinDate,
-        endDate: checkoutDate,
-        locale: {
-          format: "YYYY-MM-DD",
-          separator: " ~ ",
-          applyLabel: "확인",
-          cancelLabel: "취소",
-          fromLabel: "From",
-          toLabel: "To",
-          customRangeLabel: "Custom",
-          weekLabel: "W",
-          daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
-          monthNames: [
-            "1월",
-            "2월",
-            "3월",
-            "4월",
-            "5월",
-            "6월",
-            "7월",
-            "8월",
-            "9월",
-            "10월",
-            "11월",
-            "12월",
-          ],
-        },
-      });
-    </script>
+        return;
+      }
+    }
+  };
+  $("#date").daterangepicker({
+    alwaysShowCalendars: true,
+    minDate: today,
+    isInvalidDate: setInvalidDate,
+    startDate: checkinDate,
+    endDate: checkoutDate,
+    locale: {
+      format: "YYYY-MM-DD",
+      separator: " ~ ",
+      applyLabel: "확인",
+      cancelLabel: "취소",
+      fromLabel: "From",
+      toLabel: "To",
+      customRangeLabel: "Custom",
+      weekLabel: "W",
+      daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
+      monthNames: [
+        "1월",
+        "2월",
+        "3월",
+        "4월",
+        "5월",
+        "6월",
+        "7월",
+        "8월",
+        "9월",
+        "10월",
+        "11월",
+        "12월",
+      ],
+    },
+  });
+  $("#date").on("hide.daterangepicker", handlePick);
+</script>
 </body>
 </html>

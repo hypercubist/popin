@@ -32,7 +32,6 @@ public class PlaceController {
 
         PlaceDetailResponseDTO place = placeService.getPlaceDetail(placeNo);
         List<String> imageUrls = placeService.getImageUrls(placeNo);
-        log.info("imageUrls = {}", imageUrls);
 
         model.addAttribute("place", place);
         model.addAttribute("imageUrls", imageUrls);
