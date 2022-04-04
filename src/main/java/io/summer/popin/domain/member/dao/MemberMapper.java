@@ -14,4 +14,6 @@ public interface MemberMapper {
     ProfileUpdateDTO findEditProfileFormDataByMemberNo(Long memberNo);
 
     int updateProfileByMemberNo(MemberVO memberVO);
+
+    int deleteProfile(Long memberNo);
 }

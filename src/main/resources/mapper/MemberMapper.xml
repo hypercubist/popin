@@ -25,4 +25,8 @@
         where no = #{no}
     </update>
 
+<!--    <delete id="deleteProfile">-->
+<!--        -->
+<!--    </delete>-->
+
 </mapper>

@@ -10,4 +10,6 @@ public interface MemberService {
     ProfileUpdateDTO getEditProfileFormData(Long memberNo);
 
     int updateProfile(Long memberNo, ProfileUpdateDTO profileUpdateDTO);
+
+    int deleteProfile(Long memberNo);
 }
