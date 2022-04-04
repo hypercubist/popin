@@ -15,20 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class HomeController {
 
-    private final PlacesService placesService;
-
     @GetMapping
     public String home(){
 
         return "home";
     }
 
-    @PostMapping
-    public String homeSearch(@ModelAttribute PlaceSearchRequestDTO requestDTO, Model model){
-
-
-        model.addAttribute("places",placesService.getPlaceList(requestDTO));
-
-        return "places";
-    }
 }
