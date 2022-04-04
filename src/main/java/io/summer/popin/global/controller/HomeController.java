@@ -1,7 +1,8 @@
 package io.summer.popin.global.controller;
 
-import io.summer.popin.domain.place.dto.PlaceSearchRequestDTO;
-import io.summer.popin.domain.place.service.PlacesService;
+import io.summer.popin.domain.search.dto.SearchRequestDTO;
+import io.summer.popin.domain.search.dto.SearchResponseDTO;
+import io.summer.popin.domain.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -9,28 +10,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/")
 public class HomeController {
 
-    private final PlacesService placesService;
+    private final SearchService searchService;
 
-    @GetMapping
+    @GetMapping("/search")
     public String home(){
-
         return "home";
     }
 
-    @PostMapping
-    public String homeSearch(@ModelAttribute PlaceSearchRequestDTO requestDTO, Model model){
-
-
-        model.addAttribute("places",placesService.getPlaceList(requestDTO));
-
-        return "places";
+    @PostMapping("/search")
+    public String searchList(@ModelAttribute SearchRequestDTO dto, Model model){
+        List<SearchResponseDTO> list =searchService.placesSearch(dto);
+        model.addAttribute("dto",list);
+        return "searchTest";
     }
+
+
 }

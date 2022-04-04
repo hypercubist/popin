@@ -3,18 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+    이거 헷갈려서 여기에 뺌..
+    <select multiple name="kakaomap" id="map" ></select>
+    <div>여기부터 검색시작</div>
 
-    <h1>POPIN HOME</h1>
+    <form action="/search" method="post">
+        <input type="text" name="location" placeholder="주소 입력" id="location">
 
-    <form action="/" method="post">
-        <input type="text" name="location">
-        <input type="text" name="checkinDate">
-        <input type="text" name="checkoutDate">
-        <input type="text" name="guestCount">
+        <input type="text" name="checkinDate" placeholder="체크인 날짜">
+        <input type="text" name="checkoutDate" placeholder="체크아웃 날짜">
+        <input type="text" name="maxGuest" placeholder="인원">
         <input type="submit" value="검색">
     </form>
-
+    <script>
+    $('#location').on('keyup',function(){
+           $.ajax({
+               url:'https://dapi.kakao.com/v2/local/search/address.json',
+               type:'GET',
+               headers: { 'Authorization': 'KakaoAK 5515f022981cb25e056392bfba8e6b4a' },
+               data : {query : $('#location').val() },
+           success:function(data){
+               console.log(data);
+               console.log(data.documents[0].address_name);
+               $('#map').empty();
+               for(var i=0; i< data.documents.length; i++){
+               var option = "<option>"+data.documents[i].address_name+"</option>";
+                $('#map').append(option);
+               };
+               $('select[id=map]').on('change',function(){
+                    $('#location').val($(this).val());
+               });
+           },
+           error : function(e){
+               console.log(e);
+           }
+        });
+    });
+</script>
 </body>
 </html>
