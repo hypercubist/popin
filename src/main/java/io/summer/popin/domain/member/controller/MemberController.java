@@ -57,6 +57,7 @@ public class MemberController {
             return "redirect:/members/{memberNo}";
         }
 
+//        @PostMapping("/profile/delete/{memberNo}")
 
 
 
