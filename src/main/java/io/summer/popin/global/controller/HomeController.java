@@ -1,7 +1,5 @@
 package io.summer.popin.global.controller;
 
-import io.summer.popin.domain.place.dto.PlaceSearchRequestDTO;
-import io.summer.popin.domain.place.service.PlacesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -20,12 +20,6 @@ public class PlaceController {
 
     private final PlaceService placeService;
 
-    @GetMapping
-    public String placeList(Model model){
-
-        return "place-list";
-    }
-
 
     @GetMapping("/{placeNo}")
     public String placeDetail(@PathVariable Integer placeNo, Model model){
