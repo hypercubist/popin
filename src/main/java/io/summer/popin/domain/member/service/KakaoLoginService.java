@@ -4,5 +4,5 @@ public interface KakaoLoginService {
 
     String getKakaoAuthCodeRequestURL();
 
-    void getKakaoAuthCode(String code);
+    String getKakaoAccessToken(String code);
 }

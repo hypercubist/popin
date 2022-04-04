@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Slf4j
 @RequestMapping("/login")
@@ -27,10 +28,13 @@ public class LoginController {
         return "redirect:" + kakaoAuthCodeRequestURL;
     }
 
-    @RequestMapping(value = "/callback", produces="application/json",method= {RequestMethod.GET, RequestMethod.POST})
-    public void kakaoLogin(@RequestParam("code")String code, RedirectAttributes ra, HttpSession session, HttpServletResponse response, Model model) {
+    @ResponseBody
+    @GetMapping("/kakao/callback")
+    public void kakaoCallback(@RequestParam("code") String code ) {
 
-        kakaoLoginService.getKakaoAuthCode(code);
+        log.info("kakaoCallbackCode = {}", code);
+        kakaoLoginService.getKakaoAccessToken(code);
+
     }
 
 
