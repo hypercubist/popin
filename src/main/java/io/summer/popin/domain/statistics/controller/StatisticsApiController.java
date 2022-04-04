@@ -21,6 +21,7 @@ public class StatisticsApiController {
     @PostMapping("/statistics/{hostNo}")
     public ResponseEntity<List<StatisticsDTO>> chartInfo(@PathVariable Integer hostNo, Model model){
         return new ResponseEntity<List<StatisticsDTO>>(statisticsService.getChartData(hostNo), HttpStatus.OK);
+
     }
 
 
