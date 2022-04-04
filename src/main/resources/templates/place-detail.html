@@ -19,8 +19,14 @@
 
 
 
-<form action="">
-    <input type="text" name="" id="date"/>
+<form th:action th:object="${reservationRequest}" method="post">
+    <input type="text" th:field="*{dates}" readonly/>
+    <input type="hidden" th:field="*{checkinDate}">
+    <input type="hidden" th:field="*{checkoutDate}">
+    <input type="text" th:field="*{totalPrice}" readonly>
+    <input type="text" th:field="*{guestCount}">
+    <input type="text" th:field="*{period}" readonly>
+    <input type="submit" value="예약하기">
 </form>
 
 <script
@@ -43,6 +49,7 @@
 <script th:inline="javascript">
   const today = new Date();
   const oneDay = 1000 * 60 * 60 * 24;
+  const pricePerDay = [[${place.priceHigh}]];
   const checkinDate = [[${#temporals.format(searchDTO.checkinDate, 'yyyy-MM-dd')}]];
   const checkoutDate = [[${#temporals.format(searchDTO.checkoutDate, 'yyyy-MM-dd')}]];
   const invalidDates = [
@@ -68,10 +75,11 @@
     );
   };
   const getPeriod = (startDate, endDate) => {
-    return (endDate.getTime() - startDate.getTime()) / oneDay;
+    return Math.round((endDate.getTime() - startDate.getTime()) / oneDay)-1;
   };
   const handlePick = function(ev, picker){
     const period = getPeriod(picker.startDate._d, picker.endDate._d);
+
     for (i = 0; i < period; i++) {
       const date = new Date(picker.startDate._d.getTime() + oneDay * i);
       if (!bookedDateCheck(date)) {
@@ -82,8 +90,12 @@
         return;
       }
     }
+    $("#period").val(period);
+    $("#totalPrice").val(period*pricePerDay);
+    $("#checkinDate").val(picker.startDate.format("YYYY-MM-DD"));
+    $("#checkoutDate").val(picker.endDate.format("YYYY-MM-DD"));
   };
-  $("#date").daterangepicker({
+  $("#dates").daterangepicker({
     alwaysShowCalendars: true,
     minDate: today,
     isInvalidDate: setInvalidDate,
@@ -94,10 +106,6 @@
       separator: " ~ ",
       applyLabel: "확인",
       cancelLabel: "취소",
-      fromLabel: "From",
-      toLabel: "To",
-      customRangeLabel: "Custom",
-      weekLabel: "W",
       daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
       monthNames: [
         "1월",
@@ -115,7 +123,7 @@
       ],
     },
   });
-  $("#date").on("hide.daterangepicker", handlePick);
+  $("#dates").on("hide.daterangepicker", handlePick);
 </script>
 </body>
 </html>
