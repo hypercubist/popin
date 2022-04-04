@@ -1,14 +1,16 @@
 package io.summer.popin.domain.statistics.service;
 
-import io.summer.popin.domain.statistics.vo.StatisticsVO;
+import io.summer.popin.domain.statistics.dto.StatisticsDTO;
 
 import java.util.List;
 
 
 public interface StatisticsService {
 
-    public List<StatisticsVO> showStatistics(Integer hostNo);
+    public List<StatisticsDTO> showStatistics(Integer hostNo);
 
-    public StatisticsVO getChartData(Integer hostNo);
+    public List<StatisticsDTO> getChartData(Integer hostNo);
+
+
 
 }

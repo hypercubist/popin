@@ -1,13 +1,16 @@
 package io.summer.popin.domain.statistics.controller;
 
+import io.summer.popin.domain.statistics.dto.StatisticsDTO;
 import io.summer.popin.domain.statistics.service.StatisticsService;
-import io.summer.popin.domain.statistics.vo.StatisticsVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+
+
 
 @Controller
 @RequiredArgsConstructor
@@ -16,18 +19,17 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
-    @GetMapping("/juntest")
-    public List<StatisticsVO> individualStatistics(){
-        List<StatisticsVO> list =  statisticsService.showStatistics(1);
-        for (StatisticsVO i : list){
-            log.info(String.valueOf(i));
-        }
+    @GetMapping("/juntest/{hostNo}")
+    public List<StatisticsDTO> individualStatistics(@PathVariable Integer hostNo){
+        List<StatisticsDTO> list =  statisticsService.showStatistics(hostNo);
         return statisticsService.showStatistics(1);
     }
 
-    @GetMapping("/test")
+    @GetMapping("/statistics")
     public String test(){
         return "test";
     }
+
+
 
 }
