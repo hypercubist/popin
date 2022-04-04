@@ -11,6 +11,7 @@
             place p left outer join place_kind pk on p.place_kind_code = pk.no
     </select>
 
+
     <select id="findOneByNo" resultType="PlaceDetailResponseDTO">
         select
             p.name,
@@ -65,6 +66,5 @@
     <select id="findListByNo">
 
     </select>
-
 
 </mapper>

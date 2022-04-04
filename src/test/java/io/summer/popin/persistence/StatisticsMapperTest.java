@@ -1,9 +1,9 @@
 package io.summer.popin.persistence;
 
-import io.summer.popin.domain.statistics.controller.StatisticsController;
-import io.summer.popin.domain.statistics.service.StatisticsService;
-import io.summer.popin.domain.statistics.vo.StatisticsVO;
+import io.summer.popin.domain.statistics.dao.StatisticsMapper;
+import io.summer.popin.domain.statistics.service.SchedulerService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,25 +15,29 @@ import java.util.List;
 public class StatisticsMapperTest {
 
     @Autowired
-    StatisticsController statisticsController;
+    SchedulerService schedulerService;
 
     @Autowired
-    StatisticsService statisticsService;
+    StatisticsMapper statisticsMapper;
 
-    @Test
-    public void test(){
-        List<StatisticsVO> list =  statisticsController.individualStatistics();
-        for (StatisticsVO i : list){
-            log.info(String.valueOf(i));
-        }
-    }
-
+    @DisplayName("호스트 번호 조회")
     @Test
     public void chartTest(){
-        StatisticsVO statisticsVO = statisticsService.getChartData(1);
-            log.info("호스트 번호"+statisticsVO.getHostNo());
-            log.info("현재까지 총 수입"+statisticsVO.getIncome());
-            log.info("현재 날짜"+statisticsVO.getRecordDate());
+//        List<String> list = schedulerService.statisticsHostList();
+//            for (String i : list){
+//                log.info(i.getHostNo().toString());
+//        }
+    }
+
+    @DisplayName("배치 프로그램")
+    @Test
+    public void insertTest(){
+        List<String> list =  statisticsMapper.statisticsHostList();
+
+        for (String i: list){
+            log.info(i);
+            statisticsMapper.statisticsScheduler(i);
+        }
     }
 
 

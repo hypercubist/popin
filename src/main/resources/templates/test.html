@@ -1,42 +1,95 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      $(function(){
-            $.ajax({
-                url : "/chart",
-                method : "post"
-            }).done(function(rst){
-                    console.log(rst.income);
-            });
-      });
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
-        var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-        chart.draw(data, options);
-      }
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+<div id="curve_chart" style="width: 600px; height: 600px">
+    <button id="weekData">주별 데이터 보기</button>
+    <button id="monthData">월별 데이터 보기</button>
+    <canvas id="myChart" width="300px" height="300px" ></canvas>
+    <canvas id="myChart2" width="300px" height="300px"></canvas>
+</div>
+<script>
+    $('#weekData').on('click',function(){
+        const ctx = document.getElementById('myChart');
+        $.ajax({
+            url : "/statistics/1", //1대신에 호스트 번호가 들어와야한다
+            method : "post"
+        }).done(function(rst){
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels:  rst.map(data =>  [data.recordDay+'요일']),
+                    datasets: [
+                    {
+                        label: '당일 예약자 수',
+                            data:  rst.map(data =>  data.reservationCountToday),
+                        borderColor: [
+                            'rgba(111, 89, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }
+                    ,
+                    {
+                        label: '누적 예약자 수',
+                            data:  rst.map(data =>  data.reservationCountTotal),
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+         const ctx2= document.getElementById('myChart2');
+        $.ajax({
+            url : "/statistics/1", //1대신에 호스트 번호가 들어와야한다
+            method : "post"
+        }).done(function(rst){
+            const myChart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels:  rst.map(data =>  [data.recordDay+'요일']),
+                    datasets: [
+                    {
+                        label: '요일별 수입',
+                            data:  rst.map(data =>  data.incomeToday),
+                        borderColor: [
+                            'rgba(111, 89, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }
+                    ,
+                    {
+                        label: '누적수입',
+                            data:  rst.map(data =>  data.incomeTotal),
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,11 +1,13 @@
 package io.summer.popin.domain.member.dao;
 
-import io.summer.popin.domain.member.dto.ProfileDTO;
-import io.summer.popin.domain.member.vo.MemberVO;
+import io.summer.popin.domain.member.dto.ProfileResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MemberMapper {
 
-    public ProfileDTO findByNo(Long no);
+    public ProfileResponseDTO profileFindByNo(Long no);
+
+
+
 }

@@ -3,8 +3,6 @@ package io.summer.popin.domain.place.controller;
 import io.summer.popin.domain.place.dto.BookedDateResponseDTO;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
 import io.summer.popin.domain.place.service.PlaceService;
-import io.summer.popin.domain.place.service.PlacesServiceImpl;
-import io.summer.popin.domain.review.dto.ReviewResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -29,6 +27,7 @@ public class PlaceController {
         return "place-list"; //검색도메인으로 옮겨야함
     }
 
+
     @GetMapping("/{placeNo}")
     public String placeDetail(@PathVariable Integer placeNo, Model model){
 
@@ -41,4 +40,5 @@ public class PlaceController {
         //
         return "place-detail";
     }
+
 }
