@@ -3,12 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.member.dao.MemberMapper">
-    <select id="profileFindByNo" resultType="ProfileResponseDTO">   <!-- 특정 멤버 프로필 조회 -->
+    <select id="findProfileByMemberNo" resultType="ProfileResponseDTO">   <!-- 특정 멤버 프로필 조회 -->
         select
             m.no, name, email, phone_Number as phoneNumber, mc.class as className, email_Certificated as emailCertificated,
             phone_Certificated as phoneCertificated, extract(year from join_date) as joinYear
         from member m left outer join member_class mc on m.class_code = mc.no
         where m.no = #{no}
     </select>
+
+    <select id="findEditProfileFormDataByMemberNo" resultType="ProfileUpdateDTO">
+        select
+            no, name, email, phone_number as phoneNumber
+        from member
+        where no = #{no}
+    </select>
+
+    <update id="updateProfileByMemberNo">
+        update
+            member
+        set name = #{name}, phone_number = #{phoneNumber}
+        where no = #{no}
+    </update>
 
 </mapper>
