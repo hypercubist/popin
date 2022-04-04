@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.summer.popin.domain.statistics.dao.StatisticsMapper">
+    <select id="allMessage"  resultType="MessageVO">
+        select
+            *
+        from
+            message
+        where
+            sender_no= #{senderNo}
+    </select>
+    <insert id="sendMessage" parameterType="MessageSendDTO">
+        insert into
+            message(no,sender_no,receiver_no,content,send_date)
+        values
+            (SEQ_MESSAGE.nextval,#{senderNo},#{receiverNo},#{content},sysdate)
+    </insert>
+</mapper>
