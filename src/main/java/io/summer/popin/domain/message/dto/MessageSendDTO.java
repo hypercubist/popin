@@ -2,7 +2,7 @@ package io.summer.popin.domain.message.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class MessageSendDTO{
@@ -11,7 +11,7 @@ public class MessageSendDTO{
     private Integer senderNo;
     private Integer receiverNo;
     private String content;
-    private LocalDateTime sendDate;
-    private LocalDateTime receiveDate;
+    private LocalDate sendDate;
+    private LocalDate receiveDate;
 
 }

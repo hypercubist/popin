@@ -7,15 +7,37 @@
 </head>
 <body>
 
-    <form action="/message" method="post">
-        <input type="hidden" value="${member.no}" name="sendNo">
-        <input type="hidden" value="${host}" name="receiverNo">
-        <input type="text" placeholder="내용 입력">
-    </form>
+sender_no,receiver_no,content
 
-    <div class="messageList">
+        <input type="text" name="senderNo" id="sender">
+        <input type="text"  name="receiverNo">
+        <input type="text" name="content" placeholder="내용입력">
+        <button id="button" type="submit">전송</button>
 
-    </div>
-
+<div class="messageList">test</div>
+    <script>
+        $('#sender').on('change', function(){
+            $.ajax({
+                url : "/message/"+$('input[name=senderNo]').val(),
+                type: "get"
+            }).done(function(list){
+                console.log(list);
+                $('.messageList').html("보내는 날짜"+list[0].sendDate);
+            });
+        });
+        $('#button').on('click', function(){
+            $.ajax({
+                url : "/message",
+                type : "post",
+                data : {
+                    senderNo : $('input[name=senderNo]').val(),
+                    receiverNo : $('input[name=receiverNo]').val(),
+                    content : $('input[name=content]').val()
+                }
+            }).done(function(){
+                console.log("추가 완료");
+            });
+        });
+    </script>
 </body>
 </html>

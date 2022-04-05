@@ -2,7 +2,7 @@ package io.summer.popin.domain.search.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class SearchRequestDTO {
@@ -14,8 +14,8 @@ public class SearchRequestDTO {
     private String region3depth;
     private String location;
 
-    private LocalDateTime checkinDate;
-    private LocalDateTime checkoutDate;
+    private LocalDate checkinDate;
+    private LocalDate checkoutDate;
     private Integer maxGuest;
 
 }

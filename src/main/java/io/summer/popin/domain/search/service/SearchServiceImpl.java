@@ -18,9 +18,13 @@ public class SearchServiceImpl implements SearchService{
     @Override
     public List<SearchResponseDTO> placesSearch(SearchRequestDTO dto) {
         String[] location = dto.getLocation().split(" ");
-        dto.setRegion1depth(location[location.length-2]);
-        dto.setRegion2depth(location[location.length-1]);
 
+        dto.setRegion1depth(location[0]);
+        if(location.length >=2 ){
+            dto.setRegion2depth(location[1]);
+        }else if(location.length >=3 ){
+            dto.setRegion3depth(location[2]);
+        }
         return searchMapper.placesSearch(dto);
     }
 }

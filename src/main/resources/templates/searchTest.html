@@ -8,15 +8,14 @@
 
     <table border="1">
         <tr>
-            <th>username</th>
-            <th>age</th>
+            <th>지역이름</th>
+            <th>지역</th>
         </tr>
         <tr th:each="dto : ${dto}">
             <td th:text="${dto.placeName}"></td>
             <td th:text="${dto.location}"></td>
         </tr>
     </table>
-
 
 </body>
 </html>

@@ -2,7 +2,7 @@ package io.summer.popin.domain.statistics.vo;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @Data
@@ -12,7 +12,7 @@ public class StatisticsHostVO {
     private Integer reservationCountTotal;
     private Integer incomeToday;
     private Integer incomeTotal;
-    private LocalDateTime recordDate;
-    private LocalDateTime recordDay;
+    private LocalDate recordDate;
+    private LocalDate recordDay;
 }
 
