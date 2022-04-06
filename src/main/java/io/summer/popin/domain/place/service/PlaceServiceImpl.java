@@ -6,6 +6,7 @@ import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,5 +24,10 @@ public class PlaceServiceImpl implements PlaceService{
     @Override
     public List<String> getImageUrls(int placeNo) {
         return urlMapper.findListListByPlaceNo(placeNo);
+    }
+
+    @Override
+    public ArrayList<String> getPlaceKind() {
+        return placeMapper.findKindMap();
     }
 }

@@ -1,6 +1,7 @@
 package io.summer.popin.domain.place.controller;
 
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
+import io.summer.popin.domain.place.dto.PlaceRegisterDTO;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.place.dto.TempSearchRequestDTO;
 import io.summer.popin.domain.place.service.PlaceService;
@@ -8,11 +9,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -22,6 +26,21 @@ public class PlaceController {
 
     private final PlaceService placeService;
 
+    @GetMapping("/register")
+    public String placeRegisterForm(@ModelAttribute("registerForm") PlaceRegisterDTO registerDTO){
+
+        List<String> placeKind = placeService.getPlaceKind();
+        log.info("KIND = {}", placeKind);
+
+        return "place-register";
+    }
+
+    @PostMapping("/register")
+    public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
+                                BindingResult bindingResult){
+
+        return "place-register";
+    }
 
     @GetMapping("/{placeNo}")
     public String placeDetail(@PathVariable Integer placeNo, @ModelAttribute("reservationData") ReservationRequestDTO requestDTO, Model model){

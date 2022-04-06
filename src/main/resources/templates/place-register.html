@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>place-register</h1>
+    <form th:action th:object="${registerForm}">
+        <input type="text" th:field="*{placeName}">
+<!--        <select th:field="*{placeKind}">-->
+
+<!--        </select>-->
+    </form>
+
+</body>
+</html>

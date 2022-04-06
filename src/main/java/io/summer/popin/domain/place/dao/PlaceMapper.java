@@ -5,14 +5,16 @@ import io.summer.popin.domain.hosting.dto.ReservationCountResponseDTO;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Mapper
 public interface PlaceMapper {
 
-    public ReservationCountResponseDTO getCountByNo(long memberNo);
+    ReservationCountResponseDTO getCountByNo(long memberNo);
 
-    public PlaceDetailResponseDTO findOneByNo(long placeNo);
+    PlaceDetailResponseDTO findOneByNo(long placeNo);
+
+    ArrayList<String> findKindMap();
 
 
 }
