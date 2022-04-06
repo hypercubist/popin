@@ -14,8 +14,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ReservationRequestDTO {
 
-    private Integer placeNo;
-    private Integer HostNo;
+    private Long placeNo;
+    private Long HostNo;
+    private Long GuestNo;
     private Integer guestCount;
     private String dates;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -25,4 +26,5 @@ public class ReservationRequestDTO {
     private Integer period;
     private Integer totalPrice;
     private Integer statusCode;
+    private String orderId;
 }

@@ -4,7 +4,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.reservation.dao.ReservationMapper">
     <insert id="insertOne">
-
+        insert into
+            reservation
+        values(
+            seq_reservation_no,
+            #{placeNo},
+            #{hostNo},
+            #{guestNo},
+            #{guestCount},
+            #{checkinDate},
+            #{checkoutDate},
+            #{period},
+            #{price},
+            #{statusCode},
+            #{orderId}
+        )
     </insert>
+    <select id="findOneByOrderId" resultType="ReservationVO">
+        select * from reservation where order_id = #{orderId}
+    </select>
+    <select id="findOneByNo" resultType="ReservationVO">
+        select * from reservation where no = #{no}
+    </select>
 
 </mapper>

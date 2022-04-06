@@ -33,6 +33,7 @@ public class PlaceController {
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
         model.addAttribute("searchDTO", searchDTO);
+        log.info("RESDATA3 = {}", requestDTO);
 
         return "place-detail";
     }

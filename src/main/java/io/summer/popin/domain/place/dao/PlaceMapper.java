@@ -10,8 +10,9 @@ import java.util.List;
 @Mapper
 public interface PlaceMapper {
 
-    public ReservationCountResponseDTO getCountByNo(Long memberNo);
+    public ReservationCountResponseDTO getCountByNo(long memberNo);
 
-    public PlaceDetailResponseDTO findOneByNo(int placeNo);
+    public PlaceDetailResponseDTO findOneByNo(long placeNo);
+
 
 }

@@ -1,5 +1,7 @@
 package io.summer.popin.domain.reservation.service;
 
+import io.summer.popin.domain.place.dto.ReservationRequestDTO;
+import io.summer.popin.domain.reservation.dto.KakaopayApproveResponseDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayReadyResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +29,9 @@ public class KakaopayService implements PaymentService{
     @Value("${kakaopay.ready-url}")
     private String ready_url;
 
+    @Value("${kakaopay.approve-url}")
+    private String approve_url;
+
     @Value("${kakaopay.admin-key}")
     private String admin_key;
 
@@ -52,22 +57,19 @@ public class KakaopayService implements PaymentService{
     private String fail_url;
 
     @Override
-    public KakaopayReadyResponseDTO readyPayment(int guestNo, int totalPrice) {
+    public KakaopayReadyResponseDTO readyPayment(ReservationRequestDTO reservationRequestDTO) {
 
         String partner_order_id = this.createOrderId();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + admin_key);
-        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE+";charset=utf-8");
+        HttpHeaders headers = getHttpHeaders();
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("cid", cid);
         params.add("partner_order_id", partner_order_id);
-        params.add("partner_user_id", String.valueOf(guestNo));
+        params.add("partner_user_id", String.valueOf(reservationRequestDTO.getGuestNo()));
         params.add("item_name", item_name);
         params.add("quantity", quantity);
-        params.add("total_amount", String.valueOf(totalPrice));
+        params.add("total_amount", String.valueOf(reservationRequestDTO.getTotalPrice()));
         params.add("tax_free_amount", tax_free_amount);
         params.add("approval_url", approval_url);
         params.add("cancel_url", cancel_url);
@@ -84,9 +86,30 @@ public class KakaopayService implements PaymentService{
     }
 
     @Override
-    public void approvePayment() {
+    public KakaopayApproveResponseDTO approvePayment(ReservationRequestDTO reservationRequestDTO, KakaopayReadyResponseDTO readyDTO, String pgToken) {
 
+        HttpHeaders headers = getHttpHeaders();
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("cid", cid);
+        params.add("tid", readyDTO.getTid());
+        params.add("partner_order_id", readyDTO.getPartner_order_id());
+        params.add("partner_user_id", String.valueOf(reservationRequestDTO.getGuestNo()));
+        params.add("pg_token", pgToken);
+
+        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(params, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        KakaopayApproveResponseDTO approveDTO = restTemplate.postForObject(host+approve_url, httpEntity, KakaopayApproveResponseDTO.class);
+
+        return approveDTO;
     }
 
-
+    private HttpHeaders getHttpHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "KakaoAK " + admin_key);
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE+";charset=utf-8");
+        return headers;
+    }
 }

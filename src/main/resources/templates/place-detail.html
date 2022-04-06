@@ -22,6 +22,7 @@
 <form th:action th:object="${reservationData}" method="post">
     <input type="text" th:field="*{guestCount}">
     <input type="text" th:field="*{dates}" readonly/>
+    <input type="hidden" th:field="*{hostNo}" value="${place.hostNo}"/>
     <input type="hidden" th:field="*{checkinDate}">
     <input type="hidden" th:field="*{checkoutDate}">
     <input type="text" th:field="*{period}" readonly>

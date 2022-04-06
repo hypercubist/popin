@@ -8,6 +8,7 @@ public class PlaceDetailResponseDTO {
 
     //place
     private String name;
+    private Long hostNo;
     private String hostName;
     private String placeKind;
     private String description;

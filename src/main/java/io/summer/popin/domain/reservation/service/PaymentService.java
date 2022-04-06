@@ -1,6 +1,7 @@
 package io.summer.popin.domain.reservation.service;
 
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
+import io.summer.popin.domain.reservation.dto.KakaopayApproveResponseDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayReadyResponseDTO;
 
 import java.time.LocalDate;
@@ -9,9 +10,9 @@ import java.util.UUID;
 
 public interface PaymentService {
 
-    KakaopayReadyResponseDTO readyPayment(int guestNo, int totalPrice);
+    KakaopayReadyResponseDTO readyPayment(ReservationRequestDTO reservationRequestDTO);
 
-    void approvePayment();
+    KakaopayApproveResponseDTO approvePayment(ReservationRequestDTO reservationRequestDTO, KakaopayReadyResponseDTO readyDTO, String pgToken);
 
     default String createOrderId(){
         String uuid = UUID.randomUUID().toString();

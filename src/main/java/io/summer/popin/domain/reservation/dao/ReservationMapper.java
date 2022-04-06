@@ -5,5 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ReservationMapper {
-    public int insertOne(ReservationVO reservationVO);
+    int insertOne(ReservationVO reservationVO);
+
+    ReservationVO findOneByOrderId(String orderId);
+
+    ReservationVO findOneByNo(long no);
 }
