@@ -1,19 +1,28 @@
 package io.summer.popin.domain.member.service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.summer.popin.domain.member.dao.MemberMapper;
 import io.summer.popin.domain.member.dto.KakaoGetTokenResponseDTO;
+import io.summer.popin.domain.member.dto.KakaoGetUserInfoJsonResponseDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class KakaoLoginServiceImpl implements KakaoLoginService{
 
+    private final MemberMapper memberMapper;
 
     @Override
     public String getKakaoAuthCodeRequestURL() {
@@ -28,7 +37,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
     }
 
     @Override
-    public String getKakaoAccessToken(String code) {
+    public String getKakaoAccessToken(String code, HttpSession session) {
 
         String access_Token = "";
         String refresh_Token = "";
@@ -39,7 +48,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("POST");
-            conn.setDoOutput(true);    //서버로 데이터 출력
+            conn.setDoOutput(true);    //아웃풋 스트림으로 데이터 전송
 
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuffer postURL = new StringBuffer();
@@ -51,7 +60,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
             bufferedWriter.flush();   //버퍼에 남아있는 데이터 모두 출력
 
             int responseCode = conn.getResponseCode();
-            log.info("responseCode = {}", responseCode);
+            log.info("getKakaoAccessTokenResponseCode = {}", responseCode);
 
             //요청으로 얻은 제이슨 타입 responseBody 읽기
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -64,10 +73,6 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
             }
             log.info("response Body = {}", response);
 
-            //읽어온 json객체 파싱
-//            JsonParser parser = new JsonParser();
-//            JsonElement element = parser.parse(response);
-
             ObjectMapper objectMapper = new ObjectMapper();
 
             KakaoGetTokenResponseDTO json = objectMapper.readValue(response, KakaoGetTokenResponseDTO.class);
@@ -75,6 +80,11 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
 
             access_Token  = json.getAccess_token();
             refresh_Token = json.getRefresh_token();
+
+            log.info("access_Token = {}", access_Token);
+            log.info("refresh_Token = {}", refresh_Token);
+
+            session.setAttribute("access_Token", access_Token);
 
             bufferedReader.close();
             bufferedWriter.close();
@@ -86,6 +96,76 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
         return access_Token;
     }
 
+
+    @Override
+    public HashMap<String, Object> getUserInfo(String access_Token, HttpSession session) {
+
+        HashMap<String, Object> userInfo = new HashMap<>();
+        String reqURL = "https://kapi.kakao.com/v2/user/me";
+
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Authorization", "Bearer " + access_Token);  //요청 헤더
+
+            int responseCode = conn.getResponseCode();
+            log.info("getUserInfoResponseCode = {}", responseCode);
+
+            //요청해서 얻은 제이슨 타입 메세지 읽기
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String response = "";
+
+            while ((line = bufferedReader.readLine()) != null) {
+
+                response += line;
+            }
+            log.info("GetUserInfoResponse Body = {}", response);
+
+            //받은 제이슨 parsing
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);  //알 수 없는 프로퍼티가 있을 때 예외가 발생할 수 있는데 이를 비활성화.
+
+            KakaoGetUserInfoJsonResponseDTO jsonResponseDTO = objectMapper.readValue(response, KakaoGetUserInfoJsonResponseDTO.class);
+            log.info("KakaoGetUserInfoJsonResponseDTO = {}", jsonResponseDTO);
+
+            boolean hasEmail = jsonResponseDTO.getKakao_account().isHas_email();
+
+            if(hasEmail) {
+                session.setAttribute("email", jsonResponseDTO.getKakao_account().getEmail());
+            }
+
+            userInfo.put("id", jsonResponseDTO.getId());
+            userInfo.put("nickname", jsonResponseDTO.getProperties().getNickname());
+            userInfo.put("email", jsonResponseDTO.getKakao_account().getEmail());
+
+            bufferedReader.close();
+
+        } catch (IOException e) {
+            log.error("getUserInfo = {}", e.getMessage());
+        }
+        return userInfo;
+    }
+
+    @Override
+    public boolean kakaoLogin(HashMap<String, Object> userInfo) {
+
+        Long id = (Long)userInfo.get("id");
+        String nickname = (String)userInfo.get("nickname");
+        String email = (String)userInfo.get("email");
+
+        //db에 멤버 정보가 없으면 저장
+        if(memberMapper.checkMember(id) != 1) {
+            memberMapper.saveMember(id, nickname, email);
+        }
+
+
+        return false;
+    }
 
 
 }
