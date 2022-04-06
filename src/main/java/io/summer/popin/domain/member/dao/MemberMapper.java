@@ -1,6 +1,7 @@
 package io.summer.popin.domain.member.dao;
 
 import io.summer.popin.domain.member.dto.KakaoGetUserInfoJsonResponseDTO;
+import io.summer.popin.domain.member.dto.KakaoUserDTO;
 import io.summer.popin.domain.member.dto.ProfileUpdateDTO;
 import io.summer.popin.domain.member.dto.ProfileResponseDTO;
 import io.summer.popin.domain.member.vo.MemberVO;
@@ -17,7 +18,7 @@ public interface MemberMapper {
 
     int updateProfileByMemberNo(MemberVO memberVO);
 
-    int checkMember(Long id);
+    int checkId(Long id);
 
-    int saveMember(Long id, String nickname, String email);
+    int saveMember(KakaoUserDTO userDTO);
 }

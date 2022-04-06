@@ -1,9 +1,11 @@
 package io.summer.popin.domain.member.controller;
 
 import io.summer.popin.domain.member.dto.KakaoGetUserInfoJsonResponseDTO;
+import io.summer.popin.domain.member.dto.KakaoUserDTO;
 import io.summer.popin.domain.member.service.KakaoLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,15 +32,19 @@ public class LoginController {
         return "redirect:" + kakaoAuthCodeRequestURL;
     }
 
-    @ResponseBody
+    //    @ResponseBody
+    @SessionAttribute("userDTO")
     @GetMapping("/kakao/callback")
-    public void kakaoCallbackandAccessToken(@RequestParam("code") String code, HttpSession session) {
+    public void kakaoCallbackandAccessToken(@RequestParam("code") String code, HttpSession session, Model model) {
 
         log.info("kakaoCallbackCode = {}", code);
         String access_Token = kakaoLoginService.getKakaoAccessToken(code, session);
-        HashMap<String, Object> userInfo = kakaoLoginService.getUserInfo(access_Token, session);
-        KakaoLoginService.kakaoLogin(userInfo);
-    }
+        KakaoUserDTO userDTO = kakaoLoginService.getUserInfo(access_Token, session);
+        userDTO = kakaoLoginService.kakaoLogin(userDTO);
 
+        model.addAttribute("user", userDTO);
+
+//        return "";
+    }
 
 }

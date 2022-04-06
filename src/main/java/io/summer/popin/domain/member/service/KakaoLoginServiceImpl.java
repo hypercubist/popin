@@ -6,10 +6,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.summer.popin.domain.member.dao.MemberMapper;
 import io.summer.popin.domain.member.dto.KakaoGetTokenResponseDTO;
 import io.summer.popin.domain.member.dto.KakaoGetUserInfoJsonResponseDTO;
+import io.summer.popin.domain.member.dto.KakaoUserDTO;
+import io.summer.popin.domain.member.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -98,9 +101,10 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
 
 
     @Override
-    public HashMap<String, Object> getUserInfo(String access_Token, HttpSession session) {
+    public KakaoUserDTO getUserInfo(String access_Token, HttpSession session) {
 
-        HashMap<String, Object> userInfo = new HashMap<>();
+        KakaoUserDTO userDTO = new KakaoUserDTO();
+
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 
         try {
@@ -139,32 +143,27 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
                 session.setAttribute("email", jsonResponseDTO.getKakao_account().getEmail());
             }
 
-            userInfo.put("id", jsonResponseDTO.getId());
-            userInfo.put("nickname", jsonResponseDTO.getProperties().getNickname());
-            userInfo.put("email", jsonResponseDTO.getKakao_account().getEmail());
+            userDTO.setId(jsonResponseDTO.getId());
+            userDTO.setNickname(jsonResponseDTO.getProperties().getNickname());
+            userDTO.setEmail(jsonResponseDTO.getKakao_account().getEmail());
 
             bufferedReader.close();
 
         } catch (IOException e) {
             log.error("getUserInfo = {}", e.getMessage());
         }
-        return userInfo;
+        return userDTO;
     }
 
     @Override
-    public boolean kakaoLogin(HashMap<String, Object> userInfo) {
-
-        Long id = (Long)userInfo.get("id");
-        String nickname = (String)userInfo.get("nickname");
-        String email = (String)userInfo.get("email");
+    public KakaoUserDTO kakaoLogin(KakaoUserDTO userDTO) {
 
         //db에 멤버 정보가 없으면 저장
-        if(memberMapper.checkMember(id) != 1) {
-            memberMapper.saveMember(id, nickname, email);
+        if(memberMapper.checkId(userDTO.getId()) != 1) {
+            memberMapper.saveMember(userDTO);
         }
 
-
-        return false;
+        return userDTO;
     }
 
 

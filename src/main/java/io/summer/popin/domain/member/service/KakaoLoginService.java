@@ -1,7 +1,9 @@
 package io.summer.popin.domain.member.service;
 
 import io.summer.popin.domain.member.dto.KakaoGetUserInfoJsonResponseDTO;
+import io.summer.popin.domain.member.dto.KakaoUserDTO;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
@@ -11,7 +13,8 @@ public interface KakaoLoginService {
 
     String getKakaoAccessToken(String code, HttpSession session);
 
-    HashMap<String, Object>  getUserInfo(String access_Token, HttpSession session);
+    KakaoUserDTO getUserInfo(String access_Token, HttpSession session);
 
-    int checkMember(HashMap<String, Object> userInfo);
+    KakaoUserDTO kakaoLogin(KakaoUserDTO userDTO);
+
 }

@@ -25,13 +25,14 @@
         where no = #{no}
     </update>
 
-    <insert id="checkMember">
+    <insert id="checkId">
         select count(*) id_cnt
         from member
         where id = #{id}
     </insert>
 
     <insert id="saveMember">
-
+        insert into member (no, id, name, email)
+        values (seq_member.nextval, #{id}, #{name}, #{email, jdbcType=varchar});
     </insert>
 </mapper>
