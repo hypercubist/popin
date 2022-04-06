@@ -3,6 +3,7 @@ package io.summer.popin.domain.reservation.controller;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayApproveResponseDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayReadyResponseDTO;
+import io.summer.popin.domain.reservation.dto.ReservationResponseDTO;
 import io.summer.popin.domain.reservation.service.PaymentService;
 import io.summer.popin.domain.reservation.service.ReservationService;
 import io.summer.popin.domain.reservation.vo.ReservationVO;
@@ -11,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,7 +36,6 @@ public class ReservationController {
     public String requestPayment(@ModelAttribute("reservationData") ReservationRequestDTO reservationRequestDTO, Model model){
 
         reservationRequestDTO.setGuestNo(4L); //guest는 세션에서 받아오기
-        log.info("RESDATA1 = {}", reservationRequestDTO);
         KakaopayReadyResponseDTO readyDTO = paymentService.readyPayment(reservationRequestDTO);
         model.addAttribute("readyDTO", readyDTO);
 
@@ -40,14 +43,17 @@ public class ReservationController {
     }
 
     @GetMapping("/payment/success")
-    public String paymentSuccess(@RequestParam("pg_token") String pgToken, @SessionAttribute("reservationData") ReservationRequestDTO reservationRequestDTO, @SessionAttribute("readyDTO") KakaopayReadyResponseDTO readyDTO){
+    public String paymentSuccess(@RequestParam("pg_token") String pgToken,
+                                 @ModelAttribute("reservationData") ReservationRequestDTO reservationRequestDTO,
+                                 @SessionAttribute("readyDTO") KakaopayReadyResponseDTO readyDTO,
+                                 SessionStatus sessionStatus){
 
         KakaopayApproveResponseDTO approveDTO = paymentService.approvePayment(reservationRequestDTO, readyDTO, pgToken);
         reservationRequestDTO.setOrderId(approveDTO.getPartner_order_id());
-        log.info("RESDATA2 = {}", reservationRequestDTO);
         ReservationVO reservationVO = reservationService.insertReservation(reservationRequestDTO);
         Long reservationNo =reservationVO.getNo();
-        return "redirect:/reservation/"+reservationNo; //예약확인 페이지로 이동해야함
+        sessionStatus.setComplete();
+        return "redirect:/reservation/"+reservationNo;
     }
 
     @GetMapping("/payment/cancel")
@@ -63,11 +69,14 @@ public class ReservationController {
     }
 
     @GetMapping("/{reservationNo}")
-    public String reservation(@PathVariable Integer reservationNo){
+    public String reservation(@PathVariable Integer reservationNo, Model model){
+        ReservationResponseDTO reservationDetail = reservationService.getReservationDetail(reservationNo);
+        List<String> imageUrls = reservationService.getImageUrls(reservationNo);
+        model.addAttribute("reservation", reservationDetail);
+        model.addAttribute("imageUrls", imageUrls);
+        log.info("RESERVATION = {}", reservationDetail);
+        log.info("URLS = {}", imageUrls);
 
-        reservationService.getReservation(reservationNo);
-
-
-        return "reservation";
+        return "reservation-detail";
     }
 }

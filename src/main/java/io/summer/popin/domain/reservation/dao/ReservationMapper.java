@@ -1,5 +1,6 @@
 package io.summer.popin.domain.reservation.dao;
 
+import io.summer.popin.domain.reservation.dto.ReservationResponseDTO;
 import io.summer.popin.domain.reservation.vo.ReservationVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,5 +10,5 @@ public interface ReservationMapper {
 
     ReservationVO findOneByOrderId(String orderId);
 
-    ReservationVO findOneByNo(long no);
+    ReservationResponseDTO findOneByNo(long no);
 }

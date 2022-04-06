@@ -15,7 +15,6 @@ import java.time.LocalDate;
 public class ReservationRequestDTO {
 
     private Long placeNo;
-    private Long HostNo;
     private Long GuestNo;
     private Integer guestCount;
     private String dates;

@@ -7,7 +7,6 @@
     <select id="findOneByNo" resultType="PlaceDetailResponseDTO">
         select
             p.name,
-            p.host_no,
             m.name as host_name,
             pk.kind as place_kind,
             p.description,

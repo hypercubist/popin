@@ -1,12 +1,17 @@
 package io.summer.popin.domain.reservation.service;
 
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
+import io.summer.popin.domain.reservation.dto.ReservationResponseDTO;
 import io.summer.popin.domain.reservation.vo.ReservationVO;
+
+import java.util.List;
 
 public interface ReservationService {
 
-    public ReservationVO getReservation(int reservationNo);
+    ReservationResponseDTO getReservationDetail(int reservationNo);
 
-    public ReservationVO insertReservation(ReservationRequestDTO reservationRequestDTO);
+    ReservationVO insertReservation(ReservationRequestDTO reservationRequestDTO);
+
+    List<String> getImageUrls(int reservationNo);
 
 }

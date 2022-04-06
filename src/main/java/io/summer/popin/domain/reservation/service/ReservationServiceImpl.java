@@ -3,12 +3,15 @@ package io.summer.popin.domain.reservation.service;
 import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.reservation.dao.ReservationMapper;
+import io.summer.popin.domain.reservation.dto.ReservationResponseDTO;
 import io.summer.popin.domain.reservation.vo.ReservationVO;
+import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -16,9 +19,10 @@ import java.util.UUID;
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationMapper reservationMapper;
+    private final UrlMapper urlMapper;
 
     @Override
-    public ReservationVO getReservation(int reservationNo) {
+    public ReservationResponseDTO getReservationDetail(int reservationNo) {
         return reservationMapper.findOneByNo(reservationNo);
     }
 
@@ -27,7 +31,6 @@ public class ReservationServiceImpl implements ReservationService {
 
         ReservationVO reservationVO = new ReservationVO();
         reservationVO.setGuestNo(reservationRequestDTO.getGuestNo());
-        reservationVO.setHostNo(reservationRequestDTO.getHostNo());
         reservationVO.setPlaceNo(reservationRequestDTO.getPlaceNo());
         reservationVO.setCheckinDate(reservationRequestDTO.getCheckinDate());
         reservationVO.setCheckoutDate(reservationRequestDTO.getCheckoutDate());
@@ -40,6 +43,11 @@ public class ReservationServiceImpl implements ReservationService {
         reservationMapper.insertOne(reservationVO);
 
         return reservationMapper.findOneByOrderId(reservationRequestDTO.getOrderId());
+    }
+
+    @Override
+    public List<String> getImageUrls(int reservationNo) {
+        return urlMapper.findListByReservationNo(reservationNo);
     }
 
 }

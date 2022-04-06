@@ -22,6 +22,6 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Override
     public List<String> getImageUrls(int placeNo) {
-        return urlMapper.findListByNo(placeNo);
+        return urlMapper.findListListByPlaceNo(placeNo);
     }
 }

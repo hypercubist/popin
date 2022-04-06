@@ -7,5 +7,7 @@ import java.util.List;
 @Mapper
 public interface UrlMapper {
 
-    public List<String> findListByNo(int placeNo);
+    List<String> findListListByPlaceNo(int placeNo);
+
+    List<String> findListByReservationNo(int reservationNo);
 }
