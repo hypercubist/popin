@@ -36,6 +36,13 @@ public class PlaceController {
     public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
                                 BindingResult bindingResult){
 
+        //폼데이터검증
+        //좌표값으로 상세주소 가져오기  addressDTO
+        //주소값을 레지스터dto에 넣기
+        //db에 저장
+        //등록한 장소 리스트 페이지로 리다이렉트
+        
+        
         log.info("FORM = {}", registerDTO);
         return "place-register";
     }
