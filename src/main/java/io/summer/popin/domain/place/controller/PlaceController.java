@@ -25,8 +25,7 @@ public class PlaceController {
     @GetMapping("/register")
     public String placeRegisterForm(@ModelAttribute("registerForm") PlaceRegisterDTO registerDTO, Model model){
 
-        List<PlaceKindDTO> placeKinds = placeService.getPlaceKinds();
-        model.addAttribute("placeKinds", placeKinds);
+        model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
 
         return "place-register";
@@ -34,9 +33,16 @@ public class PlaceController {
 
     @PostMapping("/register")
     public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
-                                BindingResult bindingResult){
+                                BindingResult bindingResult,
+                                Model model){
+        model.addAttribute("placeKinds", placeService.getPlaceKinds());
+        model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
+        if (bindingResult.hasErrors()) {
+            log.info("ERRORS-PLACE-REGISTER : {}", bindingResult);
+            return "place-register";
+        }
 
-        //폼데이터검증
+
         //좌표값으로 상세주소 가져오기  addressDTO
         //주소값을 레지스터dto에 넣기
         //db에 저장

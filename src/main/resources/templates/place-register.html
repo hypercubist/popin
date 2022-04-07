@@ -7,28 +7,67 @@
 <body>
     <h1>place-register</h1>
     <form th:action th:object="${registerForm}" method="post">
+
         <label for="placeName">placeName</label>
-        <input type="text" th:field="*{placeName}">
-        <label for="placeKind">placeKind</label>
-        <select th:field="*{placeKind}">
+        <input type="text" th:field="*{placeName}" th:errorclass="field-error">
+        <div class="field-error" th:errors="*{placeName}"></div>
+
+        <label for="placeKindCode">placeKind</label>
+        <select th:field="*{placeKindCode}" th:errorclass="field-error">
+                <option selected value="">호스팅할 장소의 종류를 선택해주세요.</option>
             <th:block  th:each = "kind : ${placeKinds}">
                 <option th:text="${kind.kind}" th:value="${kind.no}"></option>
             </th:block>
         </select>
+        <div class="field-error" th:errors="*{placeKindCode}"></div>
+
         <label for="description">description</label>
-        <textarea th:field="*{description}" cols="30" rows="10"></textarea>
+        <textarea th:field="*{description}" cols="30" rows="10" th:errorclass="field-error"></textarea>
+        <div class="field-error" th:errors="*{description}"></div>
+
         <label for="priceHigh">priceHigh</label>
-        <input type="text" th:field="*{priceHigh}">
+        <input type="text" th:field="*{priceHigh}" th:errorclass="field-error">
+        <div class="field-error" th:errors="*{priceHigh}"></div>
+
         <label for="checkinTimeStart">checkinTimeStart</label>
-        <input type="text" th:field="*{checkinTimeStart}">
+        <select th:field="*{checkinTimeStart}" th:errorclass="field-error">
+            <option selected value="">체크인 시작 시간</option>
+            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                <option th:text="|${num}시|" th:value="${num}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{checkinTimeStart}"></div>
+
         <label for="checkinTimeEnd">checkinTimeEnd</label>
-        <input type="text" th:field="*{checkinTimeEnd}">
+        <select th:field="*{checkinTimeEnd}" th:errorclass="field-error">
+            <option selected value="">체크인 마감 시간</option>
+            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                <option th:text="|${num}시|" th:value="${num}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{checkinTimeEnd}"></div>
+
         <label for="checkoutTimeStart">checkoutTimeStart</label>
-        <input type="text" th:field="*{checkoutTimeStart}">
+        <select th:field="*{checkoutTimeStart}" th:errorclass="field-error">
+            <option selected value="">체크아웃 시작 시간</option>
+            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                <option th:text="|${num}시|" th:value="${num}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{checkoutTimeStart}"></div>
+
         <label for="checkoutTimeEnd">checkoutTimeEnd</label>
-        <input type="text" th:field="*{checkoutTimeEnd}">
+        <select th:field="*{checkoutTimeEnd}" th:errorclass="field-error">
+            <option selected value="">체크아웃 마감 시간</option>
+            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                <option th:text="|${num}시|" th:value="${num}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{checkoutTimeEnd}"></div>
+
         <label for="maxGuest">maxGuest</label>
-        <input type="text" th:field="*{maxGuest}">
+        <input type="text" th:field="*{maxGuest}" th:errorclass="field-error">
+        <div class="field-error" th:errors="*{maxGuest}"></div>
 
         <label for="roomCount">roomCount</label>
         <input type="text" th:field="*{roomCount}">
@@ -78,10 +117,11 @@
         <input type="text" th:field="*{kitchenTools}">
         <input type="hidden" th:field="*{coordX}">
         <input type="hidden" th:field="*{coordY}">
-        <input type="text" id="address-search" placeholder="주소" readonly />
+        <input type="text" th:field="*{addressName}" th:errorclass="field-error" placeholder="주소" readonly />
+        <div class="field-error" th:errors="*{addressName}"></div>
         <input
                 type="button"
-                onclick="sample5_execDaumPostcode()"
+                onclick="addressSearch()"
                 value="주소 검색"
         />
         <input type="submit" value="등록">
@@ -119,13 +159,13 @@
           // 인포윈도우를 지도에 표시한다
           infowindow.open(map, marker);
 
-          function sample5_execDaumPostcode() {
+          function addressSearch() {
             new daum.Postcode({
               oncomplete: function (data) {
                 var addr = data.address; // 최종 주소 변수
 
                 // 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("address-search").value = addr;
+                document.getElementById("addressName").value = addr;
 
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function (results, status) {
