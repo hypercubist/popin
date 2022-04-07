@@ -4,17 +4,128 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body th:object="${place}">
-<h1>place detail</h1>
-<h2 th:text="|*{region1depth}의 *{name}|">region1depth의 place-name</h2>
-<div th:text="*{rating}">평점</div>
-<div th:text="|*{region1depth}, *{region2depth}, *{region3depth}|">광주광역시, 서구, 동천동</div>
-<div th:each="url : {imageUrls}">
-    <div th:text="${url}">imageUrl</div>
+<body>
+<div th:object="${place}">
+    <h1>place detail</h1>
+    <h2 th:text="|*{region1depth}의 *{name}|">region1depth의 place-name</h2>
+    <div th:text="*{rating}">평점</div>
+    <div th:text="|*{region1depth}, *{region2depth}, *{region3depth}|">광주광역시, 서구, 동천동</div>
+    <div th:each="url : ${imageUrls}">
+        <div th:text="${url}">imageUrl</div>
+    </div>
+    <div th:text="|*{hostName}이 호스팅하는 *{placeKind}|">host-name이 호스팅하는 place-kind</div>
+    <div th:text="|최대인원*{maxGuest}명|">최대 인원 1명, 침실 1개, 침대 1개, 욕실 1개</div>
+    <div th:text="*{description}">장소 설명</div>
+    <div>편의시설</div>
 </div>
-<div th:text="|*{hostName}이 호스팅하는 *{placeKind}|">host-name이 호스팅하는 place-kind</div>
-<div th:text="|최대인원*{maxGuest}명|">최대 인원 1명, 침실 1개, 침대 1개, 욕실 1개</div>
-<div th:text="*{description}">장소 설명</div>
-<div>편의시설</div>
+
+
+
+<form th:action th:object="${reservationData}" method="post">
+    <input type="text" th:field="*{guestCount}">
+    <input type="text" th:field="*{dates}" readonly/>
+    <input type="hidden" th:field="*{checkinDate}">
+    <input type="hidden" th:field="*{checkoutDate}">
+    <input type="text" th:field="*{period}" readonly>
+    <input type="text" th:field="*{totalPrice}" readonly>
+    <input type="submit" value="예약하기">
+</form>
+
+<script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+></script>
+<script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+></script>
+<script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+></script>
+<link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+/>
+<script th:inline="javascript">
+  const today = new Date();
+  const oneDay = 1000 * 60 * 60 * 24;
+  const pricePerDay = [[${place.priceHigh}]];
+  const checkinDate = [[${#temporals.format(searchDTO.checkinDate, 'yyyy-MM-dd')}]];
+  const checkoutDate = [[${#temporals.format(searchDTO.checkoutDate, 'yyyy-MM-dd')}]];
+  const invalidDates = [
+    {
+      checkinDate: new Date(2022, 03, 10),
+      checkoutDate: new Date(2022, 03, 15),
+    },
+    {
+      checkinDate: new Date(2022, 04, 1),
+      checkoutDate: new Date(2022, 04, 8),
+    },
+  ];
+  const bookedDateCheck = (date) => {
+    return invalidDates.every(
+      (bookedDate) =>
+        date < bookedDate.checkinDate || date >= bookedDate.checkoutDate
+    );
+  };
+  const setInvalidDate = (date) => {
+    return !invalidDates.every(
+      (bookedDate) =>
+        date._d < bookedDate.checkinDate || date._d >= bookedDate.checkoutDate
+    );
+  };
+  const getPeriod = (startDate, endDate) => {
+    return Math.round((endDate.getTime() - startDate.getTime()) / oneDay)-1;
+  };
+  const handlePick = function(ev, picker){
+    const period = getPeriod(picker.startDate._d, picker.endDate._d);
+
+    for (i = 0; i < period; i++) {
+      const date = new Date(picker.startDate._d.getTime() + oneDay * i);
+      if (!bookedDateCheck(date)) {
+        $("#date").val("");
+        alert(
+          "예약할 수 없는 날짜가 포함되어 있습니다. 일정을 다시 선택해주세요."
+        );
+        return;
+      }
+    }
+    $("#period").val(period);
+    $("#totalPrice").val(period*pricePerDay);
+    $("#checkinDate").val(picker.startDate.format("YYYY-MM-DD"));
+    $("#checkoutDate").val(picker.endDate.format("YYYY-MM-DD"));
+  };
+  $("#dates").daterangepicker({
+    alwaysShowCalendars: true,
+    minDate: today,
+    isInvalidDate: setInvalidDate,
+    startDate: checkinDate,
+    endDate: checkoutDate,
+    locale: {
+      format: "YYYY-MM-DD",
+      separator: " ~ ",
+      applyLabel: "확인",
+      cancelLabel: "취소",
+      daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
+      monthNames: [
+        "1월",
+        "2월",
+        "3월",
+        "4월",
+        "5월",
+        "6월",
+        "7월",
+        "8월",
+        "9월",
+        "10월",
+        "11월",
+        "12월",
+      ],
+    },
+  });
+  $("#dates").on("hide.daterangepicker", handlePick);
+</script>
 </body>
 </html>
