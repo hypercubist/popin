@@ -33,6 +33,7 @@
 
     <insert id="saveMember">
         insert into member (no, id, name, email)
-        values (seq_member.nextval, #{id}, #{name}, #{email, jdbcType=varchar});
+        values (seq_member.nextval, #{id}, #{name}, <if test="email != null">#{email}</if>
+                    <if test="email == null">null</if>)
     </insert>
 </mapper>
