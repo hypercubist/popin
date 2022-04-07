@@ -1,0 +1,12 @@
+package io.summer.popin.domain.message.webSocket;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+
+
+@Slf4j
+@Controller
+public class ChatController {
+
+
+}
