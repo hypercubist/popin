@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <table border="1">
+        <tr>
+            <th>지역이름</th>
+            <th>지역</th>
+        </tr>
+        <tr th:each="dto : ${dto}">
+            <td th:text="${dto.placeName}"></td>
+            <td th:text="${dto.location}"></td>
+        </tr>
+    </table>
+
+</body>
+</html>

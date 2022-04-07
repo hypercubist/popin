@@ -3,20 +3,18 @@ package io.summer.popin.domain.place.dao;
 
 import io.summer.popin.domain.hosting.dto.ReservationCountResponseDTO;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
-import io.summer.popin.domain.place.dto.PlaceSearchRequestDTO;
-import io.summer.popin.domain.place.dto.PlacesResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Mapper
 public interface PlaceMapper {
 
+    ReservationCountResponseDTO getCountByNo(long memberNo);
 
-    public ReservationCountResponseDTO getCountByNo(Long memberNo);
+    PlaceDetailResponseDTO findOneByNo(long placeNo);
 
-    public List<PlacesResponseDTO> placesSearch(PlaceSearchRequestDTO requestDTO);
+    ArrayList<String> findKindMap();
 
-    public PlaceDetailResponseDTO findOneByNo(int placeNo);
 
 }

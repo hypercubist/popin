@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
+자신 프로필 번호는 세션에서 가져온다
+
+<div>모든 메세지 리스트</div>
+<th:block th:each="dto, index : ${dto}">
+    <div th:object="${dto}">
+        보낸 사람 : <button th:text="*{senderNo}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}"></button><br>
+        받는 사람 : <button th:text="*{receiverNo}" class="receiverNo" th:attr="value=*{receiverNo}"></button><br>
+        최근 받은 시간 : <div th:text="*{sendDate}"></div>
+        <hr>
+    </div>
+</th:block>
+<p>내게온 메세지</p>
+<p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+<div id="messageDetail"></div>
+
+<input type="text" name="senderNo" id="sender">
+<input type="text"  name="receiverNo">
+<input type="text" name="content" placeholder="내용입력" id="content">
+<button id="button" type="submit">전송</button>
+
+
+
+<script>
+        var data = {};
+        var ws;
+
+        $('.senderNo').on('click',function(){
+            var senderInput ={
+                'value' : $(this).val(),
+                'readonly' : true
+            };
+            var receiverInput ={
+                'value' : $(this).data('receiverno'),
+                'readonly' : true
+            };
+            $('input[name=senderNo]').attr(senderInput);
+            $('input[name=receiverNo]').attr(receiverInput);
+            $.ajax({
+                url : "/message/detail",
+                type : "get",
+                data : {
+                    senderNo : $(this).val(),
+                    receiverNo : $(this).data("receiverno")
+                }
+            }).done(function(list){
+                console.log(list);
+                $('#messageDetail').empty();
+                for(var i =0; i<list.length;i++){
+                   $('#messageDetail').append("<div>"+"보낸사람 : "+list[i].senderNo+"<br>"+"메세지 내용 : "+list[i].content+"<br>"+"보낸날짜 : "+list[i].sendDate+"</div><hr>")
+                };
+
+
+                ws = new WebSocket("ws://"+"localhost:8100"+"/message");
+                ws.onmessage = function(msg){
+                var data = JSON.parse(msg.data);
+                }
+
+            });
+        });
+
+        $('#button').on('click', function(){
+            $.ajax({
+                url : "/message",
+                type : "post",
+                data : {
+                    senderNo : $('input[name=senderNo]').val(),
+                    receiverNo : $('input[name=receiverNo]').val(),
+                    content : $('input[name=content]').val()
+                }
+            }).done(function(){
+                console.log("추가 완료");
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,10 +1,14 @@
-package io.summer.popin.domain.place.dto;
+package io.summer.popin.domain.search.dto;
 
+import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
-public class PlacesResponseDTO {
-
+@Getter
+@ToString
+public class SearchResponseDTO {
+//리스트 안에 정보
     private String placeName;
     private String location;
     private String placeKind;
