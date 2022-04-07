@@ -3,7 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.global.dao.UrlMapper">
+
     <select id="findListListByPlaceNo" resultType="string">
+
         select
             url
         from
@@ -18,6 +20,15 @@
             url_resource
         where
             kind_code=2 and place_no = (select place_no from reservation where no = #{reservationNo})
+    </select>
+
+    <select id="findOneByMemberNo" resultType="String">
+        select
+            url
+        from
+            url_resource
+        where
+            kind_code=1 and member_no=#{memberNo}
     </select>
 
 </mapper>
