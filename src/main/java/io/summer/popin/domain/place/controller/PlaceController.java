@@ -2,6 +2,7 @@ package io.summer.popin.domain.place.controller;
 
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
+import io.summer.popin.global.dto.AddressDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -41,9 +42,9 @@ public class PlaceController {
             log.info("ERRORS-PLACE-REGISTER : {}", bindingResult);
             return "place-register";
         }
+        AddressDTO address = placeService.getAddress(registerDTO.getCoordX(), registerDTO.getCoordY());
 
-
-        //좌표값으로 상세주소 가져오기  addressDTO
+        //좌표값으로 상세주소 가져오기  addressDTO >>진행중 api로 데이터가져오기 성공 컨트롤러로 가져와야함
         //주소값을 레지스터dto에 넣기
         //db에 저장
         //등록한 장소 리스트 페이지로 리다이렉트
