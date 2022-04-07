@@ -39,5 +39,11 @@ public class MemberServiceImpl implements MemberService{
         return memberMapper.updateProfileByMemberNo(memberVO);
     }
 
+    @Override
+    public int deleteProfile(Long memberNo) {
+
+        return memberMapper.deleteProfile(memberNo);
+    }
+
 
 }

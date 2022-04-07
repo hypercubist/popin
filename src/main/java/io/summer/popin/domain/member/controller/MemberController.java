@@ -19,12 +19,6 @@ public class MemberController {
     private final MemberService memberService;
     private final UrlMapper urlMapper;
 
-//        @GetMapping("/login")
-//        public void login() {
-//
-//
-////            return "";
-//        }
 
         @GetMapping("/members/{memberNo}")
         public String getProfile(@PathVariable("memberNo") Long memberNo, Model model) {
@@ -58,7 +52,12 @@ public class MemberController {
         }
 
 //        @PostMapping("/profile/delete/{memberNo}")
-
+//        public String deleteProfile(@PathVariable("memberNo") Long memberNo) {
+//
+//            memberService.deleteProfile(memberNo);
+//
+//            return "home";
+//        }
 
 
 
