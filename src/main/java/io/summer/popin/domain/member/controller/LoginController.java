@@ -33,7 +33,7 @@ public class LoginController {
     }
 
     //    @ResponseBody
-    @SessionAttribute("userDTO")
+//    @SessionAttribute("userDTO")
     @GetMapping("/kakao/callback")
     public void kakaoCallbackandAccessToken(@RequestParam("code") String code, HttpSession session, Model model) {
 

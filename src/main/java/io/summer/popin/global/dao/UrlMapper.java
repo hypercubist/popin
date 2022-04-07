@@ -12,4 +12,5 @@ public interface UrlMapper {
 
     List<String> findListByReservationNo(int reservationNo);
 
+    String findOneByMemberNo(Long memberNo);
 }

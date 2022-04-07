@@ -11,5 +11,4 @@ public interface MemberService {
 
     int updateProfile(Long memberNo, ProfileUpdateDTO profileUpdateDTO);
 
-    int deleteProfile(Long memberNo);
 }
