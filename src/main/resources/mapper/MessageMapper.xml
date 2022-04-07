@@ -3,20 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.message.dao.MessageMapper">
-    <select id="allMessage"  resultType="MessageVO" parameterType="Integer">
+    <select id="allMessage" resultType="MessageResponseDTO" parameterType="int">
         select
-            no,sender_no,receiver_no,content,send_date,receive_date
+            distinct sender_no, receiver_no, max(send_date) as sendDate
         from
             message
         where
-            sender_no=#{senderNo} or receiver_no=#{senderNo}
-        order by
-            send_date
+            sender_no in(select distinct sender_no from message where sender_no=#{senderNo} or receiver_no=#{senderNo})
+        group by
+            sender_no, receiver_no
     </select>
-    <insert id="sendMessage" parameterType="MessageSendDTO">
+    <insert id="sendMessage" parameterType="MessageRequestDTO">
         insert into
             message(no,sender_no,receiver_no,content,send_date)
         values
             (SEQ_MESSAGE.nextval,#{senderNo},#{receiverNo},#{content},sysdate)
     </insert>
+    <select id="messageDetail" parameterType="MessageRequestDTO" resultType="MessageResponseDTO">
+        select
+            sender_no,receiver_no,content,send_date,receive_date
+        from
+            message
+        where
+            (sender_no=#{senderNo} and receiver_no=#{receiverNo})
+    </select>
 </mapper>
