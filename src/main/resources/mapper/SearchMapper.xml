@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.summer.popin.domain.search.dao.SearchMapper">
+    <select id="placesSearch" resultType="SearchResponseDTO" parameterType="SearchRequestDTO">
+        select
+            p.name as placeName, region_1depth,region_2depth,region_3depth , pk.kind as place_kind, rating, (select count(*) from review where place_no=p.no) as review_count, p.price_high as price,( region_1depth||' '||region_2depth||' '||region_3depth)as location
+        from
+            place p left outer join place_kind pk on p.place_kind_code = pk.no
+        <where>
+            <trim prefix="(" suffix=")">
+                <if test="region1depth != null">
+                    region_1depth = #{region1depth}
+                </if>
+                <if test="region2depth != null">
+                    and region_2depth = #{region2depth}
+                </if>
+                <if test="region3depth != null">
+                    and region_3depth = #{region3depth}
+                </if>
+            </trim>
+        </where>
+    </select>
+
+</mapper>
