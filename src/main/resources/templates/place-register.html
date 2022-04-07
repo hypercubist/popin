@@ -6,12 +6,116 @@
 </head>
 <body>
     <h1>place-register</h1>
-    <form th:action th:object="${registerForm}">
+    <form th:action th:object="${registerForm}" method="post">
+        <label for="placeName">placeName</label>
         <input type="text" th:field="*{placeName}">
-<!--        <select th:field="*{placeKind}">-->
+        <label for="placeKind">placeKind</label>
+        <select th:field="*{placeKind}">
+            <th:block  th:each = "kind : ${placeKinds}">
+                <option th:text="${kind.kind}" th:value="${kind.no}"></option>
+            </th:block>
+        </select>
+        <label for="description">description</label>
+        <textarea th:field="*{description}" cols="30" rows="10"></textarea>
+        <label for="priceHigh">priceHigh</label>
+        <input type="text" th:field="*{priceHigh}">
+        <label for="checkinTimeStart">checkinTimeStart</label>
+        <input type="text" th:field="*{checkinTimeStart}">
+        <label for="checkinTimeEnd">checkinTimeEnd</label>
+        <input type="text" th:field="*{checkinTimeEnd}">
+        <label for="checkoutTimeStart">checkoutTimeStart</label>
+        <input type="text" th:field="*{checkoutTimeStart}">
+        <label for="checkoutTimeEnd">checkoutTimeEnd</label>
+        <input type="text" th:field="*{checkoutTimeEnd}">
+        <label for="maxGuest">maxGuest</label>
+        <input type="text" th:field="*{maxGuest}">
 
-<!--        </select>-->
+        <label for="roomCount">roomCount</label>
+        <input type="text" th:field="*{roomCount}">
+        <label for="bathroomCount">bathroomCount</label>
+        <input type="text" th:field="*{bathroomCount}">
+        <label for="bedSingle">bedSingle</label>
+        <input type="text" th:field="*{bedSingle}">
+        <label for="bedDouble">bedDouble</label>
+        <input type="text" th:field="*{bedDouble}">
+        <label for="bedQueen">bedQueen</label>
+        <input type="text" th:field="*{bedQueen}">
+        <label for="bedKing">bedKing</label>
+        <input type="text" th:field="*{bedKing}">
+        <label for="kitchen">kitchen</label>
+        <input type="text" th:field="*{kitchen}">
+        <label for="parking">parking</label>
+        <input type="text" th:field="*{parking}">
+        <label for="wifi">wifi</label>
+        <input type="text" th:field="*{wifi}">
+        <label for="balcony">balcony</label>
+        <input type="text" th:field="*{balcony}">
+        <label for="pool">pool</label>
+        <input type="text" th:field="*{pool}">
+        <label for="airConditioner">airConditioner</label>
+        <input type="text" th:field="*{airConditioner}">
+        <label for="bathtub">bathtub</label>
+        <input type="text" th:field="*{bathtub}">
+        <label for="crib">crib</label>
+        <input type="text" th:field="*{crib}">
+        <label for="tv">tv</label>
+        <input type="text" th:field="*{tv}">
+        <label for="coffeeMachine">coffeeMachine</label>
+        <input type="text" th:field="*{coffeeMachine}">
+        <label for="pc">pc</label>
+        <input type="text" th:field="*{pc}">
+        <label for="blackBoard">blackBoard</label>
+        <input type="text" th:field="*{blackBoard}">
+        <label for="beamProject">beamProject</label>
+        <input type="text" th:field="*{beamProject}">
+        <label for="balloon">balloon</label>
+        <input type="text" th:field="*{balloon}">
+        <label for="diningTable">diningTable</label>
+        <input type="text" th:field="*{diningTable}">
+        <label for="lamp">lamp</label>
+        <input type="text" th:field="*{lamp}">
+        <label for="kitchenTools">kitchenTools</label>
+        <input type="text" th:field="*{kitchenTools}">
+
+        <input type="submit" value="등록">
+
     </form>
 
+    <div id="map" style="width:800px;height:600px;"></div>
+
+    <script th:inline="javascript" type="text/javascript" th:attr="src=${kakaoMapsSource}"></script>
+    <script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+		    mapOption = {
+		        center: new kakao.maps.LatLng(37.56291, 126.99461), // 지도의 중심좌표
+		        level: 6, // 지도의 확대 레벨
+		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+		    };
+
+
+		// 지도를 생성한다
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+
+		// 지도에 확대 축소 컨트롤을 생성한다
+		var zoomControl = new kakao.maps.ZoomControl();
+
+		// 지도의 우측에 확대 축소 컨트롤을 추가한다
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+		// 지도에 마커를 생성하고 표시한다
+		var marker = new kakao.maps.Marker({
+		    position: new kakao.maps.LatLng(37.56986, 126.98866), // 마커의 좌표
+		    map: map // 마커를 표시할 지도 객체
+		});
+
+		// 마커 위에 표시할 인포윈도우를 생성한다
+		var infowindow = new kakao.maps.InfoWindow({
+		    content : '<div style="padding:5px;">인포윈도우 :D</div>' // 인포윈도우에 표시할 내용
+		});
+
+		// 인포윈도우를 지도에 표시한다
+		infowindow.open(map, marker);
+
+	</script>
 </body>
 </html>

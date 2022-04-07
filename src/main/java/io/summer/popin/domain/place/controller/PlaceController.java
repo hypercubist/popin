@@ -1,9 +1,6 @@
 package io.summer.popin.domain.place.controller;
 
-import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
-import io.summer.popin.domain.place.dto.PlaceRegisterDTO;
-import io.summer.popin.domain.place.dto.ReservationRequestDTO;
-import io.summer.popin.domain.place.dto.TempSearchRequestDTO;
+import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -27,10 +23,11 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @GetMapping("/register")
-    public String placeRegisterForm(@ModelAttribute("registerForm") PlaceRegisterDTO registerDTO){
+    public String placeRegisterForm(@ModelAttribute("registerForm") PlaceRegisterDTO registerDTO, Model model){
 
-        List<String> placeKind = placeService.getPlaceKind();
-        log.info("KIND = {}", placeKind);
+        List<PlaceKindDTO> placeKinds = placeService.getPlaceKinds();
+        model.addAttribute("placeKinds", placeKinds);
+        model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
 
         return "place-register";
     }
@@ -39,6 +36,7 @@ public class PlaceController {
     public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
                                 BindingResult bindingResult){
 
+        log.info("FORM = {}", registerDTO);
         return "place-register";
     }
 
@@ -52,7 +50,6 @@ public class PlaceController {
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
         model.addAttribute("searchDTO", searchDTO);
-        log.info("RESDATA3 = {}", requestDTO);
 
         return "place-detail";
     }

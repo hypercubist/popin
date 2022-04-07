@@ -2,11 +2,12 @@ package io.summer.popin.domain.place.service;
 
 import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
+import io.summer.popin.domain.place.dto.PlaceKindDTO;
 import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -15,6 +16,15 @@ public class PlaceServiceImpl implements PlaceService{
 
     private final PlaceMapper placeMapper;
     private final UrlMapper urlMapper;
+
+    @Value("${kakaomaps.host}")
+    private String kakaomapHost;
+
+    @Value("${kakaomaps.appkey}")
+    private String kakaomapsAppKey;
+
+    @Value("${kakaomaps.library}")
+    private String kakaomapsLibrary;
 
     @Override
     public PlaceDetailResponseDTO getPlaceDetail(int placeNo) {
@@ -27,7 +37,12 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public ArrayList<String> getPlaceKind() {
+    public List<PlaceKindDTO> getPlaceKinds() {
         return placeMapper.findKindMap();
+    }
+
+    @Override
+    public String getKakaoMapsSource() {
+        return kakaomapHost+kakaomapsAppKey+kakaomapsLibrary;
     }
 }

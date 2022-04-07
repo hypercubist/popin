@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.place.dao.PlaceMapper">
 
-    <select id="findKindMap" resultType="string">
-        select kind from place_kind
+    <select id="findKindMap" resultType="PlaceKindDTO">
+        select * from place_kind
     </select>
     <select id="findOneByNo" resultType="PlaceDetailResponseDTO">
         select

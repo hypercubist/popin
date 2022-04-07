@@ -11,7 +11,7 @@ public class PlaceRegisterDTO {
 
     private String placeName;
     private Integer hostNo;
-    private Integer placeKindCode; //code or name?
+    private String placeKind; //code or name?
     private String description;
     private Integer priceHigh;
     private Integer checkinTimeStart;
