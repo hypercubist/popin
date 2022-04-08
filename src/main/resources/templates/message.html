@@ -20,17 +20,18 @@
 </th:block>
 <p>내게온 메세지</p>
 <p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+<label><b>채팅방</b></label>
 <div id="messageDetail"></div>
 
-<input type="text" name="senderNo" id="sender">
-<input type="text"  name="receiverNo">
+<input type="hidden" name="senderNo" id="sender">
+<input type="hidden"  name="receiverNo">
 
 
 
 
 <div class="container">
     <div class="col-6">
-        <label><b>채팅방</b></label>
+
     </div>
     <div>
         <div id="msgArea" class="col"></div>
@@ -61,6 +62,7 @@
             $("#button-send").on("click", (e) => {
                 send();
             });
+            //추후 배포시 url 수정해야함
             const websocket = new WebSocket("ws://"+location.host+"/ws/chat");
             websocket.onmessage = onMessage;
             websocket.onopen = onOpen;
@@ -108,14 +110,14 @@
                 if(sessionId == cur_session){
                     var str = "<div class='col-6'>";
                     str += "<div class='alert alert-secondary'>";
-                    str += "<b>" + sessionId + " : " + message + "</b>";
+                    str += sessionId + " : " + message;
                     str += "</div></div>";
                     $("#msgArea").append(str);
                 }
                 else{
                     var str = "<div class='col-6'>";
                     str += "<div class='alert alert-warning'>";
-                    str += "<b>" + sessionId + " : " + message + "</b>";
+                    str += sessionId + " : " + message;
                     str += "</div></div>";
                     $("#msgArea").append(str);
                 }
@@ -149,7 +151,8 @@
                 console.log(list);
                 $('#messageDetail').empty();
                 for(var i =0; i<list.length;i++){
-                   $('#messageDetail').append("<div>"+"보낸사람 : "+list[i].senderNo+"<br>"+"메세지 내용 : "+list[i].content+"<br>"+"보낸날짜 : "+list[i].sendDate+"</div><hr>")
+                //"<div>"+"보낸사람 : "+list[i].senderNo+"<br>" +list[i].content+"<br>"+"보낸날짜 : "+list[i].sendDate+"</div>
+                   $('#messageDetail').append(list[i].senderNo+"번님 : "+list[i].content+"<br>");
                 };
             });
         });
