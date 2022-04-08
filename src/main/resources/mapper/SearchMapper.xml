@@ -7,7 +7,7 @@
         select
             p.name as placeName, region_1depth,region_2depth,region_3depth , pk.kind as place_kind, rating, (select count(*) from review where place_no=p.no) as review_count, p.price_high as price,( region_1depth||' '||region_2depth||' '||region_3depth)as location
         from
-            place p left outer join place_kind pk on p.place_kind_code = pk.no
+            place p left outer join place_kind pk on p.place_kind_code = pk.no, reservation r
         <where>
             <trim prefix="(" suffix=")">
                 <if test="region1depth != null">
@@ -20,6 +20,10 @@
                     and region_3depth = #{region3depth}
                 </if>
             </trim>
+            <![CDATA[
+            and ((to_char(r.checkout_date,'yyMMdd') <= #{checkinDate}) or ((#{checkinDate} < r.checkin_date) and (#{checkinDate} < r.checkout_date)))
+            and #{checkoutDate} > r.checkout_date
+            ]]>
         </where>
     </select>
 

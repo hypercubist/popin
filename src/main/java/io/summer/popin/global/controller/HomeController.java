@@ -22,8 +22,4 @@ public class HomeController {
         return "redirect:/search";
     }
 
-
-
-
-
 }
