@@ -1,12 +1,12 @@
 package io.summer.popin.domain.place.service;
 
+import io.summer.popin.domain.place.dto.KakaoLocalRoadAddressDTO;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
 import io.summer.popin.domain.place.dto.PlaceKindDTO;
-import io.summer.popin.global.dto.AddressDTO;
+import io.summer.popin.domain.place.dto.PlaceRegisterDTO;
+import io.summer.popin.domain.place.vo.PlaceVO;
 
 import java.util.List;
-import java.util.Map;
-
 
 public interface PlaceService {
 
@@ -18,5 +18,7 @@ public interface PlaceService {
 
     String getKakaoMapsSource();
 
-    AddressDTO getAddress(Double coordX, Double coordY);
+    KakaoLocalRoadAddressDTO getRoadAddress(Double coordX, Double coordY);
+
+    PlaceVO registerPlace(PlaceRegisterDTO registerDTO);
 }

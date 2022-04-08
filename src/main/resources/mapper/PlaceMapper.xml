@@ -61,5 +61,60 @@
     <select id="findListByNo">
 
     </select>
+    <insert id="insertOne">
+        <selectKey keyProperty="no" resultType="long" order="BEFORE">
+            select seq_place.nextval from dual
+        </selectKey>
+        insert into place
+        values(
+            #{no},
+            #{name},
+            #{hostNo},
+            #{placeKindCode},
+            #{description},
+            #{priceLow, jdbcType=INTEGER},
+            #{priceMiddle, jdbcType=INTEGER},
+            #{priceHigh},
+            #{checkinTimeStart},
+            #{checkinTimeEnd},
+            #{checkoutTimeStart},
+            #{checkoutTimeEnd},
+            #{addressName},
+            #{coordX},
+            #{coordY},
+            #{region1depth},
+            #{region2depth},
+            #{region3depth, jdbcType=VARCHAR},
+            #{roadName},
+            #{mainBuildingNo, jdbcType=VARCHAR},
+            #{subBuildingNo, jdbcType=VARCHAR},
+            #{buildingName, jdbcType=VARCHAR},
+            #{roomCount, jdbcType=INTEGER},
+            #{bathroomCount, jdbcType=INTEGER},
+            #{bedSingle, jdbcType=INTEGER},
+            #{bedDouble, jdbcType=INTEGER},
+            #{bedQueen, jdbcType=INTEGER},
+            #{bedKing, jdbcType=INTEGER},
+            #{kitchen, jdbcType=INTEGER},
+            #{parking, jdbcType=INTEGER},
+            #{wifi, jdbcType=INTEGER},
+            #{balcony, jdbcType=INTEGER},
+            #{pool, jdbcType=INTEGER},
+            #{airConditioner, jdbcType=INTEGER},
+            #{bathtub, jdbcType=INTEGER},
+            #{crib, jdbcType=INTEGER},
+            #{tv, jdbcType=INTEGER},
+            #{coffeeMachine, jdbcType=INTEGER},
+            #{pc, jdbcType=INTEGER},
+            #{blackBoard, jdbcType=INTEGER},
+            #{beamProject, jdbcType=INTEGER},
+            #{balloon, jdbcType=INTEGER},
+            #{diningTable, jdbcType=INTEGER},
+            #{lamp, jdbcType=INTEGER},
+            #{kitchenTools, jdbcType=INTEGER},
+            #{rating, jdbcType=DOUBLE},
+            #{maxGuest}
+        )
+    </insert>
 
 </mapper>

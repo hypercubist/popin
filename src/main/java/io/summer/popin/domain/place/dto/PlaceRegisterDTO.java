@@ -15,10 +15,10 @@ public class PlaceRegisterDTO {
 
     @NotBlank
     private String placeName;
-    private Integer hostNo;
+    private Long hostNo;
     @NotNull
     private Integer placeKindCode; //code or name?
-    @Length(min=100, max=2000)
+    @Length(min=20, max=2000)
     private String description;
     @NotNull
     private Integer priceHigh;
@@ -38,8 +38,8 @@ public class PlaceRegisterDTO {
     private String region2Depth;
     private String region3Depth;
     private String roadName;
-    private Integer mainBuildingNo;
-    private Integer subBuildingNo;
+    private String mainBuildingNo;
+    private String subBuildingNo;
     private String buildingName;
     private Integer roomCount;
     private Integer bathroomCount;

@@ -2,7 +2,8 @@ package io.summer.popin.domain.place.controller;
 
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
-import io.summer.popin.global.dto.AddressDTO;
+import io.summer.popin.domain.place.vo.PlaceVO;
+import io.summer.popin.domain.reservation.vo.ReservationVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -42,16 +43,22 @@ public class PlaceController {
             log.info("ERRORS-PLACE-REGISTER : {}", bindingResult);
             return "place-register";
         }
-        AddressDTO address = placeService.getAddress(registerDTO.getCoordX(), registerDTO.getCoordY());
+        KakaoLocalRoadAddressDTO roadAddress = placeService.getRoadAddress(registerDTO.getCoordX(), registerDTO.getCoordY());
 
-        //좌표값으로 상세주소 가져오기  addressDTO >>진행중 api로 데이터가져오기 성공 컨트롤러로 가져와야함
-        //주소값을 레지스터dto에 넣기
-        //db에 저장
+        registerDTO.setRegion1Depth(roadAddress.getRegion_1depth_name());
+        registerDTO.setRegion2Depth(roadAddress.getRegion_2depth_name());
+        registerDTO.setRegion3Depth(roadAddress.getRegion_3depth_name());
+        registerDTO.setRoadName(roadAddress.getRoad_name());
+        registerDTO.setMainBuildingNo(roadAddress.getMain_building_no());
+        registerDTO.setSubBuildingNo(roadAddress.getSub_building_no());
+        registerDTO.setHostNo(4L); //세션에서 받은 정보로 저장
+
+        PlaceVO placeVO = placeService.registerPlace(registerDTO);
         //등록한 장소 리스트 페이지로 리다이렉트
         
         
-        log.info("FORM = {}", registerDTO);
-        return "place-register";
+
+        return "/";
     }
 
     @GetMapping("/{placeNo}")

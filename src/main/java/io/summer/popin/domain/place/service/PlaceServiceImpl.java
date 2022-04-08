@@ -1,12 +1,10 @@
 package io.summer.popin.domain.place.service;
 
 import io.summer.popin.domain.place.dao.PlaceMapper;
-import io.summer.popin.domain.place.dto.KakaoLocalDTO;
-import io.summer.popin.domain.place.dto.KakaoLocalRoadAddressDTO;
-import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
-import io.summer.popin.domain.place.dto.PlaceKindDTO;
+import io.summer.popin.domain.place.dto.*;
+import io.summer.popin.domain.place.vo.PlaceVO;
+import io.summer.popin.domain.reservation.vo.ReservationVO;
 import io.summer.popin.global.dao.UrlMapper;
-import io.summer.popin.global.dto.AddressDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +12,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
@@ -67,7 +66,7 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public AddressDTO getAddress(Double coordX, Double coordY) {
+    public KakaoLocalRoadAddressDTO getRoadAddress(Double coordX, Double coordY) {
 
         String requestUrl = kakaolocalHost + kakaolocalFormat + "?x=" + coordX + "&y=" + coordY;
         log.info("URL={}", requestUrl);
@@ -83,20 +82,68 @@ public class PlaceServiceImpl implements PlaceService{
         KakaoLocalDTO kakaoLocalDTO = restTemplate.postForObject(requestUrl, httpEntity, KakaoLocalDTO.class);
         log.info("LOCAL={}", kakaoLocalDTO);
 
-        AddressDTO addressDTO = new AddressDTO();
-
         if (kakaoLocalDTO.getMeta().getTotal_count() > 0) {
             KakaoLocalRoadAddressDTO roadAddress = kakaoLocalDTO.getDocuments()[0].getRoad_address();
-            addressDTO.setRegion1depth(roadAddress.getRegion_1depth_name());
-            addressDTO.setRegion2depth(roadAddress.getRegion_2depth_name());
-            addressDTO.setRegion3depth(roadAddress.getRegion_3depth_name());
-            addressDTO.setRoadName(roadAddress.getRoad_name());
-            addressDTO.setMainBuildingNo(roadAddress.getMain_building_no());
-            roadAddress.getSub_building_no();
-            roadAddress.getZone_no();
+            //도로명주소가 없을 가능성
+            return roadAddress;
+        }else return null;
 
-        }
+    }
 
-        return addressDTO;
+    @Transactional
+    @Override
+    public PlaceVO registerPlace(PlaceRegisterDTO registerDTO) {
+
+        PlaceVO place = new PlaceVO();
+
+        place.setName(registerDTO.getPlaceName());
+        place.setHostNo(registerDTO.getHostNo());
+        place.setPlaceKindCode(registerDTO.getPlaceKindCode());
+        place.setDescription(registerDTO.getDescription());
+        place.setPriceHigh(registerDTO.getPriceHigh());
+        place.setCheckinTimeStart(registerDTO.getCheckinTimeStart());
+        place.setCheckinTimeEnd(registerDTO.getCheckinTimeEnd());
+        place.setCheckoutTimeStart(registerDTO.getCheckoutTimeStart());
+        place.setCheckoutTimeEnd(registerDTO.getCheckoutTimeEnd());
+        place.setAddressName(registerDTO.getAddressName());
+        place.setCoordX(registerDTO.getCoordX());
+        place.setCoordY(registerDTO.getCoordY());
+        place.setRegion1depth(registerDTO.getRegion1Depth());
+        place.setRegion2depth(registerDTO.getRegion2Depth());
+        place.setRegion3depth(registerDTO.getRegion3Depth());
+        place.setRoadName(registerDTO.getRoadName());
+        place.setMainBuildingNo(registerDTO.getMainBuildingNo());
+        place.setSubBuildingNo(registerDTO.getSubBuildingNo());
+        place.setBuildingName(registerDTO.getBuildingName());
+        place.setRoomCount(registerDTO.getRoomCount());
+        place.setBathroomCount(registerDTO.getBathroomCount());
+        place.setBedSingle(registerDTO.getBedSingle());
+        place.setBedDouble(registerDTO.getBedDouble());
+        place.setBedQueen(registerDTO.getBedQueen());
+        place.setBedKing(registerDTO.getBedKing());
+        place.setKitchen(registerDTO.getKitchen());
+        place.setParking(registerDTO.getParking());
+        place.setWifi(registerDTO.getWifi());
+        place.setBalcony(registerDTO.getBalcony());
+        place.setPool(registerDTO.getPool());
+        place.setAirConditioner(registerDTO.getAirConditioner());
+        place.setBathtub(registerDTO.getBathtub());
+        place.setCrib(registerDTO.getCrib());
+        place.setTv(registerDTO.getTv());
+        place.setCoffeeMachine(registerDTO.getCoffeeMachine());
+        place.setPc(registerDTO.getPc());
+        place.setBlackBoard(registerDTO.getBlackBoard());
+        place.setBeamProject(registerDTO.getBeamProject());
+        place.setBalloon(registerDTO.getBalloon());
+        place.setDiningTable(registerDTO.getDiningTable());
+        place.setLamp(registerDTO.getLamp());
+        place.setKitchenTools(registerDTO.getKitchenTools());
+        place.setMaxGuest(registerDTO.getMaxGuest());
+
+        placeMapper.insertOne(place);
+        log.info("NO ={}", place.getHostNo());
+
+
+        return null;
     }
 }
