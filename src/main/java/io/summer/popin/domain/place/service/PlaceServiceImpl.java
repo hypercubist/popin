@@ -2,6 +2,7 @@ package io.summer.popin.domain.place.service;
 
 import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.KakaoLocalDTO;
+import io.summer.popin.domain.place.dto.KakaoLocalRoadAddressDTO;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
 import io.summer.popin.domain.place.dto.PlaceKindDTO;
 import io.summer.popin.global.dao.UrlMapper;
@@ -82,8 +83,19 @@ public class PlaceServiceImpl implements PlaceService{
         KakaoLocalDTO kakaoLocalDTO = restTemplate.postForObject(requestUrl, httpEntity, KakaoLocalDTO.class);
         log.info("LOCAL={}", kakaoLocalDTO);
 
-
         AddressDTO addressDTO = new AddressDTO();
+
+        if (kakaoLocalDTO.getMeta().getTotal_count() > 0) {
+            KakaoLocalRoadAddressDTO roadAddress = kakaoLocalDTO.getDocuments()[0].getRoad_address();
+            addressDTO.setRegion1depth(roadAddress.getRegion_1depth_name());
+            addressDTO.setRegion2depth(roadAddress.getRegion_2depth_name());
+            addressDTO.setRegion3depth(roadAddress.getRegion_3depth_name());
+            addressDTO.setRoadName(roadAddress.getRoad_name());
+            addressDTO.setMainBuildingNo(roadAddress.getMain_building_no());
+            roadAddress.getSub_building_no();
+            roadAddress.getZone_no();
+
+        }
 
         return addressDTO;
     }
