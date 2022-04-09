@@ -92,7 +92,7 @@ public class PlaceController {
     }
 
     @GetMapping("/{placeNo}/update")
-    public String placeUpdateForm(){
+    public String placeUpdateForm(@PathVariable Long placeNo, Model model){
 
 
         return "place-update";
