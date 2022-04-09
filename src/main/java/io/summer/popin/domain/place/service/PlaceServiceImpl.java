@@ -1,9 +1,9 @@
 package io.summer.popin.domain.place.service;
 
+import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.vo.PlaceVO;
-import io.summer.popin.domain.reservation.vo.ReservationVO;
 import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,14 +45,19 @@ public class PlaceServiceImpl implements PlaceService{
     private String kakaolocalRestapiKey;
 
     @Override
-    public PlaceDetailResponseDTO getPlaceDetail(int placeNo) {
+    public PlaceDetailResponseDTO getPlaceDetail(Long placeNo) {
 
         return placeMapper.findOneByNo(placeNo);
     }
 
     @Override
-    public List<String> getImageUrls(int placeNo) {
-        return urlMapper.findListListByPlaceNo(placeNo);
+    public List<String> getImageUrls(Long placeNo) {
+        return urlMapper.findListByPlaceNo(ResourceKind.PLACE.ordinal(),placeNo);
+    }
+
+    @Override
+    public String getThumbnailUrl(Long placeNo) {
+        return urlMapper.findOneByPlaceNo(ResourceKind.PLACE_THUMBNAIL.ordinal(),placeNo);
     }
 
     @Override
@@ -145,5 +150,15 @@ public class PlaceServiceImpl implements PlaceService{
 
 
         return null;
+    }
+
+    @Override
+    public List<MyPlaceDTO> getMyPlaces(Long hostNo) {
+        return placeMapper.findPlaceListByHostNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), hostNo);
+    }
+
+    @Override
+    public Integer getMyPlacesCount(Long hostNo) {
+        return placeMapper.getPlacesCountByHostNo(hostNo);
     }
 }

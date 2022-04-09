@@ -11,4 +11,6 @@ public interface MemberService {
 
     int updateProfile(Long memberNo, ProfileUpdateDTO profileUpdateDTO);
 
+    String getProfileImageUrl(Long memberNo);
+
 }

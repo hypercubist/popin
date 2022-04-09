@@ -69,7 +69,7 @@ public class ReservationController {
     }
 
     @GetMapping("/{reservationNo}")
-    public String reservation(@PathVariable Integer reservationNo, Model model){
+    public String reservation(@PathVariable Long reservationNo, Model model){
         ReservationResponseDTO reservationDetail = reservationService.getReservationDetail(reservationNo);
         List<String> imageUrls = reservationService.getImageUrls(reservationNo);
         model.addAttribute("reservation", reservationDetail);
@@ -79,4 +79,13 @@ public class ReservationController {
 
         return "reservation-detail";
     }
+
+    @GetMapping("/{reservationNo}/update")
+    public String reservationUpdate(@PathVariable Long reservationNo) {
+
+
+
+        return "reservation-update";
+    }
+
 }

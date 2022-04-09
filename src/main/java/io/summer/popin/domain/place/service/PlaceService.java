@@ -1,18 +1,17 @@
 package io.summer.popin.domain.place.service;
 
-import io.summer.popin.domain.place.dto.KakaoLocalRoadAddressDTO;
-import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
-import io.summer.popin.domain.place.dto.PlaceKindDTO;
-import io.summer.popin.domain.place.dto.PlaceRegisterDTO;
+import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.vo.PlaceVO;
 
 import java.util.List;
 
 public interface PlaceService {
 
-    PlaceDetailResponseDTO getPlaceDetail(int placeNo);
+    PlaceDetailResponseDTO getPlaceDetail(Long placeNo);
 
-    List<String> getImageUrls(int placeNo);
+    List<String> getImageUrls(Long placeNo);
+
+    String getThumbnailUrl(Long placeNo);
 
     List<PlaceKindDTO> getPlaceKinds();
 
@@ -21,4 +20,8 @@ public interface PlaceService {
     KakaoLocalRoadAddressDTO getRoadAddress(Double coordX, Double coordY);
 
     PlaceVO registerPlace(PlaceRegisterDTO registerDTO);
+
+    List<MyPlaceDTO> getMyPlaces(Long hostNo);
+
+    Integer getMyPlacesCount(Long hostNo);
 }

@@ -24,8 +24,41 @@ public class PlaceController {
 
     private final PlaceService placeService;
 
+    @GetMapping
+    public String myPlaces(Model model) {
+
+        Long hostNo = 4L; //세션에서 가져올 값
+
+        model.addAttribute("myPlaces", placeService.getMyPlaces(hostNo));
+        model.addAttribute("myPlacesCount", placeService.getMyPlacesCount(hostNo));
+        return "my-places";
+    }
+
+    @GetMapping("/{placeNo}")
+    public String placeDetail(@PathVariable Long placeNo, @ModelAttribute("reservationData") ReservationRequestDTO requestDTO, Model model) {
+
+        LocalDateTime checkinDate = LocalDateTime.of(2022, 4, 8, 0, 0);
+        LocalDateTime checkoutDate = LocalDateTime.of(2022, 4, 9, 0, 0); //장소 리스트에서 모델로 받아올 정보임
+        TempSearchRequestDTO searchDTO = new TempSearchRequestDTO(checkinDate, checkoutDate);
+
+        model.addAttribute("place", placeService.getPlaceDetail(placeNo));
+        model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
+        model.addAttribute("searchDTO", searchDTO);
+
+        return "place-detail";
+    }
+
+    @PostMapping("/{placeNo}")
+    public String reservationPage(@PathVariable Long placeNo, @ModelAttribute("reservationRequest") ReservationRequestDTO reservationRequestDTO, RedirectAttributes rttr) {
+
+        rttr.addFlashAttribute("place", placeService.getPlaceDetail(placeNo));
+        rttr.addFlashAttribute("imageUrls", placeService.getImageUrls(placeNo));
+        rttr.addFlashAttribute("reservationData", reservationRequestDTO);
+        return "redirect:/reservation/payment";
+    }
+
     @GetMapping("/register")
-    public String placeRegisterForm(@ModelAttribute("registerForm") PlaceRegisterDTO registerDTO, Model model){
+    public String placeRegisterForm(@ModelAttribute("registerForm") PlaceRegisterDTO registerDTO, Model model) {
 
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
@@ -36,7 +69,7 @@ public class PlaceController {
     @PostMapping("/register")
     public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
                                 BindingResult bindingResult,
-                                Model model){
+                                Model model) {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
         if (bindingResult.hasErrors()) {
@@ -55,33 +88,13 @@ public class PlaceController {
 
         PlaceVO placeVO = placeService.registerPlace(registerDTO);
         //등록한 장소 리스트 페이지로 리다이렉트
-        
-        
-
         return "/";
     }
 
-    @GetMapping("/{placeNo}")
-    public String placeDetail(@PathVariable Integer placeNo, @ModelAttribute("reservationData") ReservationRequestDTO requestDTO, Model model){
+    @GetMapping("/{placeNo}/update")
+    public String placeUpdateForm(){
 
-        LocalDateTime checkinDate = LocalDateTime.of(2022, 4, 8,0,0);
-        LocalDateTime checkoutDate = LocalDateTime.of(2022, 4, 9,0,0); //장소 리스트에서 모델로 받아올 정보임
-        TempSearchRequestDTO searchDTO = new TempSearchRequestDTO(checkinDate, checkoutDate);
 
-        model.addAttribute("place", placeService.getPlaceDetail(placeNo));
-        model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
-        model.addAttribute("searchDTO", searchDTO);
-
-        return "place-detail";
+        return "place-update";
     }
-
-    @PostMapping("/{placeNo}")
-    public String reservationPage(@PathVariable Integer placeNo, @ModelAttribute("reservationRequest") ReservationRequestDTO reservationRequestDTO, RedirectAttributes rttr){
-
-        rttr.addFlashAttribute("place", placeService.getPlaceDetail(placeNo));
-        rttr.addFlashAttribute("imageUrls", placeService.getImageUrls(placeNo));
-        rttr.addFlashAttribute("reservationData", reservationRequestDTO);
-        return "redirect:/reservation/payment";
-    }
-
 }

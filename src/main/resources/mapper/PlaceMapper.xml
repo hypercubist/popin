@@ -58,9 +58,21 @@
             left outer join place_kind pk on (p.place_kind_code = pk.no)
         where p.no = #{placeNo}
     </select>
-    <select id="findListByNo">
 
+    <select id="findPlaceListByHostNo" resultType="MyPlaceDTO">
+        select
+            no as place_no,
+            name as place_name,
+            status_code as place_status,
+            region_1depth,
+            region_2depth,
+            (select url from url_resource where kind_code=#{resourceKind} and place_no = p.no) as thumbnail_url
+        from
+            place p
+        where
+            host_no=#{hostNo}
     </select>
+
     <insert id="insertOne">
         <selectKey keyProperty="no" resultType="long" order="BEFORE">
             select seq_place.nextval from dual
@@ -117,4 +129,7 @@
         )
     </insert>
 
+    <select id="getPlacesCountByHostNo" resultType="int">
+        select count(*) from place where host_no=#{hostNo}
+    </select>
 </mapper>

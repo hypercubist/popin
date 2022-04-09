@@ -17,14 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
-    private final UrlMapper urlMapper;
-
 
         @GetMapping("/members/{memberNo}")
         public String getProfile(@PathVariable("memberNo") Long memberNo, Model model) {
 
             ProfileResponseDTO profile = memberService.findProfileByMemberNo(memberNo);
-            String profileImgUrl = urlMapper.findOneByMemberNo(memberNo);
+            String profileImgUrl = memberService.getProfileImageUrl(memberNo);
 
             model.addAttribute("profile", profile);
             model.addAttribute("profileImgUrl", profileImgUrl);
@@ -34,7 +32,7 @@ public class MemberController {
         @GetMapping("/profile/edit/{memberNo}")  //프로필 수정 폼
         public String showEditProfileForm(@PathVariable("memberNo") Long memberNo, Model model) {
 
-            String profileImgUrl = urlMapper.findOneByMemberNo(memberNo);
+            String profileImgUrl = memberService.getProfileImageUrl(memberNo);
             ProfileUpdateDTO profileUpdateDTO = memberService.getEditProfileFormData(memberNo);
 
             model.addAttribute("profileImgUrl", profileImgUrl);
