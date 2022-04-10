@@ -1,11 +1,12 @@
 package io.summer.popin.global.controller;
 
 
+import io.summer.popin.domain.search.dto.SearchDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -13,13 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String home(){
+    public String home(@ModelAttribute SearchDTO serachDTO){
         return "home";
-    }
-
-    @PostMapping("/")
-    public String searchList(){
-        return "redirect:/search";
     }
 
 }

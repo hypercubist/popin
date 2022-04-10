@@ -1,7 +1,7 @@
-package io.summer.popin.domain.hosting.controller;
+package io.summer.popin.domain.reservation.controller.hosting.controller;
 
-import io.summer.popin.domain.hosting.dto.ReservationCountResponseDTO;
-import io.summer.popin.domain.hosting.service.ReservationDataService;
+import io.summer.popin.domain.reservation.controller.hosting.dto.ReservationCountResponseDTO;
+import io.summer.popin.domain.reservation.controller.hosting.service.ReservationDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

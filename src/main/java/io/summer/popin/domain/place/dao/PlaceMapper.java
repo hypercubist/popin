@@ -1,7 +1,7 @@
 package io.summer.popin.domain.place.dao;
 
 
-import io.summer.popin.domain.hosting.dto.ReservationCountResponseDTO;
+import io.summer.popin.domain.reservation.controller.hosting.dto.ReservationCountResponseDTO;
 import io.summer.popin.domain.place.dto.PlaceDetailResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
