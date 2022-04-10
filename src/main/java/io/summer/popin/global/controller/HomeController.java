@@ -19,22 +19,10 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-
-    private final SearchService searchService;
-
-    @GetMapping("/search")
-
+    @GetMapping("/")
     public String home(){
+
         return "home";
     }
-
-
-    @PostMapping("/search")
-    public String searchList(@ModelAttribute SearchRequestDTO dto, Model model){
-        List<SearchResponseDTO> list =searchService.placesSearch(dto);
-        model.addAttribute("dto",list);
-        return "searchTest";
-    }
-
 
 }
