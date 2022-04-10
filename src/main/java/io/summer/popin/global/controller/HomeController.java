@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 public class HomeController {
 
     @GetMapping("/")
-
     public String home(@ModelAttribute SearchDTO serachDTO, @SessionAttribute(name="loginMember", required = false) SessionUserDTO loginMember){
 
         log.info("LOGIN MEMBER = {}", loginMember);
         return "home";
+    }
+
+    @GetMapping("/layout")
+    public String layoutHome(){
+        return "html/sample";
     }
 
 }

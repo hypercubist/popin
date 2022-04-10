@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <body>
-        <header th:fragment="header-search-form">
+        <header th:fragment="header-nav-search">
             <div id="logo"></div>
-            <div>
+            <nav>
                 <form action=""></form>
-            </div>
+            </nav>
             <div>menu</div>
         </header>
 
-        <header th:fragment="header-category">
+        <header th:fragment="header-nav-tab">
             <div id="logo"></div>
-            <div>
+            <nav>
                 <ul>
-                    <li>category1/li>
+                    <li>tab1</li>
                 </ul>
-            </div>
+            </nav>
+            <div>menu</div>
+        </header>
+
+        <header th:fragment="header-nav-none">
+            <div id="logo"></div>
+            <nav></nav>
             <div>menu</div>
         </header>
     </body>
