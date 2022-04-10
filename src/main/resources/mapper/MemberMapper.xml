@@ -26,7 +26,7 @@
     </update>
 
     <select id="findMemberById" resultType="LoginMemberInfoDTO">
-        select id, name as nickname, email, mc.class as role
+        select m.no, id, name as nickname, email, mc.class as role
         from member m left join member_class mc on m.class_code = mc.no
         where id = #{id}
     </select>

@@ -125,7 +125,8 @@
             #{lamp, jdbcType=INTEGER},
             #{kitchenTools, jdbcType=INTEGER},
             #{rating, jdbcType=DOUBLE},
-            #{maxGuest}
+            #{maxGuest},
+            #{statusCode, jdbcType=INTEGER}
         )
     </insert>
 
