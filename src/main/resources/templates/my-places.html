@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>my-place-list</h1>
+<div>
+    <div th:text="|호스팅한 장소 갯수 : ${myPlacesCount}개|"></div>
+    <ul  th:each="place : ${myPlaces}">
+        <li th:object="${place}">
+            <a th:href="@{/places/{param1}(param1=*{placeNo})}">장소 미리보기</a>
+            <a th:href="@{/places/{param1}/update(param1=*{placeNo})}">장소 수정하기</a>
+            <div th:text="*{placeName}"></div>
+            <div th:text="*{placeStatus}"></div>
+            <div th:text="*{region1depth}"></div>
+            <div th:text="*{region2depth}"></div>
+            <div th:text="*{thumbnailUrl}"></div>
+            <hr>
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>

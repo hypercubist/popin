@@ -3,21 +3,34 @@ package io.summer.popin.domain.place.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @ToString
 public class PlaceRegisterDTO {
 
+    @NotBlank
     private String placeName;
-    private Integer hostNo;
+    private Long hostNo;
+    @NotNull
     private Integer placeKindCode; //code or name?
+    @Length(min=20, max=2000)
     private String description;
+    @NotNull
     private Integer priceHigh;
+    @NotNull
     private Integer checkinTimeStart;
+    @NotNull
     private Integer checkinTimeEnd;
+    @NotNull
     private Integer checkoutTimeStart;
+    @NotNull
     private Integer checkoutTimeEnd;
+    @NotBlank
     private String addressName;
     private Double coordX;
     private Double coordY;
@@ -25,8 +38,8 @@ public class PlaceRegisterDTO {
     private String region2Depth;
     private String region3Depth;
     private String roadName;
-    private Integer mainBuildingNo;
-    private Integer subBuildingNo;
+    private String mainBuildingNo;
+    private String subBuildingNo;
     private String buildingName;
     private Integer roomCount;
     private Integer bathroomCount;
@@ -51,5 +64,6 @@ public class PlaceRegisterDTO {
     private Integer diningTable;
     private Integer lamp;
     private Integer kitchenTools;
+    @NotNull
     private Integer maxGuest;
 }

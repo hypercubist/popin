@@ -8,7 +8,7 @@ public class PlaceVO {
     private Long no;
     private String name;
     private Long hostNo;
-    private String placeKind;
+    private Integer placeKindCode;
     private String description;
     private Integer priceLow;
     private Integer priceMiddle;
@@ -18,23 +18,21 @@ public class PlaceVO {
     private Integer checkoutTimeStart;
     private Integer checkoutTimeEnd;
     private String addressName;
-    private Integer coordX;
-    private Integer coordY;
+    private Double coordX;
+    private Double coordY;
     private String region1depth;
     private String region2depth;
     private String region3depth;
     private String roadName;
-    private Integer mainBuildingNo;
-    private Integer subBuildingNo;
+    private String mainBuildingNo;
+    private String subBuildingNo;
     private String buildingName;
     private Integer roomCount;
     private Integer bathroomCount;
-    private Integer singleBed;
-    private Integer superSingleBed;
-    private Integer doubleBed;
-    private Integer queenBed;
-    private Integer kingBed;
-    private Integer largeKingBed;
+    private Integer bedSingle;
+    private Integer bedDouble;
+    private Integer bedQueen;
+    private Integer bedKing;
     private Integer kitchen;
     private Integer parking;
     private Integer wifi;
@@ -52,5 +50,7 @@ public class PlaceVO {
     private Integer diningTable;
     private Integer lamp;
     private Integer kitchenTools;
+    private Double rating;
+    private Integer maxGuest;
 
 }

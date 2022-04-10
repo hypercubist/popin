@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface ReservationService {
 
-    ReservationResponseDTO getReservationDetail(int reservationNo);
+    ReservationResponseDTO getReservationDetail(Long reservationNo);
 
     ReservationVO insertReservation(ReservationRequestDTO reservationRequestDTO);
 
-    List<String> getImageUrls(int reservationNo);
+    List<String> getImageUrls(Long reservationNo);
 
 }

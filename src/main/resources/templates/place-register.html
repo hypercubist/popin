@@ -6,12 +6,192 @@
 </head>
 <body>
     <h1>place-register</h1>
-    <form th:action th:object="${registerForm}">
-        <input type="text" th:field="*{placeName}">
-<!--        <select th:field="*{placeKind}">-->
+    <form th:action th:object="${registerForm}" method="post">
 
-<!--        </select>-->
+        <label for="placeName">placeName</label>
+        <input type="text" th:field="*{placeName}" th:errorclass="field-error">
+        <div class="field-error" th:errors="*{placeName}"></div>
+
+        <label for="placeKindCode">placeKind</label>
+        <select th:field="*{placeKindCode}" th:errorclass="field-error">
+                <option selected value="">호스팅할 장소의 종류를 선택해주세요.</option>
+            <th:block  th:each = "kind : ${placeKinds}">
+                <option th:text="${kind.kind}" th:value="${kind.no}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{placeKindCode}"></div>
+
+        <label for="description">description</label>
+        <textarea th:field="*{description}" cols="30" rows="10" th:errorclass="field-error"></textarea>
+        <div class="field-error" th:errors="*{description}"></div>
+
+        <label for="priceHigh">priceHigh</label>
+        <input type="text" th:field="*{priceHigh}" th:errorclass="field-error">
+        <div class="field-error" th:errors="*{priceHigh}"></div>
+
+        <label for="checkinTimeStart">checkinTimeStart</label>
+        <select th:field="*{checkinTimeStart}" th:errorclass="field-error">
+            <option selected value="">체크인 시작 시간</option>
+            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                <option th:text="|${num}시|" th:value="${num}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{checkinTimeStart}"></div>
+
+        <label for="checkinTimeEnd">checkinTimeEnd</label>
+        <select th:field="*{checkinTimeEnd}" th:errorclass="field-error">
+            <option selected value="">체크인 마감 시간</option>
+            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                <option th:text="|${num}시|" th:value="${num}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{checkinTimeEnd}"></div>
+
+        <label for="checkoutTimeStart">checkoutTimeStart</label>
+        <select th:field="*{checkoutTimeStart}" th:errorclass="field-error">
+            <option selected value="">체크아웃 시작 시간</option>
+            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                <option th:text="|${num}시|" th:value="${num}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{checkoutTimeStart}"></div>
+
+        <label for="checkoutTimeEnd">checkoutTimeEnd</label>
+        <select th:field="*{checkoutTimeEnd}" th:errorclass="field-error">
+            <option selected value="">체크아웃 마감 시간</option>
+            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                <option th:text="|${num}시|" th:value="${num}"></option>
+            </th:block>
+        </select>
+        <div class="field-error" th:errors="*{checkoutTimeEnd}"></div>
+
+        <label for="maxGuest">maxGuest</label>
+        <input type="text" th:field="*{maxGuest}" th:errorclass="field-error">
+        <div class="field-error" th:errors="*{maxGuest}"></div>
+
+        <label for="roomCount">roomCount</label>
+        <input type="text" th:field="*{roomCount}">
+        <label for="bathroomCount">bathroomCount</label>
+        <input type="text" th:field="*{bathroomCount}">
+        <label for="bedSingle">bedSingle</label>
+        <input type="text" th:field="*{bedSingle}">
+        <label for="bedDouble">bedDouble</label>
+        <input type="text" th:field="*{bedDouble}">
+        <label for="bedQueen">bedQueen</label>
+        <input type="text" th:field="*{bedQueen}">
+        <label for="bedKing">bedKing</label>
+        <input type="text" th:field="*{bedKing}">
+        <label for="kitchen">kitchen</label>
+        <input type="text" th:field="*{kitchen}">
+        <label for="parking">parking</label>
+        <input type="text" th:field="*{parking}">
+        <label for="wifi">wifi</label>
+        <input type="text" th:field="*{wifi}">
+        <label for="balcony">balcony</label>
+        <input type="text" th:field="*{balcony}">
+        <label for="pool">pool</label>
+        <input type="text" th:field="*{pool}">
+        <label for="airConditioner">airConditioner</label>
+        <input type="text" th:field="*{airConditioner}">
+        <label for="bathtub">bathtub</label>
+        <input type="text" th:field="*{bathtub}">
+        <label for="crib">crib</label>
+        <input type="text" th:field="*{crib}">
+        <label for="tv">tv</label>
+        <input type="text" th:field="*{tv}">
+        <label for="coffeeMachine">coffeeMachine</label>
+        <input type="text" th:field="*{coffeeMachine}">
+        <label for="pc">pc</label>
+        <input type="text" th:field="*{pc}">
+        <label for="blackBoard">blackBoard</label>
+        <input type="text" th:field="*{blackBoard}">
+        <label for="beamProject">beamProject</label>
+        <input type="text" th:field="*{beamProject}">
+        <label for="balloon">balloon</label>
+        <input type="text" th:field="*{balloon}">
+        <label for="diningTable">diningTable</label>
+        <input type="text" th:field="*{diningTable}">
+        <label for="lamp">lamp</label>
+        <input type="text" th:field="*{lamp}">
+        <label for="kitchenTools">kitchenTools</label>
+        <input type="text" th:field="*{kitchenTools}">
+        <input type="hidden" th:field="*{coordX}">
+        <input type="hidden" th:field="*{coordY}">
+        <input type="text" th:field="*{addressName}" th:errorclass="field-error" placeholder="주소" readonly />
+        <div class="field-error" th:errors="*{addressName}"></div>
+        <input
+                type="button"
+                onclick="addressSearch()"
+                value="주소 검색"
+        />
+        <input type="submit" value="등록">
     </form>
 
+    <div id="map" style="width:600px;height:480px;"></div>
+    <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+    ></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:inline="javascript" type="text/javascript" th:attr="src=${kakaoMapsSource}"></script>
+    <script>
+        var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+            mapOption = {
+              center: new daum.maps.LatLng(35.154556, 126.849474), // 지도의 중심좌표
+              level: 5, // 지도의 확대 레벨
+              mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
+            };
+
+          //지도를 미리 생성
+          var map = new daum.maps.Map(mapContainer, mapOption);
+          //주소-좌표 변환 객체를 생성
+          var geocoder = new daum.maps.services.Geocoder();
+          //마커를 미리 생성
+          var marker = new daum.maps.Marker({
+            position: new daum.maps.LatLng(35.154556, 126.849474),
+            map: map,
+          });
+
+          // 마커 위에 표시할 인포윈도우를 생성한다
+          var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="padding:5px 15px;">TEAM SUMMER</div>', // 인포윈도우에 표시할 내용
+          });
+          // 인포윈도우를 지도에 표시한다
+          infowindow.open(map, marker);
+
+          function addressSearch() {
+            new daum.Postcode({
+              oncomplete: function (data) {
+                var addr = data.address; // 최종 주소 변수
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("addressName").value = addr;
+
+                // 주소로 상세 정보를 검색
+                geocoder.addressSearch(data.address, function (results, status) {
+                  // 정상적으로 검색이 완료됐으면
+                  if (status === daum.maps.services.Status.OK) {
+                    var result = results[0]; //첫번째 결과의 값을 활용
+
+                    // 해당 주소에 대한 좌표를 받아서
+                    var coords = new daum.maps.LatLng(result.y, result.x);
+
+                    $("#coordX").val(coords.La);
+                    $("#coordY").val(coords.Ma);
+
+                    // 지도를 보여준다.
+                    mapContainer.style.display = "block";
+                    map.relayout();
+                    // 지도 중심을 변경한다.
+                    map.setCenter(coords);
+                    // 마커를 결과값으로 받은 위치로 옮긴다.
+                    marker.setPosition(coords);
+                  }
+                });
+              },
+            }).open();
+          }
+
+	</script>
 </body>
 </html>
