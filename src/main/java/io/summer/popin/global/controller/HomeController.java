@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class HomeController {
 
     @GetMapping("/")
+
     public String home(@ModelAttribute SearchDTO serachDTO){
+
         return "home";
     }
 

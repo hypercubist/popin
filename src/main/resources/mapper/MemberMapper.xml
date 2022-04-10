@@ -25,15 +25,22 @@
         where no = #{no}
     </update>
 
-    <insert id="checkId">
-        select count(*) id_cnt
-        from member
+    <select id="findMemberById" resultType="LoginMemberInfoDTO">
+        select id, name as nickname, email, mc.class as role
+        from member m left join member_class mc on m.class_code = mc.no
         where id = #{id}
-    </insert>
+    </select>
 
     <insert id="saveMember">
         insert into member (no, id, name, email)
-        values (seq_member.nextval, #{id}, #{name}, <if test="email != null">#{email}</if>
+        values (seq_member.nextval, #{id}, #{nickname}, <if test="email != null">#{email}</if>
                     <if test="email == null">null</if>)
     </insert>
+
+    <update id="updateMember">
+        update
+            member
+        set name = #{nickname}, email = #{email}
+        where id = #{id}
+    </update>
 </mapper>

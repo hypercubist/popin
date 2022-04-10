@@ -24,10 +24,6 @@
         <input type="submit" value="검색">
     </form>
 
-    <div class="col">
-        <a th:href="@{/login/kakao}">카카오로 로그인하기</a>
-    </div>
-
     <script
             type="text/javascript"
             src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
@@ -41,6 +37,10 @@
             type="text/css"
             href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
     />
+
+    <div>
+        <a th:href="@{/oauth2/authorization/kakao}">카카오로 로그인하기</a>
+    </div>
 
     <script>
     const today = new Date();
