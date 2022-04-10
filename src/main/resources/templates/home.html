@@ -19,9 +19,11 @@
     </form>
 
 
-    <div class="col">
-        <a th:href="@{/login/kakao}">카카오로 로그인하기</a>
+    <div>
+        <a th:href="@{/oauth2/authorization/kakao}">카카오로 로그인하기</a>
     </div>
+
+    <div th:text="${loginMemberInfoDTO}">loginMemberInfoDTO</div>
 
     <script>
     $('#location').on('keyup',function(){
