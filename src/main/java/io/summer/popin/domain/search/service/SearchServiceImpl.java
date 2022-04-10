@@ -17,6 +17,6 @@ public class SearchServiceImpl implements SearchService{
 
     @Override
     public List<SearchResponseDTO> placesSearch(SearchDTO searchDTO) {
-        return null;
+        return searchMapper.placesSearch(searchDTO);
     }
 }

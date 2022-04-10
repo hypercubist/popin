@@ -52,5 +52,6 @@ public class PlaceVO {
     private Integer kitchenTools;
     private Double rating;
     private Integer maxGuest;
+    private Integer statusCode;
 
 }

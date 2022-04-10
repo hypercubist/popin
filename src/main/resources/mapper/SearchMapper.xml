@@ -16,14 +16,20 @@
                 <if test="region2depth != null">
                     and region_2depth = #{region2depth}
                 </if>
-                <if test="region3depth != null">
-                    and region_3depth = #{region3depth}
-                </if>
             </trim>
-            <![CDATA[
-            and ((to_char(r.checkout_date,'yyMMdd') <= #{checkinDate}) or ((#{checkinDate} < r.checkin_date) and (#{checkinDate} < r.checkout_date)))
-            and #{checkoutDate} > r.checkout_date
-            ]]>
+            <trim prefix="and">
+                <if test="checkinDate != null">
+                    <![CDATA[
+                    (checkout_date <= #{checkinDate} and checkout_date < #{checkoutDate})
+                    or (checkin_date > #{checkinDate} and checkin_date >= #{checkoutDate})
+                ]]>
+            </if>
+            </trim>
+            <if test="maxGuest != null">
+                <![CDATA[
+                and max_guest >= #{maxGuest}
+                 ]]>
+            </if>
         </where>
     </select>
 
