@@ -1,4 +1,4 @@
-package io.summer.popin.domain.hosting.dto;
+package io.summer.popin.domain.reservation.controller.hosting.dto;
 
 import lombok.Setter;
 

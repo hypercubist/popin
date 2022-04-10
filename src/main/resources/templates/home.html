@@ -10,38 +10,94 @@
     <select multiple name="kakaomap" id="map" ></select>
     <div>여기부터 검색시작</div>
 
-    <form action="/search" method="post">
-        <input type="text" name="location" placeholder="주소 입력" id="location">
-        <input type="text" name="checkinDate" placeholder="체크인 날짜">
-        <input type="text" name="checkoutDate" placeholder="체크아웃 날짜">
-        <input type="text" name="maxGuest" placeholder="인원">
+    <form action="/search" th:object="${searchDTO}" method="post">
+        <input type="text" th:field="*{addressName}" placeholder="주소 입력">
+        <input type="text" th:field="*{dates}" placeholder="날짜">
+        <input type="hidden" th:field="*{region1depth}">
+        <input type="hidden" th:field="*{region2depth}">
+        <input type="hidden" th:field="*{region3depth}">
+        <input type="hidden" th:field="*{coordX}">
+        <input type="hidden" th:field="*{coordY}">
+        <input type="hidden" th:field="*{checkinDate}" placeholder="체크인 날짜">
+        <input type="hidden" th:field="*{checkoutDate}" placeholder="체크아웃 날짜">
+        <input type="text" th:field="*{maxGuest}" placeholder="인원">
         <input type="submit" value="검색">
     </form>
 
+    <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
 
     <div>
         <a th:href="@{/oauth2/authorization/kakao}">카카오로 로그인하기</a>
     </div>
 
-    <div th:text="${loginMemberInfoDTO}">loginMemberInfoDTO</div>
-
     <script>
-    $('#location').on('keyup',function(){
+    const today = new Date();
+    const handlePick = function(ev, picker){
+
+    $("#checkinDate").val(picker.startDate.format("YYYY-MM-DD"));
+    $("#checkoutDate").val(picker.endDate.format("YYYY-MM-DD"));
+  };
+   $("#dates").daterangepicker({
+    alwaysShowCalendars: true,
+    minDate: today,
+    locale: {
+      format: "YYYY-MM-DD",
+      separator: " ~ ",
+      applyLabel: "확인",
+      cancelLabel: "취소",
+      daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
+      monthNames: [
+        "1월",
+        "2월",
+        "3월",
+        "4월",
+        "5월",
+        "6월",
+        "7월",
+        "8월",
+        "9월",
+        "10월",
+        "11월",
+        "12월",
+      ],
+    },
+  });
+    $("#dates").on("hide.daterangepicker", handlePick);
+
+    $('#addressName').on('keyup',function(){
            $.ajax({
                url:'https://dapi.kakao.com/v2/local/search/address.json',
                type:'GET',
                headers: { 'Authorization': 'KakaoAK 5515f022981cb25e056392bfba8e6b4a' },
-               data : {query : $('#location').val() },
+               data : {query : $('#addressName').val() },
            success:function(data){
                console.log(data);
-               console.log(data.documents[0].address_name);
                $('#map').empty();
                for(var i=0; i< data.documents.length; i++){
                var option = "<option>"+data.documents[i].address_name+"</option>";
                 $('#map').append(option);
+                $('#region1depth').val(data.documents[i].address.region_1depth_name);
+                $('#region2depth').val(data.documents[i].address.region_2depth_name);
+                $('#region3depth').val(data.documents[i].address.region_3depth_name);
+                $('#coordX').val(data.documents[i].address.x);
+                $('#coordY').val(data.documents[i].address.y);
                };
+
                $('select[id=map]').on('change',function(){
-                    $('#location').val($(this).val());
+                    $('#addressName').val($(this).val());
+
                });
            },
            error : function(e){

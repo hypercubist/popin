@@ -1,5 +1,6 @@
 package io.summer.popin.domain.member.controller;
 
+
 import io.summer.popin.domain.member.service.CustomOAuth2MemberserviceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -8,14 +8,18 @@ import lombok.ToString;
 @Getter
 @ToString
 public class SearchResponseDTO {
-//리스트 안에 정보
+
     private String placeName;
+    private String region1depth;
+    private String region2depth;
+    private String region3depth;
     private String location;
     private String placeKind;
     private Double rating;
     private Integer reviewCount;
-    private String thumbnailUrl;
     private Integer price;
     private Integer totalPrice;
+
+    private String thumbnailUrl;
 
 }

@@ -16,19 +16,13 @@ public class MessageController {
 
     private final MessageService messageService;
 
-//    @GetMapping
-//    public String messageView1(){
-//        return "message";
-//    }
-
+    //메세지화면 view
     @GetMapping
     public String messageView(Model model, HttpSession session){
         session.setAttribute("senderNo",1);
         model.addAttribute("dto", messageService.myMessageList((Integer) session.getAttribute("senderNo")));
         return "message";
     }
-
-
 
 
 
