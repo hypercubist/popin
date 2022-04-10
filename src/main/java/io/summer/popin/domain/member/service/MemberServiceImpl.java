@@ -4,6 +4,8 @@ import io.summer.popin.domain.member.dao.MemberMapper;
 import io.summer.popin.domain.member.dto.ProfileUpdateDTO;
 import io.summer.popin.domain.member.dto.ProfileResponseDTO;
 import io.summer.popin.domain.member.vo.MemberVO;
+import io.summer.popin.domain.model.ResourceKind;
+import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberMapper memberMapper;
+    private final UrlMapper urlMapper;
 
     @Override
     public ProfileResponseDTO findProfileByMemberNo(Long memberNo) {
@@ -37,6 +40,11 @@ public class MemberServiceImpl implements MemberService{
         memberVO.setPhoneNumber(profileUpdateDTO.getPhoneNumber());
 
         return memberMapper.updateProfileByMemberNo(memberVO);
+    }
+
+    @Override
+    public String getProfileImageUrl(Long memberNo) {
+        return urlMapper.findOneByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo);
     }
 
 

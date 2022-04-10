@@ -1,5 +1,6 @@
 package io.summer.popin.domain.reservation.service;
 
+import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.reservation.dao.ReservationMapper;
@@ -22,7 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final UrlMapper urlMapper;
 
     @Override
-    public ReservationResponseDTO getReservationDetail(int reservationNo) {
+    public ReservationResponseDTO getReservationDetail(Long reservationNo) {
         return reservationMapper.findOneByNo(reservationNo);
     }
 
@@ -46,8 +47,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<String> getImageUrls(int reservationNo) {
-        return urlMapper.findListByReservationNo(reservationNo);
+    public List<String> getImageUrls(Long reservationNo) {
+        return urlMapper.findListByReservationNo(ResourceKind.PLACE.ordinal(),reservationNo);
     }
 
 }
