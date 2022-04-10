@@ -45,9 +45,7 @@ public class CustomOAuth2MemberserviceImpl implements OAuth2UserService<OAuth2Us
 
         LoginMemberInfoDTO loginMemberInfoDTO = saveOrUpdate(attributes);
 
-        log.info("loginMemberInfoDTO = {}", loginMemberInfoDTO);
-
-        httpSession.setAttribute("loginMemberInfoDTO", new SessionUserDTO(loginMemberInfoDTO));  //4
+        httpSession.setAttribute("loginMember", new SessionUserDTO(loginMemberInfoDTO));  //4
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(loginMemberInfoDTO.getMemberClass())),

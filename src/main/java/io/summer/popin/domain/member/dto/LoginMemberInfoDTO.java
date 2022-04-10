@@ -6,6 +6,7 @@ import lombok.*;
 @Getter
 public class LoginMemberInfoDTO {
 
+    private Long no;
     private Long id;
     private String nickname;
     private String email;
@@ -13,7 +14,8 @@ public class LoginMemberInfoDTO {
 
 
     @Builder
-    public LoginMemberInfoDTO(Long id, String nickname, String email, String memberClass) {
+    public LoginMemberInfoDTO(Long no, Long id, String nickname, String email, String memberClass) {
+        this.no = no;
         this.id = id;
         this.nickname = nickname;
         this.email = email;
