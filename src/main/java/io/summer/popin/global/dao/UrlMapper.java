@@ -8,11 +8,9 @@ import java.util.List;
 @Mapper
 public interface UrlMapper {
 
-    List<String> findListByPlaceNo(@Param("resourceKind") int resourceKind, @Param("placeNo") long placeNo);
+    List<String> findUrlByPlaceNo(@Param("resourceKind") int resourceKind, @Param("placeNo") long placeNo);
 
-    String findOneByPlaceNo(@Param("resourceKind") int resourceKind, @Param("placeNo") long placeNo);
+    List<String> findUrlByReservationNo(@Param("resourceKind") int resourceKind, @Param("reservationNo") long reservationNo);
 
-    List<String> findListByReservationNo(@Param("resourceKind") int resourceKind, @Param("reservationNo") long reservationNo);
-
-    String findOneByMemberNo(@Param("resourceKind") int resourceKind, @Param("memberNo") long memberNo);
+    List<String> findUrlByMemberNo(@Param("resourceKind") int resourceKind, @Param("memberNo") long memberNo);
 }
