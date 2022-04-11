@@ -5,9 +5,9 @@
 <mapper namespace="io.summer.popin.domain.search.dao.SearchMapper">
     <select id="placesSearch" resultType="SearchResponseDTO" parameterType="SearchDTO">
         select
-            p.name as placeName, region_1depth,region_2depth,region_3depth , pk.kind as place_kind, rating, (select count(*) from review where place_no=p.no) as review_count, p.price_high as price,( region_1depth||' '||region_2depth||' '||region_3depth)as location, r.checkin_date,r.checkout_date
+            p.name as placeName, p.region_1depth ,p.region_2depth,p.region_3depth , pk.kind as place_kind, rating, (select count(*) from review where place_no=p.no) as review_count, p.price_high as price,( region_1depth||' '||region_2depth||' '||region_3depth)as location, r.checkin_date as checkinDate,r.checkout_date checkoutDate, p.coord_x as coordX,p.coord_y as coordY
         from
-            place p left outer join place_kind pk on p.place_kind_code = pk.no, reservation r
+            place p left outer join place_kind pk on p.place_kind_code = pk.no left outer join reservation r on (r.place_no=p.no)
         <where>
             <trim prefix="(" suffix=")">
                 <if test="region1depth != null">
