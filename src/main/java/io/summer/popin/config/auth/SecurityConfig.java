@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/places/register").hasRole(MemberClass.HOST.name())
+                .antMatchers("/places/register", "/reservations/host").hasRole(MemberClass.HOST.name())
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutSuccessUrl("/")

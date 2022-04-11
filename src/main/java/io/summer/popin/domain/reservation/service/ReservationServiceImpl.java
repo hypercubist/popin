@@ -1,5 +1,6 @@
 package io.summer.popin.domain.reservation.service;
 
+import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
@@ -8,6 +9,7 @@ import io.summer.popin.domain.reservation.dto.ReservationResponseDTO;
 import io.summer.popin.domain.reservation.vo.ReservationVO;
 import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -48,7 +51,13 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<String> getImageUrls(Long reservationNo) {
-        return urlMapper.findListByReservationNo(ResourceKind.PLACE.ordinal(),reservationNo);
+        return urlMapper.findUrlByReservationNo(ResourceKind.PLACE.ordinal(),reservationNo);
+    }
+
+    @Override
+    public List<ReservationResponseDTO> getReservationsForGuest(SessionUserDTO loginMember) {
+
+        return reservationMapper.findListByGuestNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), loginMember.getNo());
     }
 
 }

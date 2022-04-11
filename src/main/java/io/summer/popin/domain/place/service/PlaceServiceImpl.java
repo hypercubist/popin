@@ -52,12 +52,13 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Override
     public List<String> getImageUrls(Long placeNo) {
-        return urlMapper.findListByPlaceNo(ResourceKind.PLACE.ordinal(),placeNo);
+        return urlMapper.findUrlByPlaceNo(ResourceKind.PLACE.ordinal(),placeNo);
     }
 
     @Override
     public String getThumbnailUrl(Long placeNo) {
-        return urlMapper.findOneByPlaceNo(ResourceKind.PLACE_THUMBNAIL.ordinal(),placeNo);
+
+        return urlMapper.findUrlByPlaceNo(ResourceKind.PLACE_THUMBNAIL.ordinal(),placeNo).get(0);
     }
 
     @Override

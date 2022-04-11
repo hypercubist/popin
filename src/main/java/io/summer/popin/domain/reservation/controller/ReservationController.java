@@ -1,5 +1,6 @@
 package io.summer.popin.domain.reservation.controller;
 
+import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayApproveResponseDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayReadyResponseDTO;
@@ -86,6 +87,16 @@ public class ReservationController {
 
 
         return "reservation-update";
+    }
+
+    @GetMapping("/guest")
+    public String reservations_guest(@SessionAttribute("loginMember")SessionUserDTO loginMember, Model model) {
+
+        List<ReservationResponseDTO> reservationsForGuest = reservationService.getReservationsForGuest(loginMember);
+        model.addAttribute("reservations", reservationsForGuest);
+        log.info("LOGIN = {}", loginMember);
+        log.info("RESERVATIONS = {}", reservationsForGuest);
+        return "reservation-for-guest";
     }
 
 }
