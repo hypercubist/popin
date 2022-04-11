@@ -20,12 +20,12 @@ public class HomeController {
     public String home(@ModelAttribute SearchDTO serachDTO, @SessionAttribute(name="loginMember", required = false) SessionUserDTO loginMember){
 
         log.info("LOGIN MEMBER = {}", loginMember);
-        return "home";
+        return "html/home";
     }
 
     @GetMapping("/layout")
     public String layoutHome(){
-        return "html/sample";
+        return "html/home";
     }
 
 }
