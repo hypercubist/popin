@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <body>
+        <header th:fragment="header-nav-search" class="row">
+                <div id="logo" class="col-sm-2 row align-items-center">
+                    <img src="img/popin-logo.png" alt="popin-logo">
+                </div>
+
+                <form class="col-sm-8 row pd-20" action="/search" th:object="${searchDTO}" method="post">
+                    <div class="row align-items-center">
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>위치</label>
+                                <input type="text" th:field="*{addressName}" placeholder="어디로 여행가세요?" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>체크인 - 체크아웃</label>
+                                <input type="text" th:field="*{dates}" placeholder="날짜 선택" class="form-control datetimepicker-range">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group">
+                                <label>인원</label>
+                                <input type="text" name="demo3_22" id="demo3_22" class="form-control" value="0">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-info h-50">
+                            <i class="icon-copy ion-search"></i>
+                        </button>
+                    </div>
+                    <input type="hidden" th:field="*{maxGuest}">
+                    <input type="hidden" th:field="*{region1depth}">
+                    <input type="hidden" th:field="*{region2depth}">
+                    <input type="hidden" th:field="*{region3depth}">
+                    <input type="hidden" th:field="*{coordX}">
+                    <input type="hidden" th:field="*{coordY}">
+                    <input type="hidden" th:field="*{checkinDate}">
+                    <input type="hidden" th:field="*{checkoutDate}">
+                </form>
+                <div class="col-sm-2">MENU</div>
+        </header>
+
+        <header th:fragment="header-nav-tab">
+            <div id="logo"></div>
+            <nav>
+                <ul>
+                    <li>tab1</li>
+                </ul>
+            </nav>
+            <div>menu</div>
+        </header>
+
+        <header th:fragment="header-nav-none">
+            <div id="logo"></div>
+            <nav></nav>
+            <div>menu</div>
+        </header>
+    </body>
+</html>

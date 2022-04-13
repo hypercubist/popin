@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.summer.popin.domain.reservation.dao.ReservationMapper">
+    <insert id="insertOne">
+        insert into
+            reservation
+        values(
+            seq_reservation.nextval,
+            #{placeNo},
+            (select host_no from place where no = #{placeNo}),
+            #{guestNo},
+            #{guestCount},
+            #{checkinDate},
+            #{checkoutDate},
+            #{period},
+            #{price},
+            #{statusCode},
+            #{orderId}
+        )
+    </insert>
+    <select id="findOneByOrderId" resultType="ReservationVO">
+        select * from reservation where order_id = #{orderId}
+    </select>
+    <select id="findOneByNo" resultType="ReservationResponseDTO">
+        select
+            r.*,
+            p.name as place_name,
+            p.description,
+            p.checkin_time_start,
+            p.checkin_time_end,
+            p.checkout_time_start,
+            p.checkout_time_end,
+            p.address_Name,
+            p.coord_X,
+            p.coord_Y,
+            p.region_1depth,
+            p.region_2depth,
+            p.region_3depth,
+            p.road_Name,
+            p.main_Building_No,
+            p.sub_Building_No,
+            p.building_Name,
+            m.name as host_name
+        from reservation r
+            left outer join place p on (r.place_no = p.no)
+            left outer join member m on (r.host_no = m.no)
+        where r.no = #{no}
+    </select>
+
+</mapper>

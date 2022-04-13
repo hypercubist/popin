@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.summer.popin.domain.statistics.dao.StatisticsMapper">
+    <select id="showStatisticsByHostNo" parameterType="int" resultType="StatisticsDTO">
+        select
+            *
+        from
+            statistics_host
+        where
+            HOST_NO = #{hostNo}
+    </select>
+    <select id="statisticsChart" resultType="StatisticsDTO">
+        <![CDATA[
+          select
+                distinct host_no, reservation_count_today, reservation_count_total, income_today, income_total, to_char(record_date,'yyMMdd') as record_date, to_char(record_date , 'DY') as record_day
+          from
+                statistics_host
+          where
+                host_no=#{hostNo} and sysdate-record_date < 7
+          order by
+                record_date
+        ]]>
+    </select>
+    <select id="statisticsHostList" resultType="String">
+        select
+            distinct host_no
+        from
+            reservation
+    </select>
+    <insert id="statisticsScheduler" parameterType="String">
+        <![CDATA[
+        insert into statistics_host
+            (HOST_NO,RESERVATION_COUNT_TODAY,RESERVATION_COUNT_TOTAL,INCOME_TODAY,INCOME_TOTAL,RECORD_DATE)
+         values
+            (#{hostNo},
+            (select sum(guest_count) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') = to_char(sysdate,'yyMMdd')),
+            (select sum(guest_count) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') <= to_char(sysdate,'yyMMdd')),
+            (select sum(price) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') = to_char(sysdate,'yyMMdd')),
+            (select sum(price) from reservation where host_no=#{hostNo} and to_char(checkout_date,'yyMMdd') <= to_char(sysdate,'yyMMdd')),
+            sysdate)
+        ]]>
+    </insert>
+</mapper>

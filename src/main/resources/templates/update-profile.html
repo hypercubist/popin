@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"  lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProfileUpdate</title>
+</head>
+<body>
+    <h1>프로필 수정</h1>
+
+    <div th:text="${profileImgUrl}"></div>
+    <a th:href="@{|/members/edit-photo/${profileUpdateDTO.no}|}">사진 업데이트하기</a>
+
+    <form th:action th:object="${profileUpdateDTO}" method="post">
+        <div>
+            <label for="name">이름</label>
+            <input type="text" id="name" th:field="*{name}">
+        </div>
+        <div>
+            <label for="email">이메일</label>
+            <input type="text" id="email" th:field="*{email}">
+        </div>
+        <div>
+            <label for="phoneNumber">핸드폰 번호</label>
+            <input type="text" id="phoneNumber" th:field="*{phoneNumber}">
+        </div>
+
+        <input type="submit" value="완료">
+    </form>
+
+</body>
+</html>

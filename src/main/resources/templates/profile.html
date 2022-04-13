@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en"> <head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div th:object="${profile}">
+
+        <h1 th:text="|안녕하세요. 저는 *{name} 입니다!|"></h1>
+
+            <div th:text="${profileImgUrl}"></div>
+
+            <img src="https://a0.muscache.com/defaults/user_pic-225x225.png?v=3">
+
+            <div th:text="|회원 가입: *{joinYear}|"></div>
+            <div th:text="*{email}"></div>
+            <div th:text="*{phoneNumber != null} ? *{phoneNumber} : '?'"></div>   <!--핸드폰번호 입력 안했으면 textbox 비활성화-->
+            <div th:text="*{className}"></div>
+             <div th:if="${profile.className == 'host'}">
+                <a th:href="@{|/hosting/*{no}|}">숙소관리</a>
+             </div>
+<!--          등록한 숙소가 1개라도 있으면(호스트이면) 숙소 관리 페이지로 이동 버튼 -->
+
+            <div th:text="*{emailCertificated == 1} ? '이메일이 인증된 사용자입니다.' : '이메일이 인증되지 않았습니다.'"></div>
+            <div th:text="*{phoneCertificated == 1} ? '휴대폰이 인증된 사용자입니다.' : '휴대폰이 인증되지 않았습니다.'"></div>
+
+            <a th:href="@{|/members/reviews/*{no}|}">내가 작성한 후기</a>
+
+            <a th:href="@{|/profile/edit/*{no}|}">프로필 수정</a>
+
+            <a th:href="@{|/profile/delete/*{no}|}">탈퇴</a>
+    </div>
+
+
+</body>
+</html>
