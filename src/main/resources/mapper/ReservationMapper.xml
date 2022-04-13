@@ -64,4 +64,15 @@
             left outer join member m on (r.host_no = m.no)
         where r.guest_no = #{memberNo}
     </select>
+    <select id="getCountByHostNo" resultType="ReservationForHostInfoDTO">
+        select
+            (select count(*) from reservation where status_code = 1 and host_no = #{no})as hostingNowCount,
+            (select count(*) from reservation where status_code = 0 and host_no = #{no} and checkin_date in(sysdate, sysdate+1))as whillCheckIn,
+            (select count(*) from reservation where status_code = 1 and host_no = #{no} and checkout_date in(sysdate, sysdate+1))as willCheckOut,
+            (select count(*) from reservation where status_code = 3 and host_no = #{no})as cancelled
+        from
+            reservation
+        where
+            host_no = #{no}
+    </select>
 </mapper>

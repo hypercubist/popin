@@ -1,6 +1,7 @@
 package io.summer.popin.domain.place.controller;
 
 import io.summer.popin.domain.member.dto.LoginMemberInfoDTO;
+import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
 import io.summer.popin.domain.place.vo.PlaceVO;
@@ -26,10 +27,9 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @GetMapping
-    public String myPlaces(Model model, @SessionAttribute("loginMemberInfoDTO") LoginMemberInfoDTO loginMember) {
+    public String myPlaces(Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
 
-        log.info("LOGIN-MEMBER = {}", loginMember);
-        Long hostNo = 4L; //세션에서 가져올 값
+        Long hostNo = loginMember.getNo(); //세션에서 가져올 값
 
         model.addAttribute("myPlaces", placeService.getMyPlaces(hostNo));
         model.addAttribute("myPlacesCount", placeService.getMyPlacesCount(hostNo));
@@ -71,13 +71,9 @@ public class PlaceController {
     @PostMapping("/register")
     public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
                                 BindingResult bindingResult,
-                                Model model) {
+                                Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
-        if (bindingResult.hasErrors()) {
-            log.info("ERRORS-PLACE-REGISTER : {}", bindingResult);
-            return "place-register";
-        }
         KakaoLocalRoadAddressDTO roadAddress = placeService.getRoadAddress(registerDTO.getCoordX(), registerDTO.getCoordY());
 
         registerDTO.setRegion1Depth(roadAddress.getRegion_1depth_name());
@@ -86,11 +82,19 @@ public class PlaceController {
         registerDTO.setRoadName(roadAddress.getRoad_name());
         registerDTO.setMainBuildingNo(roadAddress.getMain_building_no());
         registerDTO.setSubBuildingNo(roadAddress.getSub_building_no());
-        registerDTO.setHostNo(4L); //세션에서 받은 정보로 저장
+        registerDTO.setHostNo(loginMember.getNo());
 
-        PlaceVO placeVO = placeService.registerPlace(registerDTO);
-        //등록한 장소 리스트 페이지로 리다이렉트
-        return "/";
+        Long placeNo = placeService.registerPlace(registerDTO);
+
+        if(placeNo == null) {
+            bindingResult.reject("saveFailed", "장소 등록에 실패하였습니다. 다시 시도해주세요.");
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("ERRORS-PLACE-REGISTER : {}", bindingResult);
+            return "place-register";
+        }
+        return "redirect:/places/" + placeNo;
     }
 
     @GetMapping("/{placeNo}/update")

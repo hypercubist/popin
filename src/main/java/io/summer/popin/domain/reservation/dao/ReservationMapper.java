@@ -1,5 +1,6 @@
 package io.summer.popin.domain.reservation.dao;
 
+import io.summer.popin.domain.reservation.dto.ReservationForHostInfoDTO;
 import io.summer.popin.domain.reservation.dto.ReservationResponseDTO;
 import io.summer.popin.domain.reservation.vo.ReservationVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,4 +19,5 @@ public interface ReservationMapper {
 
     List<ReservationResponseDTO> findListByGuestNo(@Param("resourceKind")int resourceKind, @Param("memberNo")long memberNo);
 
+    ReservationForHostInfoDTO getCountByHostNo(Long no);
 }

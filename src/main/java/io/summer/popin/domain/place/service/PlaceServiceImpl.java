@@ -98,7 +98,7 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Transactional
     @Override
-    public PlaceVO registerPlace(PlaceRegisterDTO registerDTO) {
+    public Long registerPlace(PlaceRegisterDTO registerDTO) {
 
         PlaceVO place = new PlaceVO();
 
@@ -146,11 +146,13 @@ public class PlaceServiceImpl implements PlaceService{
         place.setKitchenTools(registerDTO.getKitchenTools());
         place.setMaxGuest(registerDTO.getMaxGuest());
 
-        placeMapper.insertOne(place);
-        log.info("NO ={}", place.getHostNo());
+        if(placeMapper.insertOne(place) == 1) {
+            return place.getNo();
+        } else {
+            return null;
+        }
 
 
-        return null;
     }
 
     @Override

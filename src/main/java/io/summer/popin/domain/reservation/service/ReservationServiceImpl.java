@@ -5,6 +5,7 @@ import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.reservation.dao.ReservationMapper;
+import io.summer.popin.domain.reservation.dto.ReservationForHostInfoDTO;
 import io.summer.popin.domain.reservation.dto.ReservationResponseDTO;
 import io.summer.popin.domain.reservation.vo.ReservationVO;
 import io.summer.popin.global.dao.UrlMapper;
@@ -58,6 +59,12 @@ public class ReservationServiceImpl implements ReservationService {
     public List<ReservationResponseDTO> getReservationsForGuest(SessionUserDTO loginMember) {
 
         return reservationMapper.findListByGuestNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), loginMember.getNo());
+    }
+
+    @Override
+    public ReservationForHostInfoDTO getReservationsForHost(SessionUserDTO loginMember) {
+
+        return reservationMapper.getCountByHostNo(loginMember.getNo());
     }
 
 }
