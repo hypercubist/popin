@@ -9,6 +9,7 @@
             type="text/css"
             href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
     />
+    <link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css">
     <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </head>
 <body>
@@ -86,7 +87,11 @@
            }
         });
     });
+
+    $("#demo3_22").on("change", ()=>{$("#maxGuest").val($("#demo3_22").val())});
 </script>
+<script src="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+<script src="vendors/scripts/advanced-components.js"></script>
 <!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </body>
 </html>

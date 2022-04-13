@@ -2,10 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <body>
         <header th:fragment="header-nav-search" class="row">
-                <div id="logo" class="col-sm-2">LOGO</div>
+                <div id="logo" class="col-sm-2 row align-items-center">
+                    <img src="img/popin-logo.png" alt="popin-logo">
+                </div>
 
                 <form class="col-sm-8 row pd-20" action="/search" th:object="${searchDTO}" method="post">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>위치</label>
@@ -21,16 +23,14 @@
                         <div class="col-md-2 col-sm-12">
                             <div class="form-group">
                                 <label>인원</label>
-                                <input type="text" th:field="*{maxGuest}" placeholder="게스트 추가" class="form-control">
+                                <input type="text" name="demo3_22" id="demo3_22" class="form-control" value="0">
                             </div>
                         </div>
-                        <div class="col-md-1 col-sm-12">
-                            <div class="form-group">
-                                <label></label>
-                                <input type="submit" value="검색" class="form-control">
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-outline-info h-50">
+                            <i class="icon-copy ion-search"></i>
+                        </button>
                     </div>
+                    <input type="hidden" th:field="*{maxGuest}">
                     <input type="hidden" th:field="*{region1depth}">
                     <input type="hidden" th:field="*{region2depth}">
                     <input type="hidden" th:field="*{region3depth}">
