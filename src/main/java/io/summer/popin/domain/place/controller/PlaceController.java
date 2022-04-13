@@ -4,7 +4,6 @@ import io.summer.popin.domain.member.dto.LoginMemberInfoDTO;
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
 import io.summer.popin.domain.place.vo.PlaceVO;
-import io.summer.popin.domain.reservation.vo.ReservationVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
