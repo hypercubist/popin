@@ -48,7 +48,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<String> getImageUrls(Long reservationNo) {
-        return urlMapper.findListByReservationNo(ResourceKind.PLACE.ordinal(),reservationNo);
+        return urlMapper.findUrlByReservationNo(ResourceKind.PLACE.ordinal(),reservationNo);
     }
 
 }

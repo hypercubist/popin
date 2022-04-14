@@ -1,9 +1,9 @@
 package io.summer.popin.domain.place.controller;
 
+import io.summer.popin.domain.member.dto.LoginMemberInfoDTO;
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
 import io.summer.popin.domain.place.vo.PlaceVO;
-import io.summer.popin.domain.reservation.vo.ReservationVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,8 +25,9 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @GetMapping
-    public String myPlaces(Model model) {
+    public String myPlaces(Model model, @SessionAttribute("loginMemberInfoDTO") LoginMemberInfoDTO loginMember) {
 
+        log.info("LOGIN-MEMBER = {}", loginMember);
         Long hostNo = 4L; //세션에서 가져올 값
 
         model.addAttribute("myPlaces", placeService.getMyPlaces(hostNo));

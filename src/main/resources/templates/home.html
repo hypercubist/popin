@@ -6,7 +6,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+
     <select multiple name="kakaomap" id="map" ></select>
+
     <form action="/search" th:object="${searchDTO}" method="post">
         <input type="text" th:field="*{addressName}" placeholder="주소 입력">
         <input type="text" th:field="*{dates}" placeholder="날짜">
