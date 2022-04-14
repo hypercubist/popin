@@ -4,6 +4,7 @@ package io.summer.popin.global.controller;
 import io.summer.popin.domain.member.dto.LoginMemberInfoDTO;
 import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.search.dto.SearchDTO;
+import io.summer.popin.domain.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,5 @@ public class HomeController {
         return "html/home";
     }
 
-    @GetMapping("/layout")
-    public String layoutHome(){
-        return "html/home";
-    }
 
 }

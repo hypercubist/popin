@@ -22,9 +22,9 @@ public class SearchDTO {
     private String dates;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkinDate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkoutDate;
-
     private Integer maxGuest;
 
 

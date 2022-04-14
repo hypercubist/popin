@@ -10,10 +10,14 @@ import lombok.ToString;
 public class SearchResponseDTO {
 
     private String placeName;
+
     private String region1depth;
     private String region2depth;
     private String region3depth;
     private String location;
+    private String coordX;
+    private String coordY;
+
     private String placeKind;
     private Double rating;
     private Integer reviewCount;
