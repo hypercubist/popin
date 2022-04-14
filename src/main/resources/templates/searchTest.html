@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-
+<form action="/search" th:object="${searchDTO}" method="post">
+    <input type="text" th:field="*{addressName}" placeholder="주소 입력">
+    <input type="text" th:field="*{dates}" placeholder="날짜">
+    <input type="hidden" th:field="*{region1depth}">
+    <input type="hidden" th:field="*{region2depth}">
+    <input type="hidden" th:field="*{region3depth}">
+    <input type="hidden" th:field="*{coordX}">
+    <input type="hidden" th:field="*{coordY}">
+    <input type="hidden" th:field="*{checkinDate}" placeholder="체크인 날짜">
+    <input type="hidden" th:field="*{checkoutDate}" placeholder="체크아웃 날짜">
+    <input type="text" th:field="*{maxGuest}" placeholder="인원">
+    <input type="submit" value="검색">
+</form>
     <table border="1">
         <tr>
             <th>지역이름</th>
             <th>지역</th>
         </tr>
-        <tr th:each="list : ${searchList}">
+        <tr th:each="list : ${placesList}">
             <td th:text="${list.placeName}"></td>
             <td th:text="${list.region1depth}"></td>
             <td th:text="${list.region2depth}"></td>
@@ -27,28 +40,43 @@
             <td th:text="${list.thumbnailUrl}"></td>
         </tr>
     </table>
-    <input type="hidden" id="searchListSize">${listSize}</th:block>
-
+    <ul class="pagination">
+        <li th:if="${pageMaker.prev}">
+            <a class="page-link"  th:href="@{/search(pageNum = ${pageMaker.startPage-1})}">이전</a>
+        </li>
+        <!--<li th:each="num, numStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">-->
+        <th:block th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}">
+        <li class="page-item"
+            th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}"
+            th:each="pageButton : ${#numbers.sequence(start, end)}">
+            <a class="page-link" th:href="@{/search?pageNum={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+        </li>
+        </th:block >
+        <!--<a class="page-link" href="search?pageNum='${pageNum}'" th:text="${numStat.index}"></a>-->
+        <li class="page-item" th:if="${pageMaker.next}">
+            <a class="page-link"  th:href="@{/search(pageNum = ${pageMaker.endPage+1})}">다음</a>
+        </li>
+    </ul>
     <div id="map" style="width:100%;height:350px;"></div>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=73c74d0a623a3feb3381fa0523325051"></script>
 
     <script th:inline="javascript">
-    var searchList = [[${searchList}]];
+    var placesList = [[${placesList}]];
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
-        center: new kakao.maps.LatLng(searchList[0].coordY, searchList[0].coordX), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(placesList[0].coordY, placesList[0].coordX), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
 
-console.log(searchList[0].location);
+console.log(placesList[0].location);
 var map1 =[];
-    for(var i=0; i<searchList.length; i++){
-            map1.push({content: '<div>'+searchList[i].location+'</div>',latlng : new kakao.maps.LatLng(searchList[i].coordY,searchList[i].coordX)})
+    for(var i=0; i<placesList.length; i++){
+            map1.push({content: '<div>'+placesList[i].location+'</div>',latlng : new kakao.maps.LatLng(placesList[i].coordY,placesList[i].coordX)})
         };
 
         var positions =

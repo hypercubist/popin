@@ -3,13 +3,58 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.search.dao.SearchMapper">
-    <select id="placesSearch" resultType="SearchResponseDTO" parameterType="SearchDTO">
+    <select id="placesSearch" resultType="SearchResponseDTO">
         select
-            p.name as placeName, p.region_1depth ,p.region_2depth,p.region_3depth , pk.kind as place_kind, rating, (select count(*) from review where place_no=p.no) as review_count, p.price_high as price,( region_1depth||' '||region_2depth||' '||region_3depth)as location, r.checkin_date as checkinDate,r.checkout_date checkoutDate, p.coord_x as coordX,p.coord_y as coordY
+            *
+        from(
+            select
+                rownum rn ,p.name as placeName, p.region_1depth ,p.region_2depth,p.region_3depth ,
+                pk.kind as place_kind, rating, (select count(*) from review where place_no=p.no) as review_count, p.price_high as price,
+                (region_1depth||' '||region_2depth||' '||region_3depth)as location, r.checkin_date,r.checkout_date,
+                coord_x, coord_y,p.max_guest
+            from
+                place p left outer join place_kind pk on p.place_kind_code = pk.no left outer join reservation r on (r.place_no=p.no)
+            <where>
+                <trim prefix="and (" suffix=")">
+                    <if test="searchDTO.region1depth != null">
+                        region_1depth = #{searchDTO.region1depth}
+                    </if>
+                    <if test="searchDTO.region2depth != null">
+                        and region_2depth = #{searchDTO.region2depth}
+                    </if>
+                </trim>
+                <trim prefix="and">
+                    <if test="searchDTO.checkinDate != null">
+                        <![CDATA[
+                        ((checkout_date <= #{searchDTO.checkinDate} and checkout_date < #{searchDTO.checkoutDate})
+                        or (checkin_date > #{searchDTO.checkinDate} and checkin_date >= #{searchDTO.checkoutDate}))
+                    ]]>
+                </if>
+                </trim>
+                <if test="searchDTO.maxGuest != null">
+                    <![CDATA[
+                    and max_guest >= #{searchDTO.maxGuest}
+                     ]]>
+                </if>
+                <![CDATA[
+                and ROWNUM>0 and ROWNUM <= (#{criteria.pageNum} * #{criteria.amount})
+                ]]>
+            </where>
+                order by r.checkin_date
+                )
+        <where>
+                <![CDATA[
+                 (#{criteria.pageNum}-1)*#{criteria.amount} < rn
+                ]]>
+        </where>
+    </select>
+    <select id="placeCount" resultType="int">
+        select
+            count(*)
         from
             place p left outer join place_kind pk on p.place_kind_code = pk.no left outer join reservation r on (r.place_no=p.no)
         <where>
-            <trim prefix="(" suffix=")">
+            <trim prefix="and (" suffix=")">
                 <if test="region1depth != null">
                     region_1depth = #{region1depth}
                 </if>
@@ -20,17 +65,16 @@
             <trim prefix="and">
                 <if test="checkinDate != null">
                     <![CDATA[
-                    (checkout_date <= #{checkinDate} and checkout_date < #{checkoutDate})
-                    or (checkin_date > #{checkinDate} and checkin_date >= #{checkoutDate})
-                ]]>
-            </if>
+                        ((checkout_date <= #{checkinDate} and checkout_date < #{checkoutDate})
+                        or (checkin_date > #{checkinDate} and checkin_date >= #{checkoutDate}))
+                    ]]>
+                </if>
             </trim>
             <if test="maxGuest != null">
                 <![CDATA[
-                and max_guest >= #{maxGuest}
-                 ]]>
+                    and max_guest >= #{maxGuest}
+                     ]]>
             </if>
         </where>
     </select>
-
 </mapper>
