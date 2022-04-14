@@ -1,34 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <body>
-        <header th:fragment="header-nav-search" class="row">
-                <div id="logo" class="col-sm-2 row align-items-center">
+        <header th:fragment="header-nav-search">
+            <nav class="navbar navbar-expand-sm row pd-10">
+                <!-- Logo -->
+                <a class="nav-item col-md-2" href="/">
                     <img src="img/popin-logo.png" alt="popin-logo">
-                </div>
-
-                <form class="col-sm-8 row pd-20" action="/search" th:object="${searchDTO}" method="post">
-                    <div class="row align-items-center">
+                </a>
+                <!--Search Form-->
+                <form class="nav-item col-md-8" action="/search" th:object="${searchDTO}" method="post">
+                    <div class="form-row">
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>위치</label>
-                                <input type="text" th:field="*{addressName}" placeholder="어디로 여행가세요?" class="form-control">
+                                <input type="text" th:field="*{addressName}" class="form-control" placeholder="주소 입력">
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-md-5 col-sm-12">
                             <div class="form-group">
                                 <label>체크인 - 체크아웃</label>
                                 <input type="text" th:field="*{dates}" placeholder="날짜 선택" class="form-control datetimepicker-range">
                             </div>
                         </div>
-                        <div class="col-md-2 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>인원</label>
                                 <input type="text" name="demo3_22" id="demo3_22" class="form-control" value="0">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-outline-info h-50">
-                            <i class="icon-copy ion-search"></i>
-                        </button>
+                        <div class="col-md-1 col-sm-12 d-flex align-items-center">
+                            <button type="submit" class="btn btn-outline-primary" style="width:45px;height:45px;">
+                                <i class="icon-copy ion-search"></i>
+                            </button>
+                        </div>
+
                     </div>
                     <input type="hidden" th:field="*{maxGuest}">
                     <input type="hidden" th:field="*{region1depth}">
@@ -39,7 +44,25 @@
                     <input type="hidden" th:field="*{checkinDate}">
                     <input type="hidden" th:field="*{checkoutDate}">
                 </form>
-                <div class="col-sm-2">MENU</div>
+                <div class="nav-item col-md-2">
+                    <div class="user-info-dropdown">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+						<span class="user-icon">
+							<img src="vendors/images/photo1.jpg" alt="">
+						</span>
+                                <span class="user-name">Ross C. Lopez</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
+                                <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
+                                <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
+                                <a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </header>
 
         <header th:fragment="header-nav-tab">

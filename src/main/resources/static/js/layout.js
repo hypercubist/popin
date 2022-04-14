@@ -1,49 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-<body>
-    이거 헷갈려서 여기에 뺌..
-    <select multiple name="kakaomap" id="map"></select>
-    <div>여기부터 검색시작</div>
-
-    <form action="/search" th:object="${searchDTO}" method="post">
-        <input type="text" th:field="*{addressName}" placeholder="주소 입력">
-        <input type="text" th:field="*{dates}" placeholder="날짜">
-        <input type="hidden" th:field="*{region1depth}">
-        <input type="hidden" th:field="*{region2depth}">
-        <input type="hidden" th:field="*{region3depth}">
-        <input type="hidden" th:field="*{coordX}">
-        <input type="hidden" th:field="*{coordY}">
-        <input type="hidden" th:field="*{checkinDate}" placeholder="체크인 날짜">
-        <input type="hidden" th:field="*{checkoutDate}" placeholder="체크아웃 날짜">
-        <input type="text" th:field="*{maxGuest}" placeholder="인원">
-        <input type="submit" value="검색">
-    </form>
-
-    <script
-            type="text/javascript"
-            src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
-    ></script>
-    <script
-            type="text/javascript"
-            src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
-    ></script>
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
-    />
-
-    <div>
-        <a th:href="@{/oauth2/authorization/kakao}">카카오로 로그인하기</a>
-    </div>
-
-    <script>
-    const today = new Date();
+const today = new Date();
     const handlePick = function(ev, picker){
 
     $("#checkinDate").val(picker.startDate.format("YYYY-MM-DD"));
@@ -105,7 +60,5 @@
            }
         });
     });
-</script>
 
-</body>
-</html>
+    $("#demo3_22").on("change", ()=>{$("#maxGuest").val($("#demo3_22").val())});
