@@ -24,5 +24,10 @@ public class HomeController {
         return "html/home";
     }
 
+    @GetMapping("/html-test")
+    public String test(@ModelAttribute SearchDTO serachDTO){
+        return "html/place-detail";
+    }
+
 
 }
