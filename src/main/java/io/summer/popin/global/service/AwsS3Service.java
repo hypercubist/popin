@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -49,7 +50,7 @@ public class AwsS3Service {
                 amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
                 urlResourceDTO.setUrl(url);
-                urlMapper.saveUrl(urlResourceDTO);
+                update(urlResourceDTO);
             } catch (IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
             }
@@ -59,9 +60,16 @@ public class AwsS3Service {
         return urlList;
     }
 
+    @Transactional
+    public void update(UrlResourceDTO urlResourceDTO) {
+        urlMapper.deleteUrl(urlResourceDTO);
+        urlMapper.insertUrl(urlResourceDTO);
+    }
+
+
     public void deleteImage(String fileName, Long urlNo) {
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
-        urlMapper.deleteUrl(urlNo);
+//        urlMapper.deleteUrl(urlNo);
     }
 
     private String createFileName(String filename) {

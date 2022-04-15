@@ -15,8 +15,8 @@ public interface UrlMapper {
 
     List<String> findUrlByMemberNo(@Param("resourceKind") int resourceKind, @Param("memberNo") long memberNo);
 
-    int saveUrl(UrlResourceDTO urlResourceDTO);
+    int insertUrl(UrlResourceDTO urlResourceDTO);
 
-    int deleteUrl(Long urlNo);
+    int deleteUrl(UrlResourceDTO urlResourceDTO);
 
 }

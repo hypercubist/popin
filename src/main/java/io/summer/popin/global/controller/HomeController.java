@@ -24,7 +24,7 @@ public class HomeController {
         return "html/home";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login-page")
     public String login() {
 
         return "html/login";
