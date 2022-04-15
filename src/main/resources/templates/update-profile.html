@@ -7,10 +7,10 @@
 <body>
     <h1>프로필 수정</h1>
 
-    <div th:text="${profileImgUrl}"></div>
-    <a th:href="@{|/members/edit-photo/${profileUpdateDTO.no}|}">사진 업데이트하기</a>
 
-    <form th:action th:object="${profileUpdateDTO}" method="post">
+    <form th:action th:object="${profileUpdateForm}" method="post" enctype="multipart/form-data">
+        <div th:src="${profileImgUrl}">사진 업데이트하기</div>
+            <input type="file" multiple="multiple" id="imageFiles" name="imageFiles">
         <div>
             <label for="name">이름</label>
             <input type="text" id="name" th:field="*{name}">

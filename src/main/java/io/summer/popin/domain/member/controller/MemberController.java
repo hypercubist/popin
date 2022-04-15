@@ -2,13 +2,19 @@ package io.summer.popin.domain.member.controller;
 
 import io.summer.popin.domain.member.dto.ProfileUpdateDTO;
 import io.summer.popin.domain.member.dto.ProfileResponseDTO;
+import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.member.service.MemberService;
 import io.summer.popin.global.dao.UrlMapper;
+import io.summer.popin.global.dto.UrlResourceDTO;
+import io.summer.popin.global.service.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -17,14 +23,17 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final AwsS3Service awsS3Service;
 
-        @GetMapping("/members/{memberNo}")
-        public String getProfile(@PathVariable("memberNo") Long memberNo, Model model) {
+        @GetMapping("/members")
+        public String getProfile(@SessionAttribute("loginMember") SessionUserDTO loginMember, Model model) {
 
-            ProfileResponseDTO profile = memberService.findProfileByMemberNo(memberNo);
-            String profileImgUrl = memberService.getProfileImageUrl(memberNo);
+            ProfileResponseDTO profile = memberService.findProfileByMemberNo(loginMember.getNo());
+            String profileImgUrl = memberService.getProfileImageUrl(loginMember.getNo());
+            log.info("PROFILE URL= {}", profileImgUrl);
 
             model.addAttribute("profile", profile);
+
             model.addAttribute("profileImgUrl", profileImgUrl);
             return "profile";
         }
@@ -36,17 +45,21 @@ public class MemberController {
             ProfileUpdateDTO profileUpdateDTO = memberService.getEditProfileFormData(memberNo);
 
             model.addAttribute("profileImgUrl", profileImgUrl);
-            model.addAttribute("profileUpdateDTO", profileUpdateDTO);
+            model.addAttribute("profileUpdateForm", profileUpdateDTO);
             return "update-profile";
         }
 
         @PostMapping("/profile/edit/{memberNo}")  //프로필 수정 요청
-        public String updateProfile(@PathVariable("memberNo") Long memberNo, @ModelAttribute ProfileUpdateDTO profileUpdateDTO) {
+        public String updateProfile(@PathVariable("memberNo") Long memberNo, @ModelAttribute("profileUpdateForm") ProfileUpdateDTO profileUpdateDTO
+                                                , List<MultipartFile> imageFiles, UrlResourceDTO urlResourceDTO) {
 
             memberService.updateProfile(memberNo, profileUpdateDTO);
+            urlResourceDTO.setMemberNo(memberNo);
+            urlResourceDTO.setKindCode(1);
+            awsS3Service.uploadImage(imageFiles, urlResourceDTO);
 
             log.info("ProfileEditResponseDTO = {}", profileUpdateDTO);
-            return "redirect:/members/{memberNo}";
+            return "redirect:/members";
         }
 
 //        @PostMapping("/profile/delete/{memberNo}")

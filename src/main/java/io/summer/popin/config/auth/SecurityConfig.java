@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/places/register").hasRole(MemberClass.HOST.name())
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -34,13 +33,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login().userInfoEndpoint().userService(OAuth2Memberservice);
     }
-
-//    @Bean
-//    public CookieSerializer cookieSerializer() {
-//        DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-//        serializer.setUseSecureCookie(true);
-//        serializer.setUseHttpOnlyCookie(true);
-//        serializer.setSameSite("None");
-//        return serializer;
-//    }
 }

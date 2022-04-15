@@ -48,5 +48,31 @@
             left outer join member m on (r.host_no = m.no)
         where r.no = #{no}
     </select>
-
+    <select id="findListByGuestNo" resultType="ReservationResponseDTO">
+        select
+            r.no,
+            r.checkin_date,
+            r.checkout_date,
+            p.name as placeName,
+            p.address_Name,
+            p.region_1depth,
+            p.region_2depth,
+            m.name as hostName,
+            (select url from url_resource where kind_code=#{resourceKind} and place_no = p.no) as thumbnail_url
+        from reservation r
+            left outer join place p on (r.place_no = p.no)
+            left outer join member m on (r.host_no = m.no)
+        where r.guest_no = #{memberNo}
+    </select>
+    <select id="getCountByHostNo" resultType="ReservationForHostInfoDTO">
+        select
+            (select count(*) from reservation where status_code = 1 and host_no = #{no})as hostingNowCount,
+            (select count(*) from reservation where status_code = 0 and host_no = #{no} and checkin_date in(sysdate, sysdate+1))as whillCheckIn,
+            (select count(*) from reservation where status_code = 1 and host_no = #{no} and checkout_date in(sysdate, sysdate+1))as willCheckOut,
+            (select count(*) from reservation where status_code = 3 and host_no = #{no})as cancelled
+        from
+            reservation
+        where
+            host_no = #{no}
+    </select>
 </mapper>

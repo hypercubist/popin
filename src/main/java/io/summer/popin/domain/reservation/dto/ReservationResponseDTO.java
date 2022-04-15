@@ -48,4 +48,7 @@ public class ReservationResponseDTO {
 
     //member
     private String hostName;
+
+    //url
+    private String thumbnailUrl;
 }

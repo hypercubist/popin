@@ -51,6 +51,7 @@
             p.dining_Table,
             p.lamp,
             p.kitchen_Tools,
+            p.max_Guest,
             p.rating,
             (select count(*) from review where place_no = p.no) as reviewCount
         from place p
