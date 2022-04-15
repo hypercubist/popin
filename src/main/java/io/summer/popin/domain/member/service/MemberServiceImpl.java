@@ -44,6 +44,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public String getProfileImageUrl(Long memberNo) {
+        if (urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo).isEmpty()) {
+            return "";
+        }
         return urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo).get(0);
     }
 

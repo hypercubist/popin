@@ -8,9 +8,12 @@
 
         <h1 th:text="|안녕하세요. 저는 *{name} 입니다!|"></h1>
 
-            <div th:text="${profileImgUrl}"></div>
-
-            <img src="https://a0.muscache.com/defaults/user_pic-225x225.png?v=3">
+            <div th:if="${profileImgUrl == null}">
+                <img th:src="https://a0.muscache.com/defaults/user_pic-225x225.png?v=3">
+            </div>
+            <div th:unless="${profileImgUrl == null}">
+                <img th:src="${profileImgUrl}"/>
+            </div>
 
             <div th:text="|회원 가입: *{joinYear}|"></div>
             <div th:text="*{email}"></div>
