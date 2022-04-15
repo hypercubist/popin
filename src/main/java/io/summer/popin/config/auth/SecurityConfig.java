@@ -26,8 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/members").authenticated()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .formLogin()  // 로그인 페이지 커스텀
+                .loginPage("/login")
                 .and()
                 .logout().logoutSuccessUrl("/")
                 .and()

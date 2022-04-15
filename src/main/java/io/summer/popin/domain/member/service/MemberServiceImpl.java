@@ -9,6 +9,8 @@ import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
@@ -44,8 +46,10 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public String getProfileImageUrl(Long memberNo) {
-        if (urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo).isEmpty()) {
-            return "";
+        List<String> urls = urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo);
+        if (urls.isEmpty()) {
+            return "img/profile_default.png";
         }
+        return urls.get(0);
     }
 }

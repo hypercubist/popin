@@ -54,7 +54,7 @@ public class OAuthAttributesDTO {
                 .nickname(nickname)
                 .id(id)
                 .email(email)
-                .memberClass(MemberClass.GUEST.name())
+                .role(MemberClass.GUEST.name())
                 .build();
     }
 

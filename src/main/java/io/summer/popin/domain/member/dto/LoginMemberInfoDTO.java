@@ -10,16 +10,16 @@ public class LoginMemberInfoDTO {
     private Long id;
     private String nickname;
     private String email;
-    private String memberClass;
+    private String role;
 
 
     @Builder
-    public LoginMemberInfoDTO(Long no, Long id, String nickname, String email, String memberClass) {
+    public LoginMemberInfoDTO(Long no, Long id, String nickname, String email, String role) {
         this.no = no;
         this.id = id;
         this.nickname = nickname;
         this.email = email;
-        this.memberClass = memberClass;
+        this.role = role;
     }
 
     public LoginMemberInfoDTO update(String nickname, String email) {

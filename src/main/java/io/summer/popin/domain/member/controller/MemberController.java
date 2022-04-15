@@ -26,14 +26,12 @@ public class MemberController {
     private final AwsS3Service awsS3Service;
 
         @GetMapping("/members")
-        public String getProfile(@SessionAttribute("loginMember") SessionUserDTO loginMember, Model model) {
+        public String getProfile(@SessionAttribute(value = "loginMember", required = false) SessionUserDTO loginMember, Model model) {
 
             ProfileResponseDTO profile = memberService.findProfileByMemberNo(loginMember.getNo());
             String profileImgUrl = memberService.getProfileImageUrl(loginMember.getNo());
-            log.info("PROFILE URL= {}", profileImgUrl);
 
             model.addAttribute("profile", profile);
-
             model.addAttribute("profileImgUrl", profileImgUrl);
             return "profile";
         }

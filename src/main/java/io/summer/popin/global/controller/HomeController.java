@@ -24,6 +24,13 @@ public class HomeController {
         return "html/home";
     }
 
+    @GetMapping("/login")
+    public String login() {
+
+        return "html/login";
+    }
+
+
     @GetMapping("/html-test")
     public String test(@ModelAttribute SearchDTO serachDTO){
         return "html/place-detail";
