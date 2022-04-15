@@ -6,6 +6,8 @@ import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
 import io.summer.popin.domain.place.vo.PlaceVO;
 import io.summer.popin.domain.reservation.vo.ReservationVO;
+import io.summer.popin.global.dto.UrlResourceDTO;
+import io.summer.popin.global.service.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -25,6 +28,7 @@ import java.util.List;
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final AwsS3Service awsS3Service;
 
     @GetMapping
     public String myPlaces(Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
@@ -69,7 +73,7 @@ public class PlaceController {
     }
 
     @PostMapping("/register")
-    public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
+    public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO, List<MultipartFile> imageFiles, UrlResourceDTO urlResourceDTO,
                                 BindingResult bindingResult,
                                 Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
@@ -85,7 +89,9 @@ public class PlaceController {
         registerDTO.setHostNo(loginMember.getNo());
 
         Long placeNo = placeService.registerPlace(registerDTO);
-
+        urlResourceDTO.setPlaceNo(placeNo);
+        urlResourceDTO.setKindCode(2);
+        awsS3Service.uploadImage(imageFiles, urlResourceDTO);
         if(placeNo == null) {
             bindingResult.reject("saveFailed", "장소 등록에 실패하였습니다. 다시 시도해주세요.");
         }

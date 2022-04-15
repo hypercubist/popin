@@ -7,7 +7,7 @@
 <body>
     <h1>place-register</h1>
 
-    <form th:action th:object="${registerForm}" method="post">
+    <form th:action th:object="${registerForm}" method="post" enctype="multipart/form-data">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}"
                th:text="${err}">글로벌 오류 메시지</p>
@@ -129,6 +129,7 @@
                 onclick="addressSearch()"
                 value="주소 검색"
         />
+        <input type="file" multiple="multiple" id="imageFiles" name="imageFiles">
         <input type="submit" value="등록">
     </form>
 

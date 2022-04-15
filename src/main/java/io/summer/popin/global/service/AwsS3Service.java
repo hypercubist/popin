@@ -5,6 +5,9 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import io.summer.popin.domain.model.ResourceKind;
+import io.summer.popin.global.dao.UrlMapper;
+import io.summer.popin.global.dto.UrlResourceDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,37 +25,44 @@ import java.util.UUID;
 @Service
 public class AwsS3Service {
 
+    private final UrlMapper urlMapper;
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Value("${cloud.aws.s3.bucket.url}")
+    private String defaultUrl;
+
     private final AmazonS3 amazonS3;  //아마존 접근
 
-    public List<String> uploadImage(List<MultipartFile> multipartFiles) {
-        List<String> fileNameList = new ArrayList<>();
+    public List<String> uploadImage(List<MultipartFile> multipartFiles, UrlResourceDTO urlResourceDTO) {
+        List<String> urlList = new ArrayList<>();
 
         multipartFiles.forEach(file -> {
             String fileName = createFileName(file.getOriginalFilename());
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(file.getSize());
             objectMetadata.setContentType(file.getContentType());
+            String url = defaultUrl + fileName;
 
             try {
                 InputStream inputStream = file.getInputStream();
                 amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
-                //우리 db에도 저장
+                urlResourceDTO.setUrl(url);
+                urlMapper.saveUrl(urlResourceDTO);
             } catch (IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
             }
-            fileNameList.add(fileName);
+            urlList.add(url);
         });
 
-        return fileNameList;
+        return urlList;
     }
 
-    public void deleteImage(String fileName) {
+    public void deleteImage(String fileName, Long urlNo) {
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
-        //우리 db에서도 삭제
+        urlMapper.deleteUrl(urlNo);
     }
 
     private String createFileName(String filename) {
