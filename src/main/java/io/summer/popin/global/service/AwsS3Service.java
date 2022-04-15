@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.global.dao.UrlMapper;
 import io.summer.popin.global.dto.UrlResourceDTO;
 import lombok.RequiredArgsConstructor;
