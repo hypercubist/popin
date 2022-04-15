@@ -65,6 +65,7 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationForHostInfoDTO getReservationsForHost(SessionUserDTO loginMember) {
 
         return reservationMapper.getCountByHostNo(loginMember.getNo());
+
     }
 
 }

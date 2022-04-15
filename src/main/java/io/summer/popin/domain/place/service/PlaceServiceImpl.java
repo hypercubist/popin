@@ -57,7 +57,6 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Override
     public String getThumbnailUrl(Long placeNo) {
-
         return urlMapper.findUrlByPlaceNo(ResourceKind.PLACE_THUMBNAIL.ordinal(),placeNo).get(0);
     }
 
@@ -157,7 +156,7 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Override
     public List<MyPlaceDTO> getMyPlaces(Long hostNo) {
-        return placeMapper.findPlaceListByHostNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), hostNo);
+        return placeMapper.findPlaceListByHostNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), hostNo); //집 정보와 썸네일 한번에 가져오기
     }
 
     @Override

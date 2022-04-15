@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <title>PLACE-DETAIL</title>
+    <!--현재 페이지 제목을 위 라인에 입력-->
+    <link rel="stylesheet" type="text/css" href="src/plugins/slick/slick.css" />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css"
+    />
+    <link rel="stylesheet" href="css/place-detail.css">
+    <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+    <!--현재 페이지 본문 내용을 section내부에 작성-->
+    <div class="pd-ltr-20 xs-pd-10-20">
+        <div class="min-height-200px">
+            <div class="product-wrap">
+                <div class="title-info pb-20">
+                    <h1 class="pb-10">
+                        2인실룸 인피니티리조트 스쿠버다이빙 서핑 스노쿨링 바로앞 해변
+                    </h1>
+                    <!-- 제목 -->
+                    <div>
+                        <div>
+                            <i class="icon-copy ion-android-star"></i>
+                            <span>4.98</span>
+                            <!-- 평점 -->
+                            <span>·</span>
+                            <span>후기 983개</span>
+                            <!-- 후기 갯수 -->
+                            <span>·</span>
+                            <span>조천읍, 제주</span>
+                            <!-- 주소 1, 2 depth -->
+                        </div>
+                    </div>
+                </div>
+                <div class="product-detail-wrap mb-30">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                            <div class="product-slider slider-arrow">
+                                <div class="product-slide">
+                                    <img src="vendors/images/product-img1.jpg" alt="" />
+                                </div>
+                                <div class="product-slide">
+                                    <img src="vendors/images/product-img2.jpg" alt="" />
+                                </div>
+                                <div class="product-slide">
+                                    <img src="vendors/images/product-img3.jpg" alt="" />
+                                </div>
+                                <div class="product-slide">
+                                    <img src="vendors/images/product-img4.jpg" alt="" />
+                                </div>
+                            </div>
+                            <div class="product-slider-nav">
+                                <div class="product-slide-nav">
+                                    <img src="vendors/images/product-img1.jpg" alt="" />
+                                </div>
+                                <div class="product-slide-nav">
+                                    <img src="vendors/images/product-img2.jpg" alt="" />
+                                </div>
+                                <div class="product-slide-nav">
+                                    <img src="vendors/images/product-img3.jpg" alt="" />
+                                </div>
+                                <div class="product-slide-nav">
+                                    <img src="vendors/images/product-img4.jpg" alt="" />
+                                </div>
+                            </div>
+                            <div class="product-detail-desc pd-30 mt-30 card-box">
+                                <div class="pt-20 pb-10">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <img
+                                                            class="rounded"
+                                                            src="vendors/images/photo4.jpg"
+                                                            alt=""
+                                                            style="width: 60px"
+                                                    />
+                                                </div>
+
+                                                <div class="pl-20">
+                                                    <div style="font-size: 1.5rem; font-weight: 600">
+                                                        호스트: GOODHOST님
+                                                    </div>
+                                                    <span>회원가입일: 2020년 1월</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="pt-20">
+                                                <p>
+                                                    서로의 마음을 어둠 밖으로 한 뼘 한 뼘씩 옮기며
+                                                    빛나는 별들처럼 우린 그때 같이 있었다.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div>
+                                                <div class="d-flex justify-content-around pb-20">
+                                                    <i class="icon-copy ion-android-star"
+                                                    >후기 2911개</i
+                                                    >
+                                                    <i class="icon-copy ion-person">본인 인증 완료</i>
+                                                </div>
+                                                <div>
+                                                    <button
+                                                            class="btn btn-primary btn-block"
+                                                            style="height: 45px"
+                                                    >
+                                                        <span>호스트에게 연락하기</span>
+                                                    </button>
+                                                </div>
+                                                <div class="pt-20">
+                                                    안전한 결제를 위해 에어비앤비 웹사이트나 앱 외부에서
+                                                    송금하거나 대화를 나누지 마세요.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div>
+                                    <div class="row pt-20 pb-20">
+                                        <div
+                                                class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                        >
+                                            <i
+                                                    class="icon-copy ion-flame"
+                                                    style="font-size: 2rem"
+                                            ></i>
+                                        </div>
+                                        <div class="col-md-11 col-sm-11">
+                                            <div style="font-size: 1.1rem; font-weight: 600">
+                                                GOODHOST님은 슈퍼호스트입니다
+                                            </div>
+                                            <div>
+                                                슈퍼호스트는 풍부한 경험과 높은 평점을 자랑하며
+                                                게스트가 숙소에서 편안히 머무를 수 있도록 최선을
+                                                다하는 호스트입니다.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-20">
+                                        <div
+                                                class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                        >
+                                            <i
+                                                    class="icon-copy ion-checkmark-round"
+                                                    style="font-size: 2rem"
+                                            ></i>
+                                        </div>
+                                        <div class="col-md-11 col-sm-11">
+                                            <div style="font-size: 1.1rem; font-weight: 600">
+                                                수영장
+                                            </div>
+                                            <div>게스트가 자주 찾는 편의시설</div>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-10">
+                                        <div
+                                                class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                        >
+                                            <i
+                                                    class="icon-copy ion-android-calendar"
+                                                    style="font-size: 2rem"
+                                            ></i>
+                                        </div>
+                                        <div
+                                                class="col-md-11 col-sm-11 d-flex align-items-center"
+                                        >
+                                            <div style="font-size: 1.1rem; font-weight: 600">
+                                                5월 6일 전까지 무료 취소 가능
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="pt-10 pb-10">
+                                    <p>
+                                        AHHA는 객실이 4개로 구성되어있는 펜션입니다. 1층 (01,02호)
+                                        은 약17평형 스튜디오 타입이고, 2층(03,04호)은 약 18평형+
+                                        복층타입 객실입니다. 기준인원 이상 예약은 불가합니다. 꼭
+                                        지켜주세요. 수영장은 공용 공간으로 6~9월까지 운영하며
+                                        오전9:00~오후8:00까지 사용할 수 있습니다. (혹시모를 사고를
+                                        대비해 외부에 cctv를 설치하였습니다. ) 조식은 제공해드리지
+                                        않습니다. (컵라면2개 제공)
+                                    </p>
+                                    <p>
+                                        객실에 드립백커피와 티,생수를 비치해두었고
+                                        전기포트,토스터,전자렌지,전기쿡탑을 준비해두었습니다. 시골
+                                        특성상 벌레가 유입될 수 있다는점 참고하셔서 예약
+                                        부탁드립니다. (이로 인한 환불은 불가합니다) 2박숙박시엔
+                                        청소,수건 이불 교체가 제공되지 않습니다.
+                                        화장실,샤워실,세면대공간이 분리되어있습니다.
+                                        샴푸,컨디셔너,샤워젤,비누 어메니티와 드라이어가
+                                        준비되어있고 치약,칫솔은 제공하지 않습니다.
+                                    </p>
+                                </div>
+                                <hr />
+                                <div class="pt-10">
+                                    <div style="font-size: 1.5rem; font-weight: 600">
+                                        숙소 편의시설
+                                    </div>
+                                    <div>
+                                        <div class="row pt-10 pb-10">
+                                            <div
+                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                            >
+                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            </div>
+                                            <div
+                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
+                                            >
+                                                <div>해변과 인접 - 해변</div>
+                                            </div>
+                                        </div>
+                                        <div class="row pb-10">
+                                            <div
+                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                            >
+                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            </div>
+                                            <div
+                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
+                                            >
+                                                <div>주방</div>
+                                            </div>
+                                        </div>
+                                        <div class="row pb-10">
+                                            <div
+                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                            >
+                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            </div>
+                                            <div
+                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
+                                            >
+                                                <div>무선 인터넷</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 설명 -->
+                            </div>
+                            <div class="product-detail-desc pd-30 mt-30 mb-30 card-box">
+                                <div
+                                        class="pt-20"
+                                        style="font-size: 1.5rem; font-weight: 600"
+                                >
+                                    <i class="icon-copy ion-android-star"></i>
+                                    <span>4.98</span>
+                                    <!-- 평점 -->
+                                    <span>·</span>
+                                    <span>후기 983개</span>
+                                    <!-- 후기 갯수 링크로 후기위치이동 -->
+                                </div>
+
+                                <div class="pt-20">
+                                    <div class="mb-20">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img
+                                                        class="rounded"
+                                                        src="vendors/images/photo3.jpg"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                />
+                                            </div>
+                                            <div class="pl-10 d-flex-r justify-content-center">
+                                                <div>성윤</div>
+                                                <div>2022년 3월</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">
+                                            진짜 만족한 숙소에요… 또 가고싶어요!❤️
+                                        </div>
+                                    </div>
+                                    <div class="mb-20">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img
+                                                        class="rounded"
+                                                        src="vendors/images/photo2.jpg"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                />
+                                            </div>
+                                            <div class="pl-10 d-flex-r justify-content-center">
+                                                <div>건우</div>
+                                                <div>2022년 3월</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">하루 행복하게 보내고 갑니다!!</div>
+                                    </div>
+                                    <div class="mb-20">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img
+                                                        class="rounded"
+                                                        src="vendors/images/photo5.jpg"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                />
+                                            </div>
+                                            <div class="pl-10 d-flex-r justify-content-center">
+                                                <div>현경</div>
+                                                <div>2022년 3월</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">
+                                            조용했다...바쁜 도시의 삶 속 찾은 여유.
+                                        </div>
+                                    </div>
+                                    <div class="mb-20">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img
+                                                        class="rounded"
+                                                        src="vendors/images/photo1.jpg"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                />
+                                            </div>
+                                            <div class="pl-10 d-flex-r justify-content-center">
+                                                <div>수빈</div>
+                                                <div>2022년 2월</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">
+                                            숙소도 크고,쾌적합니다:) 여름에 또 오고싶어요!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product-detail-desc pd-30 mt-30 mb-30 card-box">
+                                <div
+                                        class="pt-20"
+                                        style="font-size: 1.5rem; font-weight: 600"
+                                >
+                                    호스팅 지역
+                                </div>
+                                <div class="pt-10">한림읍, 제주시, 제주도, 한국</div>
+                                <!-- 여기에 지도 표시 -->
+                            </div>
+
+                            <div class="product-detail-desc pd-30 mt-30 mb-30 card-box">
+                                <div
+                                        class="pt-20"
+                                        style="font-size: 1.5rem; font-weight: 600"
+                                >
+                                    알아두어야 할 사항
+                                </div>
+                                <div class="row pt-20">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div style="font-weight: 600">이용규칙</div>
+                                        <div>체크인: 오후 4:00 이후</div>
+                                        <div>체크아웃: 오전 11:00</div>
+                                        <div>흡연 금지</div>
+                                        <div>반려동물 금지</div>
+                                        <div>파티나 이벤트 금지</div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div style="font-weight: 600">건강과 안전</div>
+                                        <div>POPIN의 강화된 청소 절차 준수에 동의했습니다.</div>
+                                        <div>
+                                            POPIN의 사회적 거리 두기 및 관련 가이드라인이
+                                            적용됩니다.
+                                        </div>
+                                        <div>일산화탄소 경보기</div>
+                                        <div>화재경보기</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div
+                                    class="product-detail-desc pd-30 card-box"
+                                    style="position: sticky; top: 30px"
+                            >
+                                <div class="pt-20">
+                    <span style="font-size: 1.5rem; font-weight: 600"
+                    >GOODHOST님이 호스팅하는 등대</span
+                    >
+                                </div>
+                                <!-- 호스트이름 -->
+                                <div class="d-flex justify-content-between">
+                                    <span>최대 인원 2명</span>
+                                    <div>
+                                        <i class="icon-copy ion-android-star"></i>
+                                        <span>4.98</span>
+                                        <!-- 평점 -->
+                                        <span>·</span>
+                                        <span>후기 983개</span>
+                                        <!-- 후기 갯수 링크로 후기위치이동 -->
+                                    </div>
+                                </div>
+                                <div class="mt-30 mb-20">
+                    <span style="font-size: 1.5rem; font-weight: 600"
+                    >₩ 129,000</span
+                    >
+                                    <!-- 1 박 가격 price-high -->
+                                    <span>/ 박</span>
+                                </div>
+                                <div>
+                                    <form action="" method="post">
+                                        <div class="form-group">
+                                            <label>체크인 - 체크아웃</label>
+                                            <input
+                                                    type="text"
+                                                    placeholder="날짜 선택"
+                                                    class="form-control datetimepicker-range"
+                                            />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>인원</label>
+                                            <input
+                                                    type="text"
+                                                    name="demo3_22"
+                                                    id="demo3_22"
+                                                    class="form-control"
+                                                    value="0"
+                                            />
+                                        </div>
+
+                                        <div class="row pb-30">
+                                            <div class="col-12">
+                                                <button
+                                                        type="submit"
+                                                        class="btn btn-primary btn-block"
+                                                >
+                                                    <span>예약하기</span>
+                                                </button>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-center pt-10">
+                                                <div>예약 확정 전에는 요금이 청구되지 않습니다.</div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between pb-10">
+                                        <div>₩129,000 X 3박</div>
+                                        <div>₩387,000</div>
+                                    </div>
+                                    <!-- 1박 당 가격 , 이용기간-->
+                                    <div class="d-flex justify-content-between pb-10">
+                                        <div>서비스 수수료</div>
+                                        <div>₩0</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-10">
+                                        <div>숙박세와 수수료</div>
+                                        <div>₩0</div>
+                                    </div>
+                                    <hr />
+                                    <div class="d-flex justify-content-between pb-10">
+                                        <div>총 합계</div>
+                                        <div>₩387,000</div>
+                                        <!-- 계산 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="src/plugins/slick/slick.min.js"></script>
+<script src="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+<script>
+      jQuery(document).ready(function () {
+        jQuery(".product-slider").slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: true,
+          infinite: true,
+          speed: 1000,
+          fade: true,
+          asNavFor: ".product-slider-nav",
+        });
+        jQuery(".product-slider-nav").slick({
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          asNavFor: ".product-slider",
+          dots: false,
+          infinite: true,
+          arrows: false,
+          speed: 1000,
+          centerMode: true,
+          focusOnSelect: true,
+        });
+        $("input[name='demo3_22']").TouchSpin({
+          initval: 1,
+        });
+      });
+    </script>
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</body>
+</html>

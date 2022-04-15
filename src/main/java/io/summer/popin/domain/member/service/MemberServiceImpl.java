@@ -47,8 +47,5 @@ public class MemberServiceImpl implements MemberService{
         if (urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo).isEmpty()) {
             return "";
         }
-        return urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo).get(0);
     }
-
-
 }

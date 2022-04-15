@@ -1,21 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <body>
-        <header th:fragment="header-search-form">
+        <header th:fragment="header-nav-search">
+            <nav class="navbar navbar-expand-sm row pd-10">
+                <!-- Logo -->
+                <a class="nav-item col-md-2" href="/">
+                    <img src="img/popin-logo.png" alt="popin-logo">
+                </a>
+                <!--Search Form-->
+                <form class="nav-item col-md-8" action="/search" th:object="${searchDTO}" method="post">
+                    <div class="form-row">
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>위치</label>
+                                <input type="text" th:field="*{addressName}" class="form-control" placeholder="주소 입력">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-12">
+                            <div class="form-group">
+                                <label>체크인 - 체크아웃</label>
+                                <input type="text" th:field="*{dates}" placeholder="날짜 선택" class="form-control datetimepicker-range">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>인원</label>
+                                <input type="text" name="demo3_22" id="demo3_22" class="form-control" value="0">
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-12 d-flex align-items-center">
+                            <button type="submit" class="btn btn-outline-primary" style="width:45px;height:45px;">
+                                <i class="icon-copy ion-search"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                    <input type="hidden" th:field="*{maxGuest}">
+                    <input type="hidden" th:field="*{region1depth}">
+                    <input type="hidden" th:field="*{region2depth}">
+                    <input type="hidden" th:field="*{region3depth}">
+                    <input type="hidden" th:field="*{coordX}">
+                    <input type="hidden" th:field="*{coordY}">
+                    <input type="hidden" th:field="*{checkinDate}">
+                    <input type="hidden" th:field="*{checkoutDate}">
+                </form>
+                <div class="nav-item col-md-2">
+                    <div class="user-info-dropdown">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+						<span class="user-icon">
+							<img src="vendors/images/photo1.jpg" alt="">
+						</span>
+                                <span class="user-name">Ross C. Lopez</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
+                                <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
+                                <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
+                                <a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <header th:fragment="header-nav-tab">
             <div id="logo"></div>
-            <div>
-                <form action=""></form>
-            </div>
+            <nav>
+                <ul>
+                    <li>tab1</li>
+                </ul>
+            </nav>
             <div>menu</div>
         </header>
 
-        <header th:fragment="header-category">
+        <header th:fragment="header-nav-none">
             <div id="logo"></div>
-            <div>
-                <ul>
-                    <li>category1/li>
-                </ul>
-            </div>
+            <nav></nav>
             <div>menu</div>
         </header>
     </body>

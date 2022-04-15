@@ -18,4 +18,5 @@ public interface UrlMapper {
     int saveUrl(UrlResourceDTO urlResourceDTO);
 
     int deleteUrl(Long urlNo);
+
 }

@@ -4,6 +4,7 @@ package io.summer.popin.global.controller;
 import io.summer.popin.domain.member.dto.LoginMemberInfoDTO;
 import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.search.dto.SearchDTO;
+import io.summer.popin.domain.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,11 +18,16 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 public class HomeController {
 
     @GetMapping("/")
-
     public String home(@ModelAttribute SearchDTO serachDTO, @SessionAttribute(name="loginMember", required = false) SessionUserDTO loginMember){
 
         log.info("LOGIN MEMBER = {}", loginMember);
-        return "home";
+        return "html/home";
     }
+
+    @GetMapping("/html-test")
+    public String test(@ModelAttribute SearchDTO serachDTO){
+        return "html/place-detail";
+    }
+
 
 }
