@@ -28,7 +28,7 @@ public class SearchController {
         Criteria criteria = new Criteria(pageNum, 10);
         model.addAttribute("placesList",searchService.placesSearch(searchDTO,criteria));
         model.addAttribute("pageMaker", new PageVO(criteria,searchService.placeCount(searchDTO)));
-        return "searchTest";
+        return "html/search";
     }
 
     @GetMapping("/search")
@@ -37,6 +37,6 @@ public class SearchController {
         model.addAttribute("placesList",searchService.placesSearch(searchDTO,criteria));
         model.addAttribute("pageMaker", new PageVO(criteria,searchService.placeCount(searchDTO)));
         log.info("ENDPAGE = {}",new PageVO(criteria,searchService.placeCount(searchDTO)).getEndPage());
-        return "searchTest";
+        return "html/search";
     }
 }
