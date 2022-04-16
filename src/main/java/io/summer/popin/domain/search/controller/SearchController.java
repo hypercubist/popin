@@ -36,7 +36,7 @@ public class SearchController {
         Criteria criteria = new Criteria(pageNum,10);
         model.addAttribute("placesList",searchService.placesSearch(searchDTO,criteria));
         model.addAttribute("pageMaker", new PageVO(criteria,searchService.placeCount(searchDTO)));
-            log.info("ENDPAGE = {}",new PageVO(criteria,searchService.placeCount(searchDTO)).getEndPage());
+        log.info("ENDPAGE = {}",new PageVO(criteria,searchService.placeCount(searchDTO)).getEndPage());
         return "searchTest";
     }
 }
