@@ -155,7 +155,7 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public List<MyPlaceDTO> getMyPlaces(Long hostNo) {
+    public List<MyPlaceDTO> getPlaces(Long hostNo) {
         return placeMapper.findPlaceListByHostNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), hostNo); //집 정보와 썸네일 한번에 가져오기
     }
 

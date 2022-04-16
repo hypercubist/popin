@@ -21,7 +21,7 @@ public interface PlaceService {
 
     Long registerPlace(PlaceRegisterDTO registerDTO);
 
-    List<MyPlaceDTO> getMyPlaces(Long hostNo);
+    List<MyPlaceDTO> getPlaces(Long hostNo);
 
     Integer getMyPlacesCount(Long hostNo);
 }

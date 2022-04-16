@@ -33,9 +33,9 @@ public class PlaceController {
     @GetMapping
     public String myPlaces(Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
 
-        Long hostNo = loginMember.getNo(); //세션에서 가져올 값
+        Long hostNo = loginMember.getNo();
 
-        model.addAttribute("myPlaces", placeService.getMyPlaces(hostNo));
+        model.addAttribute("myPlaces", placeService.getPlaces(hostNo));
         model.addAttribute("myPlacesCount", placeService.getMyPlacesCount(hostNo));
         return "my-places";
     }

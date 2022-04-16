@@ -50,7 +50,7 @@ public class AwsS3Service {
                 amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
                 urlResourceDTO.setUrl(url);
-                update(urlResourceDTO);
+                updateDbUrl(urlResourceDTO);
             } catch (IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
             }
@@ -61,7 +61,7 @@ public class AwsS3Service {
     }
 
     @Transactional
-    public void update(UrlResourceDTO urlResourceDTO) {
+    public void updateDbUrl(UrlResourceDTO urlResourceDTO) {
         urlMapper.deleteUrl(urlResourceDTO);
         urlMapper.insertUrl(urlResourceDTO);
     }
