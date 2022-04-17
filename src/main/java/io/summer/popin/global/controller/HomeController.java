@@ -34,7 +34,7 @@ public class HomeController {
 
     @GetMapping("/html-test")
     public String test(@ModelAttribute SearchDTO serachDTO){
-        return "html/reservation-confirm";
+        return "html/place-register";
     }
 
 
