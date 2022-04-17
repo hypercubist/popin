@@ -22,7 +22,7 @@
         <h1 th:text="|${memberProfile.name}님의 숙소|"></h1>
         <ul  th:each="place : ${hostPlaces}">
             <li th:object="${place}">
-                <div th:text="*{thumbnailUrl}"></div>
+                <img th:src="*{thumbnailUrl}"/>
                 <div th:text="*{placeName}"></div>
                 <div th:text="*{region1depth}"></div>
             </li>

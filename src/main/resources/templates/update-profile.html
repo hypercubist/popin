@@ -10,7 +10,7 @@
 
     <form th:action th:object="${profileUpdateForm}" method="post" enctype="multipart/form-data">
         <div th:src="${profileImgUrl}">사진 업데이트하기</div>
-            <input type="file" multiple="multiple" id="imageFiles" name="imageFiles">
+            <input type="file" id="profileImg" name="profileImg">
         <div>
             <label for="name">이름</label>
             <input type="text" id="name" th:field="*{name}">

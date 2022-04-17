@@ -49,6 +49,7 @@ public class PlaceController {
 
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
+        model.addAttribute("thumbnailUrl", placeService.getThumbnailUrl(placeNo));
         model.addAttribute("searchDTO", searchDTO);
 
         return "place-detail";
@@ -74,7 +75,7 @@ public class PlaceController {
 
     @PostMapping("/register")
     public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
-                                @RequestParam("placeThumbnail") MultipartFile placeThumbnail,
+                                @RequestParam("placeThumbnail") List<MultipartFile> placeThumbnail,
                                 @RequestParam("imageFiles") List<MultipartFile> imageFiles, UrlResourceDTO urlResourceDTO,
                                 BindingResult bindingResult,
                                 Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
@@ -97,7 +98,7 @@ public class PlaceController {
 
         urlResourceDTO.setPlaceNo(placeNo);
         urlResourceDTO.setKindCode(3);
-        awsS3Service.uploadImage(imageFiles, urlResourceDTO);  //숙소 thumbnail
+        awsS3Service.uploadImage(placeThumbnail, urlResourceDTO);  //숙소 thumbnail
         if(placeNo == null) {
             bindingResult.reject("saveFailed", "장소 등록에 실패하였습니다. 다시 시도해주세요.");
         }

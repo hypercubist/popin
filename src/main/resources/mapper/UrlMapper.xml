@@ -50,8 +50,9 @@
                 member_no=#{memberNo}
             </if>
             <if test="placeNo != null">
-                place_no=#{placeNo}
+                kind_code=#{kindCode} and place_no=#{placeNo}
             </if>
+
         </where>
     </delete>
 </mapper>

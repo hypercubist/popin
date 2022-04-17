@@ -63,12 +63,12 @@ public class MemberController {
 
         @PostMapping("/profile/edit/{memberNo}")  //프로필 수정 요청
         public String updateProfile(@PathVariable("memberNo") Long memberNo, @ModelAttribute("profileUpdateForm") ProfileUpdateDTO profileUpdateDTO
-                                                , List<MultipartFile> imageFiles, UrlResourceDTO urlResourceDTO) {
+                                                , List<MultipartFile> profileImg, UrlResourceDTO urlResourceDTO) {
 
             memberService.updateProfile(memberNo, profileUpdateDTO);
             urlResourceDTO.setMemberNo(memberNo);
             urlResourceDTO.setKindCode(1);
-            awsS3Service.uploadImage(imageFiles, urlResourceDTO);
+            awsS3Service.updateProfileImage(profileImg, urlResourceDTO);
 
             log.info("ProfileEditResponseDTO = {}", profileUpdateDTO);
             return "redirect:/members";
