@@ -35,7 +35,7 @@ public class AwsS3Service {
 
     private final AmazonS3 amazonS3;  //아마존 접근
 
-    public List<String> uploadImage(List<MultipartFile> multipartFiles, UrlResourceDTO urlResourceDTO) {
+    public List<String> uploadImage(List<MultipartFile> multipartFiles, UrlResourceDTO urlResourceDTO) {  //다중파일업로드
         List<String> urlList = new ArrayList<>();
 
         multipartFiles.forEach(file -> {
@@ -50,18 +50,41 @@ public class AwsS3Service {
                 amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
                 urlResourceDTO.setUrl(url);
-                update(urlResourceDTO);
+                urlMapper.insertUrl(urlResourceDTO);
             } catch (IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
             }
             urlList.add(url);
         });
+        return urlList;
+    }
 
+    public List<String> updateProfileImage(List<MultipartFile> multipartFiles, UrlResourceDTO urlResourceDTO) {  //다중파일업로드
+        List<String> urlList = new ArrayList<>();
+
+        multipartFiles.forEach(file -> {
+            String fileName = createFileName(file.getOriginalFilename());
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(file.getSize());
+            objectMetadata.setContentType(file.getContentType());
+            String url = defaultUrl + fileName;
+
+            try {
+                InputStream inputStream = file.getInputStream();
+                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
+                urlResourceDTO.setUrl(url);
+                updateDbUrl(urlResourceDTO);
+            } catch (IOException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
+            }
+            urlList.add(url);
+        });
         return urlList;
     }
 
     @Transactional
-    public void update(UrlResourceDTO urlResourceDTO) {
+    public void updateDbUrl(UrlResourceDTO urlResourceDTO) {
         urlMapper.deleteUrl(urlResourceDTO);
         urlMapper.insertUrl(urlResourceDTO);
     }
