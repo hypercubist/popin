@@ -33,9 +33,9 @@ public class PlaceController {
     @GetMapping
     public String myPlaces(Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
 
-        Long hostNo = loginMember.getNo(); //세션에서 가져올 값
+        Long hostNo = loginMember.getNo();
 
-        model.addAttribute("myPlaces", placeService.getMyPlaces(hostNo));
+        model.addAttribute("myPlaces", placeService.getPlaces(hostNo));
         model.addAttribute("myPlacesCount", placeService.getMyPlacesCount(hostNo));
         return "my-places";
     }
@@ -49,6 +49,7 @@ public class PlaceController {
 
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
+        model.addAttribute("thumbnailUrl", placeService.getThumbnailUrl(placeNo));
         model.addAttribute("searchDTO", searchDTO);
 
         return "place-detail";
@@ -73,7 +74,9 @@ public class PlaceController {
     }
 
     @PostMapping("/register")
-    public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO, List<MultipartFile> imageFiles, UrlResourceDTO urlResourceDTO,
+    public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
+                                @RequestParam("placeThumbnail") List<MultipartFile> placeThumbnail,
+                                @RequestParam("imageFiles") List<MultipartFile> imageFiles, UrlResourceDTO urlResourceDTO,
                                 BindingResult bindingResult,
                                 Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
@@ -91,7 +94,11 @@ public class PlaceController {
         Long placeNo = placeService.registerPlace(registerDTO);
         urlResourceDTO.setPlaceNo(placeNo);
         urlResourceDTO.setKindCode(2);
-        awsS3Service.uploadImage(imageFiles, urlResourceDTO);
+        awsS3Service.uploadImage(imageFiles, urlResourceDTO);  //숙소사진들
+
+        urlResourceDTO.setPlaceNo(placeNo);
+        urlResourceDTO.setKindCode(3);
+        awsS3Service.uploadImage(placeThumbnail, urlResourceDTO);  //숙소 thumbnail
         if(placeNo == null) {
             bindingResult.reject("saveFailed", "장소 등록에 실패하였습니다. 다시 시도해주세요.");
         }

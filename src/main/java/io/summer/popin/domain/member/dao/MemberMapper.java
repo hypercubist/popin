@@ -1,6 +1,7 @@
 package io.summer.popin.domain.member.dao;
 
 import io.summer.popin.domain.member.dto.LoginMemberInfoDTO;
+import io.summer.popin.domain.member.dto.MemberProfileResponseDTO;
 import io.summer.popin.domain.member.dto.ProfileUpdateDTO;
 import io.summer.popin.domain.member.dto.ProfileResponseDTO;
 import io.summer.popin.domain.member.vo.MemberVO;
@@ -11,6 +12,8 @@ public interface MemberMapper {
 
     ProfileResponseDTO findProfileByMemberNo(Long no);
 
+    MemberProfileResponseDTO findMemberProfileByMemberNo(Long memberNo);
+
     ProfileUpdateDTO findEditProfileFormDataByMemberNo(Long memberNo);
 
     int updateProfileByMemberNo(MemberVO memberVO);
@@ -19,6 +22,7 @@ public interface MemberMapper {
     LoginMemberInfoDTO findMemberById(Long id);
 
     int saveMember(LoginMemberInfoDTO loginMemberInfoDTO);
+
 
     int updateMember(LoginMemberInfoDTO infoDTO);
 }

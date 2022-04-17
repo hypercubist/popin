@@ -1,6 +1,7 @@
 package io.summer.popin.domain.member.service;
 
 import io.summer.popin.domain.member.dao.MemberMapper;
+import io.summer.popin.domain.member.dto.MemberProfileResponseDTO;
 import io.summer.popin.domain.member.dto.ProfileUpdateDTO;
 import io.summer.popin.domain.member.dto.ProfileResponseDTO;
 import io.summer.popin.domain.member.vo.MemberVO;
@@ -24,6 +25,14 @@ public class MemberServiceImpl implements MemberService{
         ProfileResponseDTO profile = memberMapper.findProfileByMemberNo(memberNo);
 
         return profile;
+    }
+
+    @Override
+    public MemberProfileResponseDTO findMemberProfile(Long memberNo) {
+
+        MemberProfileResponseDTO memberProfile = memberMapper.findMemberProfileByMemberNo(memberNo);
+
+        return memberProfile;
     }
 
     @Override
