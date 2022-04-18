@@ -23,6 +23,7 @@ public class SearchResponseDTO {
     private Integer reviewCount;
     private Integer price;
     private Integer totalPrice;
+    private String maxGuest;
 
     private String thumbnailUrl;
 
