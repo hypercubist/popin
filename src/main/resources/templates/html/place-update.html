@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-sub :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <title>PLACE-REGISTER</title>
+    <!--현재 페이지 제목을 위 라인에 입력-->
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="src/plugins/jquery-steps/jquery.steps.css"
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css"
+    />
+    <link rel="stylesheet" type="text/css" href="src/plugins/dropzone/src/dropzone.css">
+    <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="pd-20 card-box mb-30">
+                <div class="clearfix">
+                    <h4 class="text-blue h4">등록사항 수정</h4>
+                    <p class="mb-30">변경된 내용을 입력해주세요.</p>
+                </div>
+                <div class="wizard-content">
+                    <form class="tab-wizard wizard-circle wizard">
+                        <h5>이름 및 주소</h5>
+                        <section>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>이름</label>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="변경된 장소의 이름을 작성해주세요"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>장소 종류</label>
+                                        <select class="custom-select form-control">
+                                            <option value="">장소의 종류를 선택해주세요</option>
+                                            <option value="Amsterdam">India</option>
+                                            <option value="Berlin">UK</option>
+                                            <option value="Frankfurt">US</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>최대 인원</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>주소</label>
+                                        <input
+                                                id="addressName"
+                                                type="text"
+                                                class="form-control"
+                                                onclick="addressSearch()"
+                                                placeholder="클릭하여 주소 찾기"
+                                                readonly
+                                        />
+                                        <!-- id는 fields로 수정 -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div id="map" style="width: 800px; height: 480px"></div>
+                            </div>
+                        </section>
+                        <!-- Step 2 -->
+                        <h5>사진 업로드</h5>
+                        <section>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="clearfix mb-20">
+                                        <div class="pull-left">
+                                            <h5 class="h5">대표사진을 등록해주세요</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropzone" action="#" id="my-awesome-dropzone">
+                                        <div class="fallback">
+                                            <input type="file" name="file" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="clearfix mb-20">
+                                        <div class="pull-left">
+                                            <h5 class="h5">호스팅 장소를 잘 표현할 수 있는 사진을 등록해주세요(3장 이상)</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropzone" action="#" id="my-awesome-dropzone">
+                                        <div class="fallback">
+                                            <input type="file" name="file" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>❗ 변경할 사진을 등록하는 경우 기존에 등록된 사진은 삭제됩니다.</div>
+                        </section>
+                        <!-- Step 3 -->
+                        <h5>상세 옵션 선택</h5>
+                        <section>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label>방</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>화장실</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>침대(싱글)</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>침대(더블)</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label>침대(퀸)</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>침대(킹)</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>주방</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>주차공간</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label>와이파이</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>발코니</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>수영장</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>에어컨</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label>욕조</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>아기 침대</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>TV</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>커피머신</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label>PC</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>칠판</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>빔프로젝트</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>풍선</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label>식탁</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>램프</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>주방 도구</label>
+                                        <input
+                                                id="demo3_22"
+                                                type="text"
+                                                value="0"
+                                                name="demo3_22"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- Step 4 -->
+                        <h5>설명 및 가격</h5>
+                        <section>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>체크인 시간(시작)</label>
+                                        <select class="form-control">
+                                            <option>Select Result</option>
+                                            <option>Selected</option>
+                                            <option>Rejected</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>체크인 시간(마감)</label>
+                                        <select class="form-control">
+                                            <option>Select Result</option>
+                                            <option>Selected</option>
+                                            <option>Rejected</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>체크아웃 시간(시작)</label>
+                                        <select class="form-control">
+                                            <option>Select Result</option>
+                                            <option>Selected</option>
+                                            <option>Rejected</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>체크아웃 시간(마감)</label>
+                                        <select class="form-control">
+                                            <option>Select Result</option>
+                                            <option>Selected</option>
+                                            <option>Rejected</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>호스트 설명 및 주의사항(20자 이상 2000자 이내)</label>
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>이용가격</label>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="1박 당 가격 (원)"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+
+            <!-- success Popup html Start -->
+            <div
+                    class="modal fade"
+                    id="success-modal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true"
+            >
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body text-center font-18">
+                            <h3 class="mb-20">축하합니다.</h3>
+                            <div class="mb-30 text-center">
+                                <img src="vendors/images/success.png" />
+                            </div>
+                            등록이 완료되었습니다!
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    data-dismiss="modal"
+                            >
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- success Popup html End -->
+        </div>
+
+    </div>
+    <!--현재 페이지 본문 내용을 section내부에 작성-->
+</section>
+<script src="src/plugins/jquery-steps/jquery.steps.js"></script>
+<script src="vendors/scripts/steps-setting.js"></script>
+<script src="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+<script src="vendors/scripts/advanced-components.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:inline="javascript" type="text/javascript" th:attr="src=${kakaoMapsSource}"></script>
+<script src="js/place-register.js"></script>
+<script src="src/plugins/dropzone/src/dropzone.js"></script>
+
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</body>
+</html>
