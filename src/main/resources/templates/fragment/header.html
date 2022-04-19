@@ -13,7 +13,8 @@
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>위치</label>
-                                <input type="text" th:field="*{addressName}" class="form-control" placeholder="주소 입력">
+                                <input type="text" th:field="*{addressName}" class="form-control location-input" placeholder="주소 입력">
+                                <select multiple name="kakaomap" id="address-list"></select>
                             </div>
                         </div>
                         <div class="col-md-5 col-sm-12">

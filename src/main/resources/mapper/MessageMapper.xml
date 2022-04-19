@@ -5,7 +5,9 @@
 <mapper namespace="io.summer.popin.domain.message.dao.MessageMapper">
     <select id="allMessage" resultType="MessageResponseDTO" parameterType="int">
         select
-            distinct sender_no, receiver_no, max(send_date) as sendDate
+            distinct sender_no,
+            receiver_no,
+            max(send_date) as sendDate
         from
             message
         where

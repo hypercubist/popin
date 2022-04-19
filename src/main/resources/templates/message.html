@@ -6,6 +6,100 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+<div class="bg-white border-radius-4 box-shadow mb-30">
+    <div class="row no-gutters">
+        <div class="col-lg-3 col-md-4 col-sm-12">
+            <div class="chat-list bg-light-gray">
+                <div class="chat-search">
+                    <span class="ti-search"></span>
+                    <input type="text" placeholder="Search Contact">
+                </div>
+                <div class="notification-list chat-notification-list customscroll">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <img src="vendors/images/img.jpg" alt="">
+                                <h3 class="clearfix">John Doe</h3>
+                                <p><i class="fa fa-circle text-light-green"></i> online</p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                <img src="vendors/images/img.jpg" alt="">
+                                <h3 class="clearfix">John Doe</h3>
+                                <p><i class="fa fa-circle text-light-green"></i> online</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- message other profile -->
+        <div class="col-lg-9 col-md-8 col-sm-12">
+            <div class="chat-detail">
+                <div class="chat-profile-header clearfix">
+                    <div class="left">
+                        <div class="clearfix">
+                            <div class="chat-profile-photo">
+                                <img src="vendors/images/profile-photo.jpg" alt="">
+                            </div>
+                            <div class="chat-profile-name">
+                                <h3>Rachel Curtis</h3>
+                                <span>New York, USA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-box">
+                    <div class="chat-desc customscroll">
+                        <ul>
+                            <li class="clearfix admin_chat">
+												<span class="chat-img">
+													<img src="vendors/images/chat-img2.jpg" alt="">
+												</span>
+                                <div class="chat-body clearfix">
+                                    <p>Maybe you already have additional info?</p>
+                                    <div class="chat_time">09:40PM</div>
+                                </div>
+                            </li>
+                            <li class="clearfix upload-file">
+												<span class="chat-img">
+													<img src="vendors/images/chat-img1.jpg" alt="">
+												</span>
+                                <div class="chat-body clearfix">
+                                    <div class="upload-file-box clearfix">
+                                        <div class="left">
+                                            <img src="vendors/images/upload-file-img.jpg" alt="">
+                                            <div class="overlay">
+                                                <a href="#">
+                                                    <span><i class="fa fa-angle-down"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="right">
+                                            <h3>Big room.jpg</h3>
+                                            <a href="#">Download</a>
+                                        </div>
+                                    </div>
+                                    <div class="chat_time">09:40PM</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="chat-footer">
+                        <div class="file-upload"><a href="#"><i class="fa fa-paperclip"></i></a></div>
+                        <div class="chat_text_area">
+                            <textarea placeholder="Type your message…"></textarea>
+                        </div>
+                        <div class="chat_send">
+                            <button class="btn btn-link" type="submit"><i class="icon-copy ion-paper-airplane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 자신 프로필 번호는 세션에서 가져온다
 
@@ -26,18 +120,13 @@
 <input type="hidden" name="senderNo" id="sender">
 <input type="hidden"  name="receiverNo">
 
-
-
-
 <div class="container">
     <div class="col-6">
-
     </div>
     <div>
         <div id="msgArea" class="col"></div>
         <div class="col-6">
             <div class="input-group mb-3">
-
                 <div class="input-group-append">
                     <input type="text" name="content" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" placeholder="내용 입력">
                     <!--<input type="text" name="content" placeholder="내용입력" id="content">-->
@@ -108,10 +197,9 @@
                 console.log("cur_session : " + cur_session);
                 //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
                 if(sessionId == cur_session){
-                    var str = "<div class='col-6'>";
-                    str += "<div class='alert alert-secondary'>";
-                    str += sessionId + " : " + message;
-                    str += "</div></div>";
+                    var str += "<li class='clearfix admin_chat' id='msgArea'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span>"
+                    str += "<div class='chat-body clearfix'>"+message+"</div>";
+                    str += "<div class='chat_time'>09:40PM</div></li>"
                     $("#msgArea").append(str);
                 }
                 else{

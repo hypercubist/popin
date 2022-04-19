@@ -1,3 +1,4 @@
+
 const today = new Date();
     const handlePick = function(ev, picker){
 
@@ -39,10 +40,10 @@ const today = new Date();
                data : {query : $('#addressName').val() },
            success:function(data){
                console.log(data);
-               $('#map').empty();
+               $('#address-list').empty();
                for(var i=0; i< data.documents.length; i++){
                var option = "<option>"+data.documents[i].address_name+"</option>";
-                $('#map').append(option);
+                $('#address-list').append(option);
                 $('#region1depth').val(data.documents[i].address.region_1depth_name);
                 $('#region2depth').val(data.documents[i].address.region_2depth_name);
                 $('#region3depth').val(data.documents[i].address.region_3depth_name);
@@ -50,9 +51,8 @@ const today = new Date();
                 $('#coordY').val(data.documents[i].address.y);
                };
 
-               $('select[id=map]').on('change',function(){
+               $('select[id=address-list]').on('change',function(){
                     $('#addressName').val($(this).val());
-
                });
            },
            error : function(e){
@@ -62,3 +62,7 @@ const today = new Date();
     });
 
     $("#demo3_22").on("change", ()=>{$("#maxGuest").val($("#demo3_22").val())});
+
+    $('.datetimepicker-range').on('keyup',function(){
+        $('#address-list').hide();
+    });

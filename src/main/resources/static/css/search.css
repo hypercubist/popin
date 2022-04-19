@@ -1,0 +1,5 @@
+.page-li-item { margin-right : 2px; }
+.pageMaker-css { color:black; background-color : inherit; border-radius : 50%; border : none;}
+.pageMaker-css-now { border : 1px solid black; border-radius : 50%; background : black;color:white;}
+.pageMaker-css:hover { border : 1px solid black; border-radius : 50%; background : black;}
+.pageMaker-css:hover > a{ color : white; }

@@ -20,8 +20,8 @@ public class MessageController {
     @GetMapping
     public String messageView(Model model, HttpSession session){
         session.setAttribute("senderNo",1);
-        model.addAttribute("dto", messageService.myMessageList((Integer) session.getAttribute("senderNo")));
-        return "message";
+        model.addAttribute("messageDTO", messageService.myMessageList((Integer) session.getAttribute("senderNo")));
+        return "html/message";
     }
 
 
