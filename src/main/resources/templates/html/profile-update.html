@@ -2,7 +2,7 @@
 <html th:replace="~{layout/layout-sub :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <title>PROFILE</title>
+    <title>PROFILE-UPDATE</title>
     <!--현재 페이지 제목을 위 라인에 입력-->
     <link rel="stylesheet" href="">
     <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
@@ -71,31 +71,39 @@
                                 <h2 class="pt-30">안녕하세요. 저는 유진입니다</h2>
                                 <div class="pt-10 pb-10">회원가입:2016</div>
                                 <div>
-                                    <a th:href="@{|/profile/edit/*{no}|}">프로필 수정하기</a>
+                                    <a
+                                            style="pointer-events: none"
+                                            th:href="@{|/profile/edit/*{no}|}"
+                                    >프로필 수정하기</a
+                                    >
                                 </div>
-                                <section class="mb-20">
-                                    <div
-                                            class="pt-20 pb-20"
-                                            style="font-size: 1.5rem; font-weight: 600"
-                                    >
-                                        소개
+
+                                <form>
+                                    <div class="form-group pt-30">
+                                        <label>사진 업데이트</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" />
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
                                     </div>
-                                    <div>유진입니둥!</div>
-                                    <div
-                                            class="pt-20 pb-10"
-                                            style="font-size: 1.5rem; font-weight: 600"
-                                    >
-                                        이메일
+                                    <div class="form-group">
+                                        <label class="pt-20">소개</label>
+                                        <textarea class="form-control"></textarea>
                                     </div>
-                                    <div>wowoeifh@gmail.com</div>
-                                    <div
-                                            class="pt-20 pb-10"
-                                            style="font-size: 1.5rem; font-weight: 600"
-                                    >
-                                        핸드폰 번호
+                                    <div class="form-group">
+                                        <label>이메일</label>
+                                        <input type="text" class="form-control" />
                                     </div>
-                                    <div>010-8632-9742</div>
-                                </section>
+                                    <div class="form-group">
+                                        <label>핸드폰 번호</label>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                    <div class="mb-30 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-secondary btn-lg">
+                                            저장
+                                        </button>
+                                    </div>
+                                </form>
                             </section>
                         </div>
                     </div>
