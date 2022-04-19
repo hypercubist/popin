@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html th:fragment="layout (link, title, content, script)" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <!-- Mobile Specific Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
-  <link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
-  <link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
-  <th:block th:replace="${link}" />
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
+    <link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
+    <th:block th:replace="${link}" />
 
-  <title th:replace="${title}">Temp Title</title>
+    <title th:replace="${title}">Temp Title</title>
 
 </head>
 <body>
-  <div th:replace="~{fragment/header :: header-nav-search}">Temp Header</div>
-  <div th:replace="${content}">Temp Content</div>
-  <div th:replace="~{fragment/footer :: footer}">Temp Footer</div>
+<div th:replace="~{fragment/header :: header-nav-none}">Temp Header</div>
+<div th:replace="${content}">Temp Content</div>
+<div th:replace="~{fragment/footer :: footer}">Temp Footer</div>
 
-  <!-- js -->
-  <script src="vendors/scripts/core.js"></script>
-  <script src="vendors/scripts/script.min.js"></script>
-  <script src="vendors/scripts/process.js"></script>
-  <script src="vendors/scripts/layout-settings.js"></script>
-  <th:block th:replace="${script}" />
+<!-- js -->
+<script src="vendors/scripts/core.js"></script>
+<script src="vendors/scripts/script.min.js"></script>
+<script src="vendors/scripts/process.js"></script>
+<script src="vendors/scripts/layout-settings.js"></script>
+<th:block th:replace="${script}" />
 </body>
 </html>
