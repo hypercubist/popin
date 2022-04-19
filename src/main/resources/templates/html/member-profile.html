@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-sub :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <title>MEMBER-PROFILE</title>
+    <!--현재 페이지 제목을 위 라인에 입력-->
+    <link rel="stylesheet" href="">
+    <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
+                <div class="pd-20 card-box height-100-p">
+                    <div class="profile-photo pt-30">
+                        <img
+                                src="vendors/images/photo1.jpg"
+                                alt=""
+                                class="avatar-photo"
+                        />
+                        <div
+                                class="modal fade"
+                                id="modal"
+                                tabindex="-1"
+                                role="dialog"
+                                aria-labelledby="modalLabel"
+                                aria-hidden="true"
+                        >
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body pd-5">
+                                        <div class="img-container">
+                                            <img
+                                                    id="image"
+                                                    src="vendors/images/photo2.jpg"
+                                                    alt="Picture"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <i
+                            class="icon-copy ion-android-done-all"
+                            style="font-size: 1.5rem"
+                    ></i>
+                    <div style="font-weight: 900; font-size: 1.3rem">본인 인증</div>
+                    <div class="pt-10 pb-30">
+                        본인 인증 배지를 통해 본인 인증을 마쳤다는 사실을 다른 사용자에게
+                        보여줄 수 있습니다.
+                    </div>
+                    <div class="profile-info">
+                        <h5 class="mb-20 h5 text-black" style="font-size: 1.5rem">
+                            유진 인증 완료
+                        </h5>
+                        <i
+                                class="icon-copy ion-checkmark-round"
+                                style="font-size: 1.3rem"
+                        ></i>
+                        <span class="pl-10" style="font-size: 1.1rem">전화번호</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
+                <div class="card-box height-100-p overflow-hidden">
+                    <div class="height-100-p overflow-hidden">
+                        <div class="pd-20 tab height-100-p">
+                            <div class="pd-20">
+                                <h2 class="pt-10">안녕하세요. 저는 유진입니다</h2>
+                                <div class="pt-10 pb-10">회원가입:2016</div>
+                                <div>
+                                    <a th:href="@{|/profile/edit/*{no}|}">프로필 수정하기</a>
+                                </div>
+
+                                <div
+                                        class="pt-20 pb-20"
+                                        style="font-size: 1.5rem; font-weight: 600"
+                                >
+                                    소개
+                                </div>
+                                <div>유진입니둥!</div>
+                            </div>
+                            <hr />
+                            <div class="pd-20">
+                                <h5 class="pb-20" style="font-size: 1.5rem">
+                                    Uncle Rod Private Cabin님의 숙소
+                                </h5>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
+                                        <div class="da-card">
+                                            <div class="da-card-photo">
+                                                <img src="vendors/images/photo1.jpg" alt="" />
+                                            </div>
+                                            <div class="da-card-content">
+                                                <h5 class="h5 mb-10">해가 잘드는 집</h5>
+                                                <p class="mb-0">광주광역시</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--현재 페이지 본문 내용을 section내부에 작성-->
+</section>
+<script></script>
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</body>
+</html>

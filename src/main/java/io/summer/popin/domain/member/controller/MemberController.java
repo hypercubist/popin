@@ -37,7 +37,7 @@ public class MemberController {
 
             model.addAttribute("profile", profile);
             model.addAttribute("profileImgUrl", profileImgUrl);
-            return "myProfile";
+            return "html/myProfile";
         }
 
         @GetMapping("/members/{memberNo}")
