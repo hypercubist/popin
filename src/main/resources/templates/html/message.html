@@ -52,7 +52,7 @@
                         <div class="chat-desc customscroll" id="scrollbottom">
                             <ul>
                                 <div>
-                                    <div id="userMesssage">
+                                    <div id="userMessage">
                                     </div>
                                 </div>
                             </ul>
@@ -132,18 +132,15 @@
                 console.log("cur_session : " + cur_session);
                 //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
                 if(sessionId == cur_session){
-                    var str = "<div class='col-6'>";
-                    str += "<div class='alert alert-secondary'>";
-                    str += sessionId + " : " + message;
-                    str += "</div></div>";
-                    $("#msgArea").append(str);
+                    var str = "<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+message+"</p><div class='chat_time'>시간</div></div></li>";
+                    $("#userMessage").append(str);
                 }
                 else{
                     var str = "<div class='col-6'>";
                     str += "<div class='alert alert-warning'>";
                     str += sessionId + " : " + message;
                     str += "</div></div>";
-                    $("#msgArea").append(str);
+                    $("#userMessage").append(str);
                 }
             }
             })
@@ -173,13 +170,13 @@
                 }
             }).done(function(list){
                 console.log(list);
-                $('#userMesssage').empty();
+                $('#userMessage').empty();
                 for(var i =0; i<list.length;i++){
                 //"<div>"+"보낸사람 : "+list[i].senderNo+"<br>" +list[i].content+"<br>"+"보낸날짜 : "+list[i].sendDate+"</div>;
                 if(list[i].senderNo == 1){
-                     $('#userMesssage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                     $('#userMessage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
                 }else{
-                     $('#userMesssage').append("<li class='clearfix'><span class='chat-img'><img src='vendors/images/chat-img1.jpg' alt=''></span><div class='chat-body clearfix'><p style='display : inline-block'>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                     $('#userMessage').append("<li class='clearfix'><span class='chat-img'><img src='vendors/images/chat-img1.jpg' alt=''></span><div class='chat-body clearfix'><p style='display : inline-block'>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
                 }
                 };
                 $('#scrollbottom').scrollTop($('#scrollbottom').scrollHeight);
