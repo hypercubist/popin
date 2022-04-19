@@ -14,10 +14,6 @@
         <div class="row no-gutters">
             <div class="col-lg-3 col-md-4 col-sm-12">
                 <div class="chat-list bg-light-gray">
-                    <div class="chat-search">
-                        <span class="ti-search"></span>
-                        <input type="text" placeholder="Search Contact">
-                    </div>
                     <div class="notification-list chat-notification-list customscroll">
                         <ul>
                             <th:block th:each="dto, index : ${messageDTO}">
@@ -53,43 +49,12 @@
                         </div>
                     </div>
                     <div class="chat-box">
-                        <div class="chat-desc customscroll">
+                        <div class="chat-desc customscroll" id="scrollbottom">
                             <ul>
-                                <li class="clearfix admin_chat">
-								<span class="chat-img">
-									<img src="vendors/images/chat-img2.jpg" alt="">
-								</span>
-                                    <div class="chat-body clearfix">
-                                        <p>Maybe you already have additional info?</p>
-                                        <div class="chat_time">09:40PM</div>
+                                <div>
+                                    <div id="userMesssage">
                                     </div>
-                                    <div class="chat-body clearfix">
-                                        <p>Maybe you already have additional info?</p>
-                                        <div class="chat_time">09:40PM</div>
-                                    </div>
-                                </li>
-                                <li class="clearfix upload-file">
-												<span class="chat-img">
-													<img src="vendors/images/chat-img1.jpg" alt="">
-												</span>
-                                    <div class="chat-body clearfix">
-                                        <div class="upload-file-box clearfix">
-                                            <div class="left">
-                                                <img src="vendors/images/upload-file-img.jpg" alt="">
-                                                <div class="overlay">
-                                                    <a href="#">
-                                                        <span><i class="fa fa-angle-down"></i></span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="right">
-                                                <h3>Big room.jpg</h3>
-                                                <a href="#">Download</a>
-                                            </div>
-                                        </div>
-                                        <div class="chat_time">09:40PM</div>
-                                    </div>
-                                </li>
+                                </div>
                             </ul>
                         </div>
                         <div class="chat-footer">
@@ -99,9 +64,6 @@
                             </div>
                             <div class="chat_send">
                                 <button id="button-send" class="btn btn-link" type="submit"><i class="icon-copy ion-paper-airplane"></i></button>
-                            </div>
-                            <div>
-                                <button id="disconn">연결해제</button>
                             </div>
                         </div>
                     </div>
@@ -211,15 +173,18 @@
                 }
             }).done(function(list){
                 console.log(list);
-                $('#messageDetail').empty();
+                $('#userMesssage').empty();
                 for(var i =0; i<list.length;i++){
-                //"<div>"+"보낸사람 : "+list[i].senderNo+"<br>" +list[i].content+"<br>"+"보낸날짜 : "+list[i].sendDate+"</div>
-                   $('#messageDetail').append(list[i].senderNo+"번님 : "+list[i].content+"<br>");
+                //"<div>"+"보낸사람 : "+list[i].senderNo+"<br>" +list[i].content+"<br>"+"보낸날짜 : "+list[i].sendDate+"</div>;
+                if(list[i].senderNo == 1){
+                     $('#userMesssage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                }else{
+                     $('#userMesssage').append("<li class='clearfix'><span class='chat-img'><img src='vendors/images/chat-img1.jpg' alt=''></span><div class='chat-body clearfix'><p style='display : inline-block'>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                }
                 };
+                $('#scrollbottom').scrollTop($('#scrollbottom').scrollHeight);
             });
         });
-
-
         $('#button-send').on('click', function(){
             $.ajax({
                 url : "/message",
@@ -233,6 +198,7 @@
                 console.log("추가 완료");
             });
         });
+
     </script>
 </body>
 </html>
