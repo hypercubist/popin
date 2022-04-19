@@ -1,4 +1,4 @@
- var placesList = [[${placesList}]];
+    var placesList = [[${placesList}]];
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
@@ -9,16 +9,13 @@
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
 
-console.log(placesList[0].location);
 var map1 =[];
     for(var i=0; i<placesList.length; i++){
             map1.push({content: '<div>'+placesList[i].location+'</div>',latlng : new kakao.maps.LatLng(placesList[i].coordY,placesList[i].coordX)})
         };
-
         var positions =
             map1.map(x => x)
         ;
-
 for (var i = 0; i < positions.length; i ++) {
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({

@@ -1,3 +1,4 @@
+
 const today = new Date();
     const handlePick = function(ev, picker){
 
@@ -52,7 +53,6 @@ const today = new Date();
 
                $('select[id=address-list]').on('change',function(){
                     $('#addressName').val($(this).val());
-
                });
            },
            error : function(e){
@@ -62,3 +62,7 @@ const today = new Date();
     });
 
     $("#demo3_22").on("change", ()=>{$("#maxGuest").val($("#demo3_22").val())});
+
+    $('.datetimepicker-range').on('keyup',function(){
+        $('#address-list').hide();
+    });
