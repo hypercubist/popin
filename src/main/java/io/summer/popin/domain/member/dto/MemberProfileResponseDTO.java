@@ -6,7 +6,7 @@ import lombok.Data;
 public class MemberProfileResponseDTO {
 
     //member
-    private Long no;
+    private Long memberNo;
     private String name;
     private String joinYear;
     private Integer emailCertificated;

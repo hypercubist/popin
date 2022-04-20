@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import io.summer.popin.global.dao.UrlMapper;
 import io.summer.popin.global.dto.UrlResourceDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AwsS3Service {
@@ -62,6 +64,7 @@ public class AwsS3Service {
     public List<String> updateProfileImage(List<MultipartFile> multipartFiles, UrlResourceDTO urlResourceDTO) {  //다중파일업로드
         List<String> urlList = new ArrayList<>();
 
+        log.info("multipartFiles = {}", multipartFiles.get(0).getOriginalFilename());
         multipartFiles.forEach(file -> {
             String fileName = createFileName(file.getOriginalFilename());
             ObjectMetadata objectMetadata = new ObjectMetadata();

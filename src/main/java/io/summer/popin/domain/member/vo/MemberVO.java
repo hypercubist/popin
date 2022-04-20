@@ -9,6 +9,7 @@ public class MemberVO {
 
     private Long no;
     private String name;
+    private String introduction;
     private String email;
     private String phoneNumber;
     private Date joinDate;
