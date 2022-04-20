@@ -37,7 +37,7 @@ public class MemberController {
 
             model.addAttribute("profile", profile);
             model.addAttribute("profileImgUrl", profileImgUrl);
-            return "myProfile";
+            return "html/my-profile";
         }
 
         @GetMapping("/members/{memberNo}")
@@ -46,19 +46,21 @@ public class MemberController {
             model.addAttribute("memberProfile", memberService.findMemberProfile(memberNo));
             model.addAttribute("profileImgUrl", memberService.getProfileImageUrl(memberNo));
             model.addAttribute("hostPlaces", placeService.getPlaces(memberNo));
-            return "memberProfile";
+            return "html/member-profile";
     }
 
 
         @GetMapping("/profile/edit/{memberNo}")  //프로필 수정 폼
         public String showEditProfileForm(@PathVariable("memberNo") Long memberNo, Model model) {
 
+            ProfileResponseDTO profile = memberService.findProfileByMemberNo(memberNo);
             String profileImgUrl = memberService.getProfileImageUrl(memberNo);
             ProfileUpdateDTO profileUpdateDTO = memberService.getEditProfileFormData(memberNo);
 
+            model.addAttribute("profile", profile);
             model.addAttribute("profileImgUrl", profileImgUrl);
             model.addAttribute("profileUpdateForm", profileUpdateDTO);
-            return "update-profile";
+            return "html/profile-update";
         }
 
         @PostMapping("/profile/edit/{memberNo}")  //프로필 수정 요청
