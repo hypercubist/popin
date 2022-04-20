@@ -17,6 +17,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -43,6 +44,9 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Value("${kakaolocal.restapi-key}")
     private String kakaolocalRestapiKey;
+
+    @Value("${cloud.aws.s3.bucket.url}")
+    private String awsS3BucketUrl;
 
     @Override
     public PlaceDetailResponseDTO getPlaceDetail(Long placeNo) {

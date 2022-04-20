@@ -10,7 +10,11 @@
     <select id="findOneByNo" resultType="PlaceDetailResponseDTO">
         select
             p.name,
+            m.no as host_no,
             m.name as host_name,
+            m.introduction as host_introduction,
+            m.email_certificated as hostCertificated,
+            m.join_date as host_join_date,
             pk.kind as place_kind,
             p.description,
             p.price_High,

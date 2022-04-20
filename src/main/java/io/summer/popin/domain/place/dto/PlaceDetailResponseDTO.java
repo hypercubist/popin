@@ -1,14 +1,20 @@
 package io.summer.popin.domain.place.dto;
 
-import io.summer.popin.domain.review.dto.ReviewResponseDTO;
 import lombok.Data;
+
+import java.time.LocalDate;
+
 
 @Data
 public class PlaceDetailResponseDTO {
 
     //place
     private String name;
+    private String hostNo;
     private String hostName;
+    private String hostIntroduction;
+    private String hostCertificated;
+    private LocalDate hostJoinDate;
     private String placeKind;
     private String description;
     private Integer priceHigh;

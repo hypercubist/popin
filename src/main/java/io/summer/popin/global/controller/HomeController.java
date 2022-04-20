@@ -33,7 +33,7 @@ public class HomeController {
 
     @GetMapping("/html-test")
     public String test(@ModelAttribute SearchDTO searchDTO){
-        return "html/profile-update";
+        return "html/place-detail";
     }
 
 
