@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 public class HomeController {
 
     @GetMapping("/")
-    public String home(@ModelAttribute SearchDTO serachDTO, @SessionAttribute(name="loginMember", required = false) SessionUserDTO loginMember){
+    public String home(@ModelAttribute("searchDTO") SearchDTO searchDTO, @SessionAttribute(name="loginMember", required = false) SessionUserDTO loginMember){
 
         log.info("LOGIN MEMBER = {}", loginMember);
         return "html/home";
@@ -27,13 +27,12 @@ public class HomeController {
 
     @GetMapping("/login-page")
     public String login() {
-        log.info("HERE WE ARE");
         return "html/login";
     }
 
 
     @GetMapping("/html-test")
-    public String test(@ModelAttribute SearchDTO serachDTO){
+    public String test(@ModelAttribute SearchDTO searchDTO){
         return "html/profile-update";
     }
 
