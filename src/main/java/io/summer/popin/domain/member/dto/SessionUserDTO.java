@@ -14,6 +14,7 @@ public class SessionUserDTO implements Serializable {
     private String nickname;
     private String role;
     private String email;
+    private String profileUrl;
 
     public SessionUserDTO(LoginMemberInfoDTO loginMemberInfoDTO) {
 
@@ -22,5 +23,7 @@ public class SessionUserDTO implements Serializable {
         this.nickname = loginMemberInfoDTO.getNickname();
         this.role = loginMemberInfoDTO.getRole();
         this.email = loginMemberInfoDTO.getEmail();
+        this.profileUrl = loginMemberInfoDTO.getProfileUrl();
+
     }
 }

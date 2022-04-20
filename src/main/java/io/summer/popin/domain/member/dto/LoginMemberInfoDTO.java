@@ -4,6 +4,7 @@ import lombok.*;
 
 @ToString
 @Getter
+@Setter
 public class LoginMemberInfoDTO {
 
     private Long no;
@@ -11,6 +12,7 @@ public class LoginMemberInfoDTO {
     private String nickname;
     private String email;
     private String role;
+    private String profileUrl;
 
 
     @Builder

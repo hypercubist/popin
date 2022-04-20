@@ -57,7 +57,7 @@ public class MemberServiceImpl implements MemberService{
     public String getProfileImageUrl(Long memberNo) {
         List<String> urls = urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo);
         if (urls.isEmpty()) {
-            return "img/profile_default.png";
+            return "/img/profile_default.png";
         }
         return urls.get(0);
     }

@@ -4,6 +4,8 @@ import io.summer.popin.domain.member.dao.MemberMapper;
 import io.summer.popin.domain.member.dto.LoginMemberInfoDTO;
 import io.summer.popin.domain.member.dto.OAuthAttributesDTO;
 import io.summer.popin.domain.member.dto.SessionUserDTO;
+import io.summer.popin.domain.model.ResourceKind;
+import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 //로그인 이후 가져온 사용자의 정보들을 기반으로 가입/정보 업데이트/세션 저장 처리 클래스
@@ -28,6 +31,8 @@ public class CustomOAuth2MemberserviceImpl implements OAuth2UserService<OAuth2Us
 
     private final MemberMapper memberMapper;
     private final HttpSession httpSession;
+    private final UrlMapper urlMapper;
+    private final MemberService memberService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest memberRequest) throws OAuth2AuthenticationException {
@@ -44,6 +49,7 @@ public class CustomOAuth2MemberserviceImpl implements OAuth2UserService<OAuth2Us
         OAuthAttributesDTO attributes = OAuthAttributesDTO.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());  //3
 
         LoginMemberInfoDTO loginMemberInfoDTO = saveOrUpdate(attributes);
+        loginMemberInfoDTO.setProfileUrl(memberService.getProfileImageUrl(loginMemberInfoDTO.getNo()));
 
         httpSession.setAttribute("loginMember", new SessionUserDTO(loginMemberInfoDTO));  //4
 
