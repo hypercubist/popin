@@ -6,6 +6,7 @@ import lombok.Data;
 public class ProfileResponseDTO {
     private Long no;
     private String name;
+    private String introduction;
     private String email;
     private String phoneNumber;
     private String className;
