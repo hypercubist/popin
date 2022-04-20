@@ -23,10 +23,16 @@
     </insert>
     <select id="messageDetail" parameterType="MessageRequestDTO" resultType="MessageResponseDTO">
         select
-            sender_no,receiver_no,content,send_date,receive_date
+            sender_no,
+            receiver_no,
+            content,
+            send_date,
+            receive_date
         from
             message
         where
-            (sender_no=#{senderNo} and receiver_no=#{receiverNo})
+            (sender_no=#{senderNo} and receiver_no=#{receiverNo}) or (sender_no=#{receiverNo} and receiver_no=#{senderNo})
+        order by
+            send_date
     </select>
 </mapper>
