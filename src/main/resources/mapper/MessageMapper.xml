@@ -7,13 +7,14 @@
         select
             distinct sender_no,
             receiver_no,
-            max(send_date) as sendDate
+            max(send_date) as sendDate,
+            name
         from
-            message
+            message left outer join member on(message.no=member.no)
         where
             sender_no in(select distinct sender_no from message where sender_no=#{senderNo} or receiver_no=#{senderNo})
         group by
-            sender_no, receiver_no
+            sender_no, receiver_no,name
     </select>
     <insert id="sendMessage" parameterType="MessageRequestDTO">
         insert into

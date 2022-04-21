@@ -20,8 +20,8 @@
                                 <div th:object="${dto}">
                                     <li>
                                         <img src="vendors/images/img.jpg" alt="">
-                                         보낸 사람 : <button th:text="*{senderNo}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}"></button><br>
-                                         받는 사람 : <button th:text="*{receiverNo}" class="receiverNo" th:attr="value=*{receiverNo}"></button><br>
+                                         보낸 사람 : <button th:text="*{name}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}"></button><br>
+                                         받는 사람 : <button th:text="*{name}" class="receiverNo" th:attr="value=*{receiverNo}"></button><br>
                                          최근 받은 시간 : <div th:text="*{sendDate}"></div>
                                          <hr>
                                     </li>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="chat-box">
-                        <div class="chat-desc customscroll" id="scrollbottom">
+                        <div class="chat-desc customscroll">
                             <ul>
                                 <div>
                                     <div id="userMessage">
@@ -150,6 +150,7 @@
             var data = JSON.parse(msg.data);
         }
 }
+
         $('.senderNo').on('click',function(){
             var senderInput ={
                 'value' : $(this).val(),
@@ -172,16 +173,16 @@
                 console.log(list);
                 $('#userMessage').empty();
                 for(var i =0; i<list.length;i++){
-                //"<div>"+"보낸사람 : "+list[i].senderNo+"<br>" +list[i].content+"<br>"+"보낸날짜 : "+list[i].sendDate+"</div>;
-                if(list[i].senderNo == 1){
-                     $('#userMessage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
-                }else{
-                     $('#userMessage').append("<li class='clearfix'><span class='chat-img'><img src='vendors/images/chat-img1.jpg' alt=''></span><div class='chat-body clearfix'><p style='display : inline-block'>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
-                }
+                    if(list[i].senderNo == 1){
+                         $('#userMessage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                    }else{
+                         $('#userMessage').append("<li class='clearfix'><span class='chat-img'><img src='vendors/images/chat-img1.jpg' alt=''></span><div class='chat-body clearfix'><p style='display : inline-block'>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                    }
                 };
-                $('#scrollbottom').scrollTop($('#scrollbottom').scrollHeight);
+                $('#userMessage').scrollTop($('#userMessage')[0].scrollHeight);
             });
         });
+
         $('#button-send').on('click', function(){
             $.ajax({
                 url : "/message",
