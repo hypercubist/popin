@@ -27,56 +27,65 @@
                     <p class="mb-30">당신의 장소를 공유해주세요.</p>
                 </div>
                 <div class="wizard-content">
-                    <form class="tab-wizard wizard-circle wizard">
+                    <form class="tab-wizard wizard-circle wizard" th:action th:object="${registerForm}" method="post" enctype="multipart/form-data">
+                        <div th:if="${#fields.hasGlobalErrors()}">
+                            <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+                               th:text="${err}">글로벌 오류 메시지</p>
+                        </div>
                         <h5>이름 및 주소</h5>
                         <section>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>이름</label>
+                                        <label for="placeName">이름</label>
                                         <input
                                                 type="text"
                                                 class="form-control"
+                                                th:errorclass="field-error"
                                                 placeholder="호스팅할 장소의 이름을 작성해주세요"
+                                                th:field="*{placeName}"
                                         />
+                                        <div class="field-error" th:errors="*{placeName}"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>장소 종류</label>
-                                        <select class="custom-select form-control">
-                                            <option value="">장소의 종류를 선택해주세요</option>
-                                            <option value="Amsterdam">India</option>
-                                            <option value="Berlin">UK</option>
-                                            <option value="Frankfurt">US</option>
+                                        <label for="placeKindCode">장소 종류</label>
+                                        <select class="custom-select form-control" th:field="*{placeKindCode}" th:errorclass="field-error">
+                                            <option selected value="">장소의 종류를 선택해주세요</option>
+                                            <th:block th:each="placeKind : ${placeKinds}">
+                                                <option th:value="${placeKind.no}" th:text="${placeKind.kind}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{placeKindCode}"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>최대 인원</label>
+                                        <label for="maxGuest">최대 인원</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{maxGuest}"
+                                                th:errorclass="field-error"
                                         />
+                                        <div class="field-error" th:errors="*{maxGuest}"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>주소</label>
                                         <input
-                                                id="addressName"
+                                                th:field="*{addressName}"
                                                 type="text"
                                                 class="form-control"
+                                                th:errorclass="field-error"
                                                 onclick="addressSearch()"
                                                 placeholder="클릭하여 주소 찾기"
                                                 readonly
                                         />
-                                        <!-- id는 fields로 수정 -->
+                                        <div class="field-error" th:errors="*{addressName}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -90,26 +99,25 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-12"><div class="clearfix mb-20">
                                     <div class="pull-left">
-                                        <h5 class="h5">대표사진을 등록해주세요</h4>
+                                        <h5 class="h5">대표사진을 등록해주세요</h5>
                                     </div>
                                 </div>
-                                    <div class="dropzone" action="#" id="my-awesome-dropzone">
-                                        <div class="fallback">
-                                            <input type="file" name="file" />
-                                        </div>
-                                    </div></div>
+                                <div class="dropzone" action="#" id="my-awesome-dropzone">
+                                    <div class="fallback">
+                                        <input type="file" id="placeThumbnail" name="placeThumbnail">
+                                    </div>
+                                </div>
                                 <div class="col-md-8 col-sm-12"><div class="clearfix mb-20">
                                     <div class="pull-left">
-                                        <h5 class="h5">호스팅 장소를 잘 표현할 수 있는 사진을 등록해주세요(3장 이상)</h4>
+                                        <h5 class="h5">호스팅 장소를 잘 표현할 수 있는 사진을 등록해주세요(3장 이상)</h5>
                                     </div>
                                 </div>
-                                    <div class="dropzone" action="#" id="my-awesome-dropzone">
-                                        <div class="fallback">
-                                            <input type="file" name="file" />
-                                        </div>
-                                    </div></div>
+                                <div class="dropzone" action="#" id="my-awesome-dropzone">
+                                    <div class="fallback">
+                                        <input type="file" multiple="multiple" id="imageFiles" name="imageFiles">
+                                    </div>
+                                </div>
                             </div>
-
                         </section>
                         <!-- Step 3 -->
                         <h5>상세 옵션 선택</h5>
@@ -117,220 +125,174 @@
                             <div class="row">
                                 <div class="col-lg-2 col-md-3 col-sm-6">
                                     <div class="form-group">
-                                        <label>방</label>
+                                        <label for="roomCount">방</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{roomCount}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>화장실</label>
+                                        <label for="bathroomCount">화장실</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{bathroomCount}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>침대(싱글)</label>
+                                        <label for="bedSingle">침대(싱글)</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{bedSingle}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>침대(더블)</label>
+                                        <label for="bedDouble">침대(더블)</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{bedDouble}"
                                         />
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-3 col-sm-6">
                                     <div class="form-group">
-                                        <label>침대(퀸)</label>
+                                        <label for="bedQueen">침대(퀸)</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{bedQueen}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>침대(킹)</label>
+                                        <label for="bedKing">침대(킹)</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{bedKing}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>주방</label>
+                                        <label for="kitchen">주방</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{kitchen}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>주차공간</label>
+                                        <label for="parking">주차공간</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{parking}"
                                         />
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-3 col-sm-6">
                                     <div class="form-group">
-                                        <label>와이파이</label>
+                                        <label for="wifi">와이파이</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{wifi}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>발코니</label>
+                                        <label for="balcony">발코니</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{balcony}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>수영장</label>
+                                        <label for="pool">수영장</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{pool}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>에어컨</label>
+                                        <label for="airConditioner">에어컨</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{airConditioner}"
                                         />
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-3 col-sm-6">
                                     <div class="form-group">
-                                        <label>욕조</label>
+                                        <label for="bathtub">욕조</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{bathtub}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>아기 침대</label>
+                                        <label for="crib">아기 침대</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{crib}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>TV</label>
+                                        <label for="tv">TV</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{tv}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>커피머신</label>
+                                        <label for="coffeeMachine">커피머신</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{coffeeMachine}"
                                         />
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-3 col-sm-6">
                                     <div class="form-group">
-                                        <label>PC</label>
+                                        <label for="pc">PC</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{pc}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>칠판</label>
+                                        <label for="blackBoard">칠판</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{blackBoard}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>빔프로젝트</label>
+                                        <label for="beamProject">빔프로젝트</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{beamProject}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>풍선</label>
+                                        <label for="balloon">풍선</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{balloon}"
                                         />
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-3 col-sm-6">
                                     <div class="form-group">
-                                        <label>식탁</label>
+                                        <label for="diningTable">식탁</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{diningTable}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>램프</label>
+                                        <label for="lamp">램프</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{lamp}"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <label>주방 도구</label>
+                                        <label for="kitchenTools">주방 도구</label>
                                         <input
-                                                id="demo3_22"
                                                 type="text"
-                                                value="0"
-                                                name="demo3_22"
+                                                th:field="*{kitchenTools}"
                                         />
                                     </div>
                                 </div>
@@ -342,54 +304,73 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>체크인 시간(시작)</label>
-                                        <select class="form-control">
-                                            <option>Select Result</option>
-                                            <option>Selected</option>
-                                            <option>Rejected</option>
+                                        <label for="checkinTimeStart">체크인 시간(시작)</label>
+                                        <select th:field="*{checkinTimeStart}" th:errorclass="field-error" class="form-control">
+                                            <option selected value="">체크인 시작 시간</option>
+                                            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                                                <option th:text="|${num}시|" th:value="${num}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{checkinTimeStart}"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>체크인 시간(마감)</label>
-                                        <select class="form-control">
-                                            <option>Select Result</option>
-                                            <option>Selected</option>
-                                            <option>Rejected</option>
+                                        <label for="checkinTimeEnd">체크인 시간(마감)</label>
+                                        <select th:field="*{checkinTimeEnd}" th:errorclass="field-error" class="form-control">
+                                            <option selected value="">체크인 시작 시간</option>
+                                            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                                                <option th:text="|${num}시|" th:value="${num}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{checkinTimeEnd}"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>체크아웃 시간(시작)</label>
-                                        <select class="form-control">
-                                            <option>Select Result</option>
-                                            <option>Selected</option>
-                                            <option>Rejected</option>
+                                        <label for="checkoutTimeStart">체크아웃 시간(시작)</label>
+                                        <select th:field="*{checkoutTimeStart}" th:errorclass="field-error" class="form-control">
+                                            <option selected value="">체크인 시작 시간</option>
+                                            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                                                <option th:text="|${num}시|" th:value="${num}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{checkoutTimeStart}"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>체크아웃 시간(마감)</label>
-                                        <select class="form-control">
-                                            <option>Select Result</option>
-                                            <option>Selected</option>
-                                            <option>Rejected</option>
+                                        <label for="checkoutTimeEnd">체크아웃 시간(마감)</label>
+                                        <select th:field="*{checkoutTimeEnd}" th:errorclass="field-error" class="form-control">
+                                            <option selected value="">체크인 시작 시간</option>
+                                            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                                                <option th:text="|${num}시|" th:value="${num}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{checkoutTimeEnd}"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>호스트 설명 및 주의사항(20자 이상 2000자 이내)</label>
-                                        <textarea class="form-control"></textarea>
+                                        <label for="description">호스트 설명 및 주의사항(20자 이상 2000자 이내)</label>
+                                        <textarea class="form-control"
+                                                  th:field="*{description}"
+                                                  th:errorclass="field-error">
+                                        </textarea>
+                                        <div class="field-error" th:errors="*{description}"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>이용가격</label>
+                                        <label for="priceHigh">이용가격</label>
                                         <input
                                                 type="text"
                                                 class="form-control"
+                                                th:field="*{priceHigh}"
+                                                th:errorclass="field-error"
                                                 placeholder="1박 당 가격 (원)"
                                         />
                                     </div>
                                 </div>
                             </div>
                         </section>
+                        <div class="mb-30 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-secondary btn-lg">
+                                저장
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
