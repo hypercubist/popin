@@ -71,9 +71,7 @@ public class MemberController {
             memberService.updateProfile(memberNo, profileUpdateDTO);
             log.info("profileImg = {}", profileImg.isEmpty());
 
-            if ("".equals(profileImg.get(0).getOriginalFilename())) {
-
-            }else {
+            if (!"".equals(profileImg.get(0).getOriginalFilename())) {
                 urlResourceDTO.setMemberNo(memberNo);
                 urlResourceDTO.setKindCode(1);
                 awsS3Service.updateProfileImage(profileImg, urlResourceDTO);
@@ -82,22 +80,6 @@ public class MemberController {
             log.info("ProfileEditResponseDTO = {}", profileUpdateDTO);
             return "redirect:/members";
         }
-
-//        @PostMapping("/profile/delete/{memberNo}")
-//        public String deleteProfile(@PathVariable("memberNo") Long memberNo) {
-//
-//            memberService.deleteProfile(memberNo);
-//
-//            return "home";
-//        }
-
-
-
-
-
-
-
-
 
 
 }
