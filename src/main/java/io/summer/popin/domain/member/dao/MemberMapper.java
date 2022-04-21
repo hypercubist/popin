@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MemberMapper {
 
-    ProfileResponseDTO findProfileByMemberNo(Long no);
+    ProfileResponseDTO findProfileByMemberNo(Long memberNo);
 
     MemberProfileResponseDTO findMemberProfileByMemberNo(Long memberNo);
 

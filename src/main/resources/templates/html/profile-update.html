@@ -15,7 +15,7 @@
                 <div class="pd-20 card-box height-100-p">
                     <div class="profile-photo pt-30">
                         <img
-                                th:src="${profileImgUrl != null} ? ${profileImgUrl} : 'img/profile_default.png'"
+                                th:src="${profileImgUrl != null} ? ${profileImgUrl} : '/img/profile_default.png'"
                                 alt=""
                                 class="avatar-photo"
                         />
@@ -54,19 +54,19 @@
                     <div class="height-100-p overflow-hidden">
                         <div class="pd-20 tab height-100-p">
                             <section>
-                                <h2 class="pt-30" th:text="|안녕하세요. 저는 *{name} 입니다!|"></h2>
+                                <h2 class="pt-10" th:text="|안녕하세요. 저는 *{name} 입니다!|"></h2>
                                 <div class="pt-10 pb-10" th:text="|회원 가입: *{joinYear}|"></div>
                                 <div>
                                     <a
                                             style="pointer-events: none"
-                                            th:href="@{|/profile/edit/*{no}|}"
+                                            th:href="@{|/members/update/*{memberNo}|}"
                                     >프로필 수정하기</a
                                     >
                                 </div>
 
                                 <form th:action th:object="${profileUpdateForm}" method="post" enctype="multipart/form-data">
                                     <div class="form-group pt-30">
-                                        <label>사진 업데이트</label>
+                                        <label for="profileImg">사진 업데이트</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="profileImg" name="profileImg"/>
                                             <label class="custom-file-label">Choose file</label>
@@ -74,18 +74,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="introduction" class="pt-20">소개</label>
-                                        <textarea class="form-control" id="introduction"
-                                                  th:text="*{introduction}" th:if="*{introduction != null}"
+                                        <textarea class="form-control"
+                                                  th:field="*{introduction}"
                                         ></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">이메일</label>
-                                        <input type="text" id="email" class="form-control" th:text="*{email}"/>
+                                        <input type="text" class="form-control"
+                                               th:field="*{email}" readonly/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phoneNumber">핸드폰 번호</label>
-                                        <input type="text" class="form-control" id="phoneNumber"
-                                               th:text="*{phoneNumber}" th:if="*{phoneNumber != null}" />
+                                        <input type="text" class="form-control"
+                                               th:field="*{phoneNumber}" />
                                     </div>
                                     <div class="mb-30 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-secondary btn-lg">

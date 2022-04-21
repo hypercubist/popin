@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout/layout-sub :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}"
+<html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}"
       xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
@@ -16,7 +16,7 @@
                 <div class="pd-20 card-box height-100-p">
                     <div class="profile-photo pt-30">
                         <img
-                                th:src="${profileImgUrl != null} ? ${profileImgUrl} : 'img/profile_default.png'"
+                                th:src="${profileImgUrl != null} ? ${profileImgUrl} : '/img/profile_default.png'"
                                 alt=""
                                 class="avatar-photo"
                         />
@@ -58,7 +58,7 @@
                                 <h2 class="pt-30" th:text="|안녕하세요. 저는 *{name} 입니다!|"></h2>
                                 <div class="pt-10 pb-10" th:text="|회원 가입: *{joinYear}|"></div>
                                 <div>
-                                    <a th:href="@{|/profile/edit/*{no}|}">프로필 수정하기</a>
+                                    <a th:href="@{|/members/update/*{memberNo}|}">프로필 수정하기</a>
                                 </div>
                                 <section class="mb-20">
                                     <div

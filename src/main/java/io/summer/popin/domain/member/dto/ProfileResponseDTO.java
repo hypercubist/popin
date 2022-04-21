@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProfileResponseDTO {
-    private Long no;
+    private Long memberNo;
     private String name;
     private String introduction;
     private String email;

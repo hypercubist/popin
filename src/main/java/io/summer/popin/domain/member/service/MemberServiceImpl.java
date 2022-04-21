@@ -8,10 +8,12 @@ import io.summer.popin.domain.member.vo.MemberVO;
 import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
@@ -47,7 +49,7 @@ public class MemberServiceImpl implements MemberService{
         MemberVO memberVO = new MemberVO();
 
         memberVO.setNo(memberNo);
-        memberVO.setName(profileUpdateDTO.getName());
+        memberVO.setIntroduction(profileUpdateDTO.getIntroduction());
         memberVO.setPhoneNumber(profileUpdateDTO.getPhoneNumber());
 
         return memberMapper.updateProfileByMemberNo(memberVO);

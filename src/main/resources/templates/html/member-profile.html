@@ -9,38 +9,16 @@
 </head>
 <body>
 <section>
-    <div class="pd-ltr-20 xs-pd-20-10">
+    <div class="pd-ltr-20 xs-pd-20-10" th:object="${memberProfile}">
         <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
                 <div class="pd-20 card-box height-100-p">
                     <div class="profile-photo pt-30">
                         <img
-                                src="vendors/images/photo1.jpg"
+                                th:src="${profileImgUrl != null} ? ${profileImgUrl} : '/img/profile_default.png'"
                                 alt=""
                                 class="avatar-photo"
                         />
-                        <div
-                                class="modal fade"
-                                id="modal"
-                                tabindex="-1"
-                                role="dialog"
-                                aria-labelledby="modalLabel"
-                                aria-hidden="true"
-                        >
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-body pd-5">
-                                        <div class="img-container">
-                                            <img
-                                                    id="image"
-                                                    src="vendors/images/photo2.jpg"
-                                                    alt="Picture"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <i
                             class="icon-copy ion-android-done-all"
@@ -52,14 +30,22 @@
                         보여줄 수 있습니다.
                     </div>
                     <div class="profile-info">
-                        <h5 class="mb-20 h5 text-black" style="font-size: 1.5rem">
-                            유진 인증 완료
+                        <h5 class="mb-20 h5 text-black" style="font-size: 1.5rem" th:text="|*{name} 인증 완료|">
                         </h5>
-                        <i
-                                class="icon-copy ion-checkmark-round"
-                                style="font-size: 1.3rem"
-                        ></i>
-                        <span class="pl-10" style="font-size: 1.1rem">전화번호</span>
+                        <div th:if="*{emailCertificated == 1}">
+                            <i
+                                    class="icon-copy ion-checkmark-round"
+                                    style="font-size: 1.3rem"
+                            ></i>
+                            <span class="pl-10" style="font-size: 1.1rem">이메일</span>
+                        </div>
+                        <div th:if="*{phoneCertificated == 1}">
+                            <i
+                                    class="icon-copy ion-checkmark-round"
+                                    style="font-size: 1.3rem"
+                            ></i>
+                            <span class="pl-10" style="font-size: 1.1rem">전화번호</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,37 +54,41 @@
                     <div class="height-100-p overflow-hidden">
                         <div class="pd-20 tab height-100-p">
                             <div class="pd-20">
-                                <h2 class="pt-10">안녕하세요. 저는 유진입니다</h2>
-                                <div class="pt-10 pb-10">회원가입:2016</div>
-                                <div>
-                                    <a th:href="@{|/profile/edit/*{no}|}">프로필 수정하기</a>
-                                </div>
-
+                                <h2 class="pt-10" th:text="|안녕하세요. 저는 *{name} 입니다!|"></h2>
+                                <div class="pt-10 pb-10" th:text="|회원 가입: *{joinYear}|"></div>
                                 <div
                                         class="pt-20 pb-20"
                                         style="font-size: 1.5rem; font-weight: 600"
                                 >
                                     소개
                                 </div>
-                                <div>유진입니둥!</div>
+                                <div th:text="*{introduction}" th:if="*{introduction != null}"></div>
                             </div>
                             <hr />
                             <div class="pd-20">
-                                <h5 class="pb-20" style="font-size: 1.5rem">
-                                    Uncle Rod Private Cabin님의 숙소
+                                <h5 class="pb-20" style="font-size: 1.5rem" th:text="|${memberProfile.name}님의 숙소|">
                                 </h5>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
-                                        <div class="da-card">
-                                            <div class="da-card-photo">
-                                                <img src="vendors/images/photo1.jpg" alt="" />
-                                            </div>
-                                            <div class="da-card-content">
-                                                <h5 class="h5 mb-10">해가 잘드는 집</h5>
-                                                <p class="mb-0">광주광역시</p>
+                                <div class="row clearfix">
+                                    <th:block th:each="hostPlace : ${hostPlaces}">
+                                        <div class="col-lg-3 col-md-4 col-sm-6 mb-10" th:object="${hostPlace}">
+                                            <div class="da-card">
+                                                <div class="da-card-photo">
+                                                    <a th:href="@{|/places/*{placeNo}|}">
+                                                        <img th:src="*{thumbnailUrl}" alt="숙소 썸네일" />
+                                                    </a>
+                                                </div>
+                                                <div class="da-card-content">
+                                                    <div class="pb-30" style="font-size: 1.1rem" th:text="*{placeName}"></div>
+                                                    <p class="mb-0"
+                                                       style="display:inline-block"
+                                                       th:text="*{region1depth}"></p>
+                                                    <p class="mb-0"
+                                                       style="display:inline-block"
+                                                       th:text="|,*{region2depth}|"></p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </th:block>
                                 </div>
                             </div>
                         </div>
