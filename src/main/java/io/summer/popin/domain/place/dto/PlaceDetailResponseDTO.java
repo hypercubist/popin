@@ -10,7 +10,7 @@ public class PlaceDetailResponseDTO {
 
     //place
     private String name;
-    private String hostNo;
+    private Long hostNo;
     private String hostName;
     private String hostIntroduction;
     private String hostCertificated;

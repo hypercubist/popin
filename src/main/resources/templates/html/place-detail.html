@@ -64,7 +64,7 @@
                                                 <div>
                                                     <img
                                                         class="rounded"
-                                                        src="/vendors/images/photo4.jpg"
+                                                        th:src="${hostProfileUrl}"
                                                         alt=""
                                                         style="width: 60px"
                                                     />
@@ -87,11 +87,6 @@
                                         <div class="col-md-6 col-sm-12">
                                             <div>
                                                 <div class="d-flex justify-content-around pb-20">
-                                                    <i class="icon-copy ion-android-star"
-                                                    >
-                                                        <span th:text="|후기 ${place.reviewCount}개|">후기갯수</span>
-                                                    </i
-                                                    >
                                                     <i th:if="${place.hostCertificated != 1}" class="icon-copy ion-person">본인 인증 완료</i>
 <!--                                                    if조건 반대로 바꿔야 함-->
                                                 </div>
@@ -142,12 +137,12 @@
                                                     style="font-size: 2rem"
                                             ></i>
                                         </div>
-                                        <div class="col-md-11 col-sm-11">
-                                            <div style="font-size: 1.1rem; font-weight: 600">
-                                                수영장(로딩안됨)
-                                            </div>
-                                            <div>게스트가 자주 찾는 편의시설(로딩안됨)</div>
-                                        </div>
+<!--                                        <div class="col-md-11 col-sm-11">-->
+<!--                                            <div style="font-size: 1.1rem; font-weight: 600">-->
+<!--                                                수영장(로딩안됨)-->
+<!--                                            </div>-->
+<!--                                            <div>게스트가 자주 찾는 편의시설(로딩안됨)</div>-->
+<!--                                        </div>-->
                                     </div>
                                     <div class="row pb-10">
                                         <div
@@ -391,7 +386,7 @@
                                             <label>체크인 - 체크아웃</label>
                                             <input
                                                     type="text"
-                                                    th:field="*{dates}"
+                                                    th:field="*{pickedDates}"
                                                     placeholder="날짜 선택"
                                                     class="form-control datetimepicker-range"
                                                     readonly
@@ -423,8 +418,8 @@
                                             </div>
                                         </div>
                                         <input type="hidden" th:field="*{guestCount}">
-                                        <input type="hidden" th:field="*{checkinDate}">
-                                        <input type="hidden" th:field="*{checkoutDate}">
+                                        <input type="hidden" th:field="*{pickedCheckinDate}">
+                                        <input type="hidden" th:field="*{pickedCheckoutDate}">
                                         <input type="hidden" th:field="*{period}" readonly>
                                         <input type="hidden" th:field="*{totalPrice}" readonly>
                                     </form>
@@ -461,7 +456,7 @@
 <script src="/src/plugins/slick/slick.min.js"></script>
 <script src="/src/scripts/moment.js"></script>
 <script src="/src/scripts/daterangepicker.min.js"></script>
-<script>
+<script th:inline="javascript">
       jQuery(document).ready(function () {
         jQuery(".product-slider").slick({
           slidesToShow: 1,
@@ -486,60 +481,12 @@
         $("input[name='demo3_22']").TouchSpin({
           initval: 1,
         });
-          const today = new Date();
+
           const oneDay = 1000 * 60 * 60 * 24;
           const pricePerDay = [[${place.priceHigh}]];
-<!--          const checkinDate = [[${#temporals.format(searchDTO.checkinDate, 'yyyy-MM-dd')}]];-->
-<!--          const checkoutDate = [[${#temporals.format(searchDTO.checkoutDate, 'yyyy-MM-dd')}]];-->
-          const invalidDates = [
-            {
-              checkinDate: new Date(2022, 03, 10),
-              checkoutDate: new Date(2022, 03, 15),
-            },
-            {
-              checkinDate: new Date(2022, 04, 1),
-              checkoutDate: new Date(2022, 04, 8),
-            },
-          ];
-          const bookedDateCheck = (date) => {
-            return invalidDates.every(
-              (bookedDate) =>
-                date < bookedDate.checkinDate || date >= bookedDate.checkoutDate
-            );
-          };
-          const setInvalidDate = (date) => {
-            return !invalidDates.every(
-              (bookedDate) =>
-                date._d < bookedDate.checkinDate || date._d >= bookedDate.checkoutDate
-            );
-          };
-          const getPeriod = (startDate, endDate) => {
-            return Math.round((endDate.getTime() - startDate.getTime()) / oneDay)-1;
-          };
-          const handlePick = function(ev, picker){
-            const period = getPeriod(picker.startDate._d, picker.endDate._d);
-
-            for (i = 0; i < period; i++) {
-              const date = new Date(picker.startDate._d.getTime() + oneDay * i);
-              if (!bookedDateCheck(date)) {
-                $("#date").val("");
-                alert(
-                  "예약할 수 없는 날짜가 포함되어 있습니다. 일정을 다시 선택해주세요."
-                );
-                return;
-              }
-            }
-            $("#period").val(period);
-            $("#totalPrice").val(period*pricePerDay);
-            $("#checkinDate").val(picker.startDate.format("YYYY-MM-DD"));
-            $("#checkoutDate").val(picker.endDate.format("YYYY-MM-DD"));
-          };
-          $("#dates").daterangepicker({
+          let daterangepickerConfig = {
             alwaysShowCalendars: true,
-            minDate: today,
-            isInvalidDate: setInvalidDate,
-            startDate: null,
-            endDate: null,
+            minDate: new Date(),
             locale: {
               format: "YYYY-MM-DD",
               separator: " ~ ",
@@ -561,8 +508,72 @@
                 "12월",
               ],
             },
-          });
-          $("#dates").on("hide.daterangepicker", handlePick);
+          }
+
+          const bookedDateCheck = (date) => {
+            return invalidDates.every(
+              (bookedDate) =>
+                date < bookedDate.checkinDate || date >= bookedDate.checkoutDate
+            );
+          };
+          const setInvalidDate = (date) => {
+            return !invalidDates.every(
+              (bookedDate) =>
+                date._d < bookedDate.checkinDate || date._d >= bookedDate.checkoutDate
+            );
+          };
+          const getPeriod = (startDate, endDate) => {
+            console.log(startDate);
+            console.log(endDate);
+            console.log((endDate.getTime() - startDate.getTime()) / oneDay);
+            return Math.round((endDate.getTime() - startDate.getTime()) / oneDay);
+          };
+          const handlePick = function(ev, picker){
+            const start = new Date(picker.startDate._d.getFullYear(), picker.startDate._d.getMonth()+1, picker.startDate._d.getDate());
+            const end = new Date(picker.endDate._d.getFullYear(), picker.endDate._d.getMonth()+1, picker.endDate._d.getDate());
+            const period = getPeriod(start, end);
+
+            for (i = 0; i < period; i++) {
+              const date = new Date(start + oneDay * i);
+              if (!bookedDateCheck(date)) {
+                $("#dates").val("");
+                alert(
+                  "예약할 수 없는 날짜가 포함되어 있습니다. 일정을 다시 선택해주세요."
+                );
+                return;
+              }
+            }
+            $("#period").val(period);
+            $("#totalPrice").val(period*pricePerDay);
+            console.log(picker.startDate.format("YYYY-MM-DD"));
+            $("#pickedCheckinDate").val(picker.startDate.format("YYYY-MM-DD"));
+            $("#pickedCheckoutDate").val(picker.endDate.format("YYYY-MM-DD"));
+          };
+
+          const searchDTO = [[${searchDTO}]];
+
+          if(searchDTO.dates){
+              const checkinDate = [[${#temporals.format(searchDTO.checkinDate, 'yyyy-MM-dd')}]];
+              const checkoutDate = [[${#temporals.format(searchDTO.checkoutDate, 'yyyy-MM-dd')}]];
+              daterangepickerConfig.startDate = checkinDate;
+              daterangepickerConfig.endDate = checkoutDate;
+          }
+
+          const invalidDates = [
+            {
+              checkinDate: new Date(2022, 05, 10),
+              checkoutDate: new Date(2022, 05, 15),
+            },
+            {
+              checkinDate: new Date(2022, 06, 1),
+              checkoutDate: new Date(2022, 06, 8),
+            },
+          ];
+
+          daterangepickerConfig.isInvalidDate = setInvalidDate;
+
+          $("#pickedDates").daterangepicker(daterangepickerConfig);
+          $("#pickedDates").on("hide.daterangepicker", handlePick);
       });
 
     </script>

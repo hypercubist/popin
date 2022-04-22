@@ -35,7 +35,6 @@
   <script src="/src/scripts/daterangepicker.min.js"></script>
   <script src="/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
   <script src="/vendors/scripts/advanced-components.js"></script>
-<!--  <script src="js/search-form.js"></script>-->
   <script th:inline="javascript">
 
     $(function () {
@@ -46,17 +45,13 @@
           }
 
         }
-
-        initForm();
-        const today = new Date();
         const handlePick = function(ev, picker){
-
         $("#checkinDate").val(picker.startDate.format("YYYY-MM-DD"));
         $("#checkoutDate").val(picker.endDate.format("YYYY-MM-DD"));
       };
        $("#dates").daterangepicker({
         alwaysShowCalendars: true,
-        minDate: today,
+        minDate: new Date(),
         locale: {
           format: "YYYY-MM-DD",
           separator: " ~ ",
@@ -80,6 +75,7 @@
         },
       });
 
+        initForm();
         $("#dates").on("hide.daterangepicker", handlePick);
         $(".custom-select2").select2({
           ajax: {
@@ -102,7 +98,6 @@
                   text: item.address_name,
                 };
               });
-              // Transforms the top-level key of the response object from 'items' to 'results'
               return {
                 results: results,
               };

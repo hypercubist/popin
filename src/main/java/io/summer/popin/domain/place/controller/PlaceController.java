@@ -1,6 +1,8 @@
 package io.summer.popin.domain.place.controller;
 
 import io.summer.popin.domain.member.dto.SessionUserDTO;
+import io.summer.popin.domain.member.service.MemberService;
+import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
 import io.summer.popin.domain.search.dto.SearchDTO;
@@ -21,11 +23,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Controller
+@SessionAttributes("searchDTO")
 @RequestMapping("/places")
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final MemberService memberService;
     private final AwsS3Service awsS3Service;
+
+    @ModelAttribute("searchDTO")
+    public SearchDTO test(){
+        return new SearchDTO();
+    }
 
     @GetMapping
     public String myPlaces(Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
@@ -46,8 +55,9 @@ public class PlaceController {
 //        LocalDateTime checkinDate = LocalDateTime.of(2022, 4, 8, 0, 0);
 //        LocalDateTime checkoutDate = LocalDateTime.of(2022, 4, 9, 0, 0); //장소 리스트에서 모델로 받아올 정보임
 //        TempSearchRequestDTO searchDTO = new TempSearchRequestDTO(checkinDate, checkoutDate);
-
+        PlaceDetailResponseDTO placeDetail = placeService.getPlaceDetail(placeNo);
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
+        model.addAttribute("hostProfileUrl", memberService.getProfileImageUrl(placeDetail.getHostNo()));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
         model.addAttribute("thumbnailUrl", placeService.getThumbnailUrl(placeNo));
 
