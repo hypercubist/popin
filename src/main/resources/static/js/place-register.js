@@ -54,13 +54,3 @@ var mapContainer = document.getElementById("map"), // 지도를 표시할 div
               },
             }).open();
           }
-
-          Dropzone.autoDiscover = false;
-                $(".dropzone").dropzone({
-                  addRemoveLinks: true,
-                  removedfile: function(file) {
-                    var name = file.name;
-                    var _ref;
-                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-                  }
-                });
