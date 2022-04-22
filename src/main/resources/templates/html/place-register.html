@@ -7,14 +7,14 @@
     <link
             rel="stylesheet"
             type="text/css"
-            href="src/plugins/jquery-steps/jquery.steps.css"
+            href="/src/plugins/jquery-steps/jquery.steps.css"
     />
     <link
             rel="stylesheet"
             type="text/css"
-            href="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css"
+            href="/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css"
     />
-    <link rel="stylesheet" type="text/css" href="src/plugins/dropzone/src/dropzone.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/dropzone/src/dropzone.css">
     <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </head>
 <body>
@@ -408,7 +408,7 @@
                         <div class="modal-body text-center font-18">
                             <h3 class="mb-20">축하합니다.</h3>
                             <div class="mb-30 text-center">
-                                <img src="vendors/images/success.png" />
+                                <img src="/vendors/images/success.png" />
                             </div>
                             등록이 완료되었습니다!
                         </div>
@@ -430,14 +430,15 @@
     </div>
     <!--현재 페이지 본문 내용을 section내부에 작성-->
 </section>
-<script src="src/plugins/jquery-steps/jquery.steps.js"></script>
-<script src="vendors/scripts/steps-setting.js"></script>
-<script src="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
-<script src="vendors/scripts/advanced-components.js"></script>
+<script src="/src/plugins/jquery-steps/jquery.steps.js"></script>
+<script src="/vendors/scripts/steps-setting.js"></script>
+<script src="/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+<script src="/vendors/scripts/advanced-components.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script th:inline="javascript" type="text/javascript" th:attr="src=${kakaoMapsSource}"></script>
-<script src="js/place-register.js"></script>
-<script src="src/plugins/dropzone/src/dropzone.js"></script>
+<script src="/src/plugins/dropzone/src/dropzone.js"></script>
+<script src="/js/place-register.js"></script>
+
 
 <!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </body>

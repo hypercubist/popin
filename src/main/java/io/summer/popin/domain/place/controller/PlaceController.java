@@ -79,7 +79,7 @@ public class PlaceController {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
 
-        return "place-register";
+        return "html/place-register";
     }
 
     @PostMapping("/register")
