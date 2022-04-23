@@ -10,7 +10,11 @@
     <select id="findOneByNo" resultType="PlaceDetailResponseDTO">
         select
             p.name,
+            m.no as host_no,
             m.name as host_name,
+            m.introduction as host_introduction,
+            m.email_certificated as hostCertificated,
+            m.join_date as host_join_date,
             pk.kind as place_kind,
             p.description,
             p.price_High,
@@ -51,6 +55,7 @@
             p.dining_Table,
             p.lamp,
             p.kitchen_Tools,
+            p.max_Guest,
             p.rating,
             (select count(*) from review where place_no = p.no) as reviewCount
         from place p
@@ -132,5 +137,14 @@
 
     <select id="getPlacesCountByHostNo" resultType="int">
         select count(*) from place where host_no=#{hostNo}
+    </select>
+
+    <select id="findReservationByPlaceNo" resultType="ReservatedDateDTO">
+        select
+            checkin_date, checkout_date
+        from
+            reservation
+        where
+            place_no = #{placeNo}
     </select>
 </mapper>

@@ -10,8 +10,9 @@
     <h2 th:text="|*{region1depth}의 *{name}|">region1depth의 place-name</h2>
     <div th:text="*{rating}">평점</div>
     <div th:text="|*{region1depth}, *{region2depth}, *{region3depth}|">광주광역시, 서구, 동천동</div>
+    <img th:src="${thumbnailUrl}"/>
     <div th:each="url : ${imageUrls}">
-        <div th:text="${url}">imageUrl</div>
+        <img th:src="${url}"/>
     </div>
     <div th:text="|*{hostName}이 호스팅하는 *{placeKind}|">host-name이 호스팅하는 place-kind</div>
     <div th:text="|최대인원*{maxGuest}명|">최대 인원 1명, 침실 1개, 침대 1개, 욕실 1개</div>

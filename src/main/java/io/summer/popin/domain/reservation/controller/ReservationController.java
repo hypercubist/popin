@@ -1,8 +1,10 @@
 package io.summer.popin.domain.reservation.controller;
 
+import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayApproveResponseDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayReadyResponseDTO;
+import io.summer.popin.domain.reservation.dto.ReservationForHostInfoDTO;
 import io.summer.popin.domain.reservation.dto.ReservationResponseDTO;
 import io.summer.popin.domain.reservation.service.PaymentService;
 import io.summer.popin.domain.reservation.service.ReservationService;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@SessionAttributes({"reservationData","readyDTO"})
+@SessionAttributes({"reservationData", "readyDTO"})
 @RequestMapping("/reservation")
 @Controller
 public class ReservationController {
@@ -27,49 +29,49 @@ public class ReservationController {
     private final PaymentService paymentService;
 
     @GetMapping("/payment")
-    public String requestReservation(){
+    public String requestReservation() {
 
         return "reservation-payment";
     }
 
     @PostMapping("/payment")
-    public String requestPayment(@ModelAttribute("reservationData") ReservationRequestDTO reservationRequestDTO, Model model){
+    public String requestPayment(@ModelAttribute("reservationData") ReservationRequestDTO reservationRequestDTO, Model model,  @SessionAttribute("loginMember")SessionUserDTO loginMember) {
 
-        reservationRequestDTO.setGuestNo(4L); //guest는 세션에서 받아오기
+        reservationRequestDTO.setGuestNo(loginMember.getNo());
         KakaopayReadyResponseDTO readyDTO = paymentService.readyPayment(reservationRequestDTO);
         model.addAttribute("readyDTO", readyDTO);
 
-        return "redirect:"+readyDTO.getNext_redirect_pc_url();
+        return "redirect:" + readyDTO.getNext_redirect_pc_url();
     }
 
     @GetMapping("/payment/success")
     public String paymentSuccess(@RequestParam("pg_token") String pgToken,
                                  @ModelAttribute("reservationData") ReservationRequestDTO reservationRequestDTO,
                                  @SessionAttribute("readyDTO") KakaopayReadyResponseDTO readyDTO,
-                                 SessionStatus sessionStatus){
+                                 SessionStatus sessionStatus) {
 
         KakaopayApproveResponseDTO approveDTO = paymentService.approvePayment(reservationRequestDTO, readyDTO, pgToken);
         reservationRequestDTO.setOrderId(approveDTO.getPartner_order_id());
         ReservationVO reservationVO = reservationService.insertReservation(reservationRequestDTO);
-        Long reservationNo =reservationVO.getNo();
+        Long reservationNo = reservationVO.getNo();
         sessionStatus.setComplete();
-        return "redirect:/reservation/"+reservationNo;
+        return "redirect:/reservation/" + reservationNo;
     }
 
     @GetMapping("/payment/cancel")
-    public String paymentCancel(){
+    public String paymentCancel() {
 
         return "redirect:/";
     }
 
     @GetMapping("/payment/fail")
-    public String paymentFail(){
+    public String paymentFail() {
 
         return "redirect:/";
     }
 
     @GetMapping("/{reservationNo}")
-    public String reservation(@PathVariable Long reservationNo, Model model){
+    public String reservation(@PathVariable Long reservationNo, Model model) {
         ReservationResponseDTO reservationDetail = reservationService.getReservationDetail(reservationNo);
         List<String> imageUrls = reservationService.getImageUrls(reservationNo);
         model.addAttribute("reservation", reservationDetail);
@@ -84,8 +86,24 @@ public class ReservationController {
     public String reservationUpdate(@PathVariable Long reservationNo) {
 
 
-
         return "reservation-update";
     }
 
+    @GetMapping("/guest")
+    public String reservations_guest(@SessionAttribute("loginMember") SessionUserDTO loginMember, Model model) {
+
+        List<ReservationResponseDTO> reservationsForGuest = reservationService.getReservationsForGuest(loginMember);
+        model.addAttribute("reservations", reservationsForGuest);
+        log.info("GUESTRESERVATIONS = {}", reservationsForGuest);
+        return "reservation-for-guest";
+    }
+
+    @GetMapping("/host")
+    public String reservations_host(@SessionAttribute("loginMember") SessionUserDTO loginMember, Model model) {
+
+        ReservationForHostInfoDTO reservationsForHost = reservationService.getReservationsForHost(loginMember);
+        model.addAttribute("reservationsForHost", reservationsForHost);
+        log.info("HOSTRESERVATIONS = {}", reservationsForHost);
+        return "reservation-for-host";
+    }
 }

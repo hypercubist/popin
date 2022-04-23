@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <title>REVIEWS</title>
+    <!--현재 페이지 제목을 위 라인에 입력-->
+    <link rel="stylesheet" href="">
+    <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+    <!--현재 페이지 본문 내용을 section내부에 작성-->
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="pd-30 bg-white border-radius-4 box-shadow mb-30">
+            <h3 class="pt-30 pb-20">나의 후기</h3>
+
+            <div class="pd-20">
+                <h5 class="pb-20">후기쓰기</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
+                        <div class="da-card">
+                            <div class="da-card-photo">
+                                <img src="vendors/images/photo1.jpg" alt="" />
+                                <div class="da-overlay">
+                                    <div class="da-social">
+                                        <ul class="clearfix">
+                                            <li>
+                                                <a
+                                                        href="#"
+                                                        class="btn-block"
+                                                        data-toggle="modal"
+                                                        data-target="#Medium-modal"
+                                                        type="button"
+                                                >
+                                                    <i class="icon-copy ion-android-create"></i
+                                                    ></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="da-card-content">
+                                <h5 class="h5 mb-10">해가 잘드는 집</h5>
+                                <p class="mb-0">5월 12일 ~ 16일</p>
+                                <p class="mb-0">광주광역시, 서구</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pd-20">
+                <h5 class="pb-20">내가 작성한 후기</h5>
+                <div>
+                    <div class="d-flex">
+                        <div class="pr-20">
+                            <img
+                                    src="src/images/photo3.jpg"
+                                    alt=""
+                                    class="rounded"
+                                    style="height: 70px"
+                            />
+                        </div>
+                        <div class="d-flex flex-column justify-content-around">
+                            <div style="font-weight: 600">
+                                광주광역시 서구, 3월 12일 ~ 13일
+                            </div>
+                            <div>안락하고 깨끗했어요!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+                class="modal fade"
+                id="Medium-modal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="myLargeModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myLargeModalLabel">후기 작성</h4>
+                        <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-hidden="true"
+                        >
+                            ×
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <div class="form-group">
+                                <label for="">별점</label>
+                                <div class="d-flex">
+                                    <div style="color: lightgray; font-size: 1.2rem">
+                                        <i id="star1" class="icon-copy ion-android-star"></i>
+                                        <i id="star2" class="icon-copy ion-android-star"></i>
+                                        <i id="star3" class="icon-copy ion-android-star"></i>
+                                        <i id="star4" class="icon-copy ion-android-star"></i>
+                                        <i id="star5" class="icon-copy ion-android-star"></i>
+                                    </div>
+                                    <input
+                                            id="rating"
+                                            type="text"
+                                            value=""
+                                            readonly
+                                            class="pl-10"
+                                            style="border: 0px; font-size: 1.2rem; font-weight: 600"
+                                    />
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label>내용</label>
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                        >
+                            취소
+                        </button>
+                        <button type="button" class="btn btn-primary">저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script src="js/reviews.js"></script>
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</body>
+</html>

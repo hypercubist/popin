@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -66,4 +68,7 @@ public class PlaceRegisterDTO {
     private Integer kitchenTools;
     @NotNull
     private Integer maxGuest;
+
+    private List<MultipartFile> imageFiles;
+
 }

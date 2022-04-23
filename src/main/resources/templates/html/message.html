@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>Message</title>
+    <!--현재 페이지 제목을 위 라인에 입력-->
+    <link rel="stylesheet" href="">
+    <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+    <div class="bg-white border-radius-4 box-shadow mb-30">
+        <div class="row no-gutters">
+            <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="chat-list bg-light-gray">
+                    <div class="notification-list chat-notification-list customscroll">
+                        <ul>
+                            <th:block th:each="dto, index : ${messageDTO}">
+                                <div th:object="${dto}">
+                                    <li>
+                                        <img src="vendors/images/img.jpg" alt="">
+                                        <button th:text="*{senderName}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}, data-nickname=*{receiverName}" ></button> 님<br>
+                                        <button th:text="*{receiverName}" class="receiverNo" th:attr="value=*{receiverNo}"></button> 에게<br>
+                                        최근 <p th:text="*{sendDate}"></p>
+                                        <hr>
+                                    </li>
+                                </div>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden"  name="receiverNo">
+            <!-- message other profile -->
+            <div class="col-lg-9 col-md-8 col-sm-12">
+                <div class="chat-detail">
+                    <div class="chat-profile-header clearfix">
+                        <div class="left">
+                            <div class="clearfix">
+                                <div class="chat-profile-photo">
+                                    <img src="vendors/images/profile-photo.jpg" alt="">
+                                </div>
+                                <div class="chat-profile-name">
+                                    <h3 id="sender"></h3>
+                                    <span>New York, USA</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-box">
+                        <div class="chat-desc customscroll">
+                            <ul>
+                                <div>
+                                    <div id="userMessage">
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="chat-footer">
+                            <div class="file-upload"><a href="#"><i class="fa fa-paperclip"></i></a></div>
+                            <div class="chat_text_area">
+                                <input type="text" name="content" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" placeholder="내용 입력">
+                            </div>
+                            <div class="chat_send">
+                                <button id="button-send" class="btn btn-link" type="submit"><i class="icon-copy ion-paper-airplane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script>
+      console.log("ws://"+location.host+"/ws/chat");
+            $(document).ready(function(){
+            //세션에서 아이디 가져오기
+            const username = '';
+            //연결 해제
+            $("#disconn").on("click", (e) => {
+                disconnect();
+            })
+            //전송 클릭
+            $("#button-send").on("click", (e) => {
+                send();
+            });
+            //추후 배포시 url 수정해야함
+            const websocket = new WebSocket("ws://"+location.host+"/ws/chat");
+            websocket.onmessage = onMessage;
+            websocket.onopen = onOpen;
+            websocket.onclose = onClose;
+            //나가기
+            function disconnect(){
+                location.href="/messages";
+                websocket.send(username +":"+msg.value);
+            }
+
+            //보내기
+            function send(){
+                let msg = document.getElementById("msg");
+                console.log(username + ":" + msg.value);
+                websocket.send(username + ":" + msg.value);
+                msg.value = '';
+            }
+            //채팅창에서 나갔을 때
+            function onClose(evt) {
+                var str = username + ": 님이 방을 나가셨습니다.";
+//                websocket.send(str);
+            }
+            //채팅창에 들어왔을 때
+            function onOpen(evt) {
+                var str = username + ": 님이 입장하셨습니다.";
+                websocket.send(str);
+            }
+            function onMessage(msg) {
+                var data = msg.data;
+                var sessionId = null;
+                //데이터를 보낸 사람
+                var message = null;
+                var arr = data.split(":");
+                for(var i=0; i<arr.length; i++){
+                    console.log('arr[' + i + ']: ' + arr[i]);
+                }
+                var cur_session = username;
+                //현재 세션에 로그인 한 사람
+                console.log("cur_session : " + cur_session);
+                sessionId = arr[0];
+                message = arr[1];
+                console.log("sessionID : " + sessionId);
+                console.log("cur_session : " + cur_session);
+                //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+                if(sessionId == cur_session){
+                    var str = "<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+message+"</p><div class='chat_time'>시간</div></div></li>";
+                    $("#userMessage").append(str);
+                }
+                else{
+                    var str = "<div class='col-6'>";
+                    str += "<div class='alert alert-warning'>";
+                    str += sessionId + " : " + message;
+                    str += "</div></div>";
+                    $("#userMessage").append(str);
+                }
+            }
+            })
+        window.onload = function(){
+        ws = new WebSocket("ws://"+"localhost:8100"+"/messages");
+        ws.onmessage = function(msg){
+            var data = JSON.parse(msg.data);
+        }
+}
+
+        $('.senderNo').on('click',function(){
+
+            var senderInput ={
+                'value' : $(this).val(),
+                'readonly' : true
+            };
+            var receiverInput ={
+                'value' : $(this).data('receiverno'),
+                'readonly' : true
+            };
+            $('input[name=senderNo]').attr(senderInput);
+            $('input[name=receiverNo]').attr(receiverInput);
+            $('#sender').html($(this).data('nickname'));
+            $.ajax({
+                url : "/messages/detail",
+                type : "get",
+                data : {
+                    senderNo : $(this).val(),
+                    receiverNo : $(this).data("receiverno")
+                }
+            }).done(function(list){
+                console.log(list);
+                $('#userMessage').empty();
+                for(var i =0; i<list.length;i++){
+                    if(list[i].senderNo == [[${session.loginMember.no}]]){
+                         $('#userMessage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                    }else{
+                         $('#userMessage').append("<li class='clearfix'><span class='chat-img'><img src='vendors/images/chat-img1.jpg' alt=''></span><div class='chat-body clearfix'><p style='display : inline-block'>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                    }
+                };
+                $('#userMessage').scrollTop($('#userMessage')[0].scrollHeight);
+            });
+        });
+
+        $('#button-send').on('click', function(){
+            $.ajax({
+                url : "/messages",
+                type : "post",
+                data : {
+                    senderNo : $('input[name=senderNo]').val(),
+                    receiverNo : $('input[name=receiverNo]').val(),
+                    content : $('#msg').val()
+                }
+            }).done(function(){
+                console.log("추가 완료");
+            });
+        });
+
+    </script>
+</body>
+</html>

@@ -32,4 +32,27 @@
             kind_code=#{resourceKind} and member_no=#{memberNo}
     </select>
 
+    <insert id="insertUrl">
+        insert into
+            url_resource (no, kind_code, member_no, place_no, url)
+        values (seq_url_resource.nextval,
+                    #{kindCode},
+                    <if test="memberNo != null">#{memberNo}</if><if test="memberNo == null">null</if>,
+                    <if test="placeNo != null">#{placeNo}</if><if test="placeNo == null">null</if>,
+                    #{url})
+    </insert>
+    <delete id="deleteUrl">
+        delete
+        from
+            url_resource
+        <where>
+            <if test="memberNo != null">
+                member_no=#{memberNo}
+            </if>
+            <if test="placeNo != null">
+                kind_code=#{kindCode} and place_no=#{placeNo}
+            </if>
+
+        </where>
+    </delete>
 </mapper>

@@ -1,9 +1,13 @@
 package io.summer.popin.domain.place.controller;
 
-import io.summer.popin.domain.member.dto.LoginMemberInfoDTO;
+import io.summer.popin.domain.member.dto.SessionUserDTO;
+import io.summer.popin.domain.member.service.MemberService;
+import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
-import io.summer.popin.domain.place.vo.PlaceVO;
+import io.summer.popin.domain.search.dto.SearchDTO;
+import io.summer.popin.global.dto.UrlResourceDTO;
+import io.summer.popin.global.service.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,42 +15,53 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
 @Controller
+@SessionAttributes("searchDTO")
 @RequestMapping("/places")
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final MemberService memberService;
+    private final AwsS3Service awsS3Service;
+
+    @ModelAttribute("searchDTO")
+    public SearchDTO test(){
+        return new SearchDTO();
+    }
 
     @GetMapping
-    public String myPlaces(Model model, @SessionAttribute("loginMemberInfoDTO") LoginMemberInfoDTO loginMember) {
+    public String myPlaces(Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
 
-        log.info("LOGIN-MEMBER = {}", loginMember);
-        Long hostNo = 4L; //세션에서 가져올 값
+        Long hostNo = loginMember.getNo();
 
-        model.addAttribute("myPlaces", placeService.getMyPlaces(hostNo));
+        model.addAttribute("myPlaces", placeService.getPlaces(hostNo));
         model.addAttribute("myPlacesCount", placeService.getMyPlacesCount(hostNo));
         return "my-places";
     }
 
     @GetMapping("/{placeNo}")
-    public String placeDetail(@PathVariable Long placeNo, @ModelAttribute("reservationData") ReservationRequestDTO requestDTO, Model model) {
+    public String placeDetail(@PathVariable Long placeNo,
+                              @ModelAttribute("reservationData") ReservationRequestDTO requestDTO,
+                              @ModelAttribute("searchDTO") SearchDTO searchDTO,
+                              Model model) {
 
-        LocalDateTime checkinDate = LocalDateTime.of(2022, 4, 8, 0, 0);
-        LocalDateTime checkoutDate = LocalDateTime.of(2022, 4, 9, 0, 0); //장소 리스트에서 모델로 받아올 정보임
-        TempSearchRequestDTO searchDTO = new TempSearchRequestDTO(checkinDate, checkoutDate);
-
+        PlaceDetailResponseDTO placeDetail = placeService.getPlaceDetail(placeNo);
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
+        model.addAttribute("hostProfileUrl", memberService.getProfileImageUrl(placeDetail.getHostNo()));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
-        model.addAttribute("searchDTO", searchDTO);
+        model.addAttribute("thumbnailUrl", placeService.getThumbnailUrl(placeNo));
+        model.addAttribute("reservatedDates", placeService.getReservatedDates(placeNo));
+        log.info("RESERVATED ={}",placeService.getReservatedDates(placeNo) );
 
-        return "place-detail";
+
+        return "html/place-detail";
     }
 
     @PostMapping("/{placeNo}")
@@ -64,19 +79,18 @@ public class PlaceController {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
 
-        return "place-register";
+        return "html/place-register";
     }
 
     @PostMapping("/register")
     public String placeRegister(@Validated @ModelAttribute("registerForm") PlaceRegisterDTO registerDTO,
+                                @RequestParam("placeThumbnail") List<MultipartFile> placeThumbnail,
+                                @RequestParam("imageFiles") List<MultipartFile> imageFiles, UrlResourceDTO urlResourceDTO,
                                 BindingResult bindingResult,
-                                Model model) {
+                                Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
-        if (bindingResult.hasErrors()) {
-            log.info("ERRORS-PLACE-REGISTER : {}", bindingResult);
-            return "place-register";
-        }
+        log.info("PLACEREGISTERDTO = {}", registerDTO );
         KakaoLocalRoadAddressDTO roadAddress = placeService.getRoadAddress(registerDTO.getCoordX(), registerDTO.getCoordY());
 
         registerDTO.setRegion1Depth(roadAddress.getRegion_1depth_name());
@@ -85,11 +99,25 @@ public class PlaceController {
         registerDTO.setRoadName(roadAddress.getRoad_name());
         registerDTO.setMainBuildingNo(roadAddress.getMain_building_no());
         registerDTO.setSubBuildingNo(roadAddress.getSub_building_no());
-        registerDTO.setHostNo(4L); //세션에서 받은 정보로 저장
+        registerDTO.setHostNo(loginMember.getNo());
 
-        PlaceVO placeVO = placeService.registerPlace(registerDTO);
-        //등록한 장소 리스트 페이지로 리다이렉트
-        return "/";
+        Long placeNo = placeService.registerPlace(registerDTO);
+        urlResourceDTO.setPlaceNo(placeNo);
+        urlResourceDTO.setKindCode(2);
+        awsS3Service.uploadImage(imageFiles, urlResourceDTO);  //숙소사진들
+
+        urlResourceDTO.setPlaceNo(placeNo);
+        urlResourceDTO.setKindCode(3);
+        awsS3Service.uploadImage(placeThumbnail, urlResourceDTO);  //숙소 thumbnail
+        if(placeNo == null) {
+            bindingResult.reject("saveFailed", "장소 등록에 실패하였습니다. 다시 시도해주세요.");
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("ERRORS-PLACE-REGISTER : {}", bindingResult);
+            return "place-register";
+        }
+        return "redirect:/places/" + placeNo;
     }
 
     @GetMapping("/{placeNo}/update")

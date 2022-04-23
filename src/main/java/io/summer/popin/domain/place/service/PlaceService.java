@@ -19,9 +19,11 @@ public interface PlaceService {
 
     KakaoLocalRoadAddressDTO getRoadAddress(Double coordX, Double coordY);
 
-    PlaceVO registerPlace(PlaceRegisterDTO registerDTO);
+    Long registerPlace(PlaceRegisterDTO registerDTO);
 
-    List<MyPlaceDTO> getMyPlaces(Long hostNo);
+    List<MyPlaceDTO> getPlaces(Long hostNo);
 
     Integer getMyPlacesCount(Long hostNo);
+
+    List<ReservatedDateDTO> getReservatedDates(Long placeNo);
 }

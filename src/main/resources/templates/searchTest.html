@@ -3,19 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-
+<form action="/search" th:object="${searchDTO}" method="post">
+    <input type="text" th:field="*{addressName}" placeholder="주소 입력">
+    <input type="text" th:field="*{dates}" placeholder="날짜">
+    <input type="hidden" th:field="*{region1depth}">
+    <input type="hidden" th:field="*{region2depth}">
+    <input type="hidden" th:field="*{region3depth}">
+    <input type="hidden" th:field="*{coordX}">
+    <input type="hidden" th:field="*{coordY}">
+    <input type="hidden" th:field="*{checkinDate}" placeholder="체크인 날짜">
+    <input type="hidden" th:field="*{checkoutDate}" placeholder="체크아웃 날짜">
+    <input type="text" th:field="*{maxGuest}" placeholder="인원">
+    <input type="submit" value="검색">
+</form>
     <table border="1">
         <tr>
             <th>지역이름</th>
             <th>지역</th>
         </tr>
-        <tr th:each="searchList : ${searchList}">
-            <td th:text="${searchList.placeName}"></td>
-            <td th:text="${searchList.location}"></td>
+        <tr th:each="list : ${placesList}">
+            <td th:text="${list.placeName}"></td>
+            <td th:text="${list.region1depth}"></td>
+            <td th:text="${list.region2depth}"></td>
+            <td th:text="${list.region3depth}"></td>
+            <td th:text="${list.location}"></td>
+            <td th:text="${list.coordX}" th:field="${list.coordX}"></td>
+            <td th:text="${list.coordY}" th:field="${list.coordY}"></td>
+            <td th:text="${list.placeKind}"></td>
+            <td th:text="${list.reviewCount}"></td>
+            <td th:text="${list.price}"></td>
+            <td th:text="${list.totalPrice}"></td>
+            <td th:text="${list.thumbnailUrl}"></td>
         </tr>
     </table>
+    <ul class="pagination">
+        <li th:if="${pageMaker.prev}">
+            <a class="page-link"  th:href="@{/search(pageNum = ${pageMaker.startPage-1})}">이전</a>
+        </li>
+        <!--<li th:each="num, numStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">-->
+        <th:block th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}">
+        <li class="page-item"
+            th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}"
+            th:each="pageButton : ${#numbers.sequence(start, end)}">
+            <a class="page-link" th:href="@{/search?pageNum={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+        </li>
+        </th:block >
+        <!--<a class="page-link" href="search?pageNum='${pageNum}'" th:text="${numStat.index}"></a>-->
+        <li class="page-item" th:if="${pageMaker.next}">
+            <a class="page-link"  th:href="@{/search(pageNum = ${pageMaker.endPage+1})}">다음</a>
+        </li>
+    </ul>
+    <div id="map" style="width:auto;height:auto;"></div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=73c74d0a623a3feb3381fa0523325051"></script>
+
+    <script th:inline="javascript">
+    var placesList = [[${placesList}]];
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+        center: new kakao.maps.LatLng(placesList[0].coordY, placesList[0].coordX), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+// 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
+
+console.log(placesList[0].location);
+var map1 =[];
+    for(var i=0; i<placesList.length; i++){
+            map1.push({content: '<div>'+placesList[i].location+'</div>',latlng : new kakao.maps.LatLng(placesList[i].coordY,placesList[i].coordX)})
+        };
+
+        var positions =
+            map1.map(x => x)
+        ;
+
+for (var i = 0; i < positions.length; i ++) {
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng  // 마커의 위치
+    });
+
+    // 마커에 표시할 인포윈도우를 생성합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        content: positions[i].content // 인포윈도우에 표시할 내용
+    });
+
+    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+    // 이벤트 리스너로는 클로저를 만들어 등록합니다
+    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+}
+
+// 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+function makeOverListener(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    };
+}
+
+/* 아래와 같이도 할 수 있습니다 */
+/*
+for (var i = 0; i < positions.length; i ++) {
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng // 마커의 위치
+    });
+
+    // 마커에 표시할 인포윈도우를 생성합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        content: positions[i].content // 인포윈도우에 표시할 내용
+    });
+
+    // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
+    // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    (function(marker, infowindow) {
+        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
+        kakao.maps.event.addListener(marker, 'mouseover', function() {
+            infowindow.open(map, marker);
+        });
+
+        // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+        kakao.maps.event.addListener(marker, 'mouseout', function() {
+            infowindow.close();
+        });
+    })(marker, infowindow);
+}
+*/
+</script>
 
 </body>
 </html>

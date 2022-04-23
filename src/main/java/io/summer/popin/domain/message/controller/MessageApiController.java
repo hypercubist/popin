@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/message")
+@RequestMapping("/messages")
 public class MessageApiController {
 
     private final MessageService messageService;

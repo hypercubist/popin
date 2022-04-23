@@ -16,4 +16,7 @@ public class MessageResponseDTO {
     private LocalDate receiveDate;
 
     private LocalDate latestDate;
+    private String senderName;
+    private String receiverName;
 }
+

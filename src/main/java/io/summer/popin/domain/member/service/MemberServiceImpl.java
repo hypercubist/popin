@@ -1,14 +1,19 @@
 package io.summer.popin.domain.member.service;
 
 import io.summer.popin.domain.member.dao.MemberMapper;
+import io.summer.popin.domain.member.dto.MemberProfileResponseDTO;
 import io.summer.popin.domain.member.dto.ProfileUpdateDTO;
 import io.summer.popin.domain.member.dto.ProfileResponseDTO;
 import io.summer.popin.domain.member.vo.MemberVO;
 import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
@@ -25,6 +30,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public MemberProfileResponseDTO findMemberProfile(Long memberNo) {
+
+        MemberProfileResponseDTO memberProfile = memberMapper.findMemberProfileByMemberNo(memberNo);
+
+        return memberProfile;
+    }
+
+    @Override
     public ProfileUpdateDTO getEditProfileFormData(Long memberNo) {
 
         return memberMapper.findEditProfileFormDataByMemberNo(memberNo);
@@ -36,7 +49,7 @@ public class MemberServiceImpl implements MemberService{
         MemberVO memberVO = new MemberVO();
 
         memberVO.setNo(memberNo);
-        memberVO.setName(profileUpdateDTO.getName());
+        memberVO.setIntroduction(profileUpdateDTO.getIntroduction());
         memberVO.setPhoneNumber(profileUpdateDTO.getPhoneNumber());
 
         return memberMapper.updateProfileByMemberNo(memberVO);
@@ -44,8 +57,10 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public String getProfileImageUrl(Long memberNo) {
-        return urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo).get(0);
+        List<String> urls = urlMapper.findUrlByMemberNo(ResourceKind.PROFILE.ordinal(), memberNo);
+        if (urls.isEmpty()) {
+            return "/img/profile_default.png";
+        }
+        return urls.get(0);
     }
-
-
 }

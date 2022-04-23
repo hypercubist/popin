@@ -3,15 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.message.dao.MessageMapper">
-    <select id="allMessage" resultType="MessageResponseDTO" parameterType="int">
-        select
-            distinct sender_no, receiver_no, max(send_date) as sendDate
-        from
-            message
-        where
-            sender_no in(select distinct sender_no from message where sender_no=#{senderNo} or receiver_no=#{senderNo})
-        group by
-            sender_no, receiver_no
+    <select id="allMessage" resultType="MessageResponseDTO">
+        select * from(
+            select
+                (select name as sender_name from member where no=sender_no) as sender_name,
+                sender_no,
+                (select name as receiver_name from member where no=receiver_no) as receiver_name,
+                receiver_no,
+                max(send_date) as sendDate
+            from
+                message
+            where
+                sender_no in (select distinct sender_no from message where sender_no=#{senderNo} or receiver_no=#{senderNo})
+            group by
+                sender_no, receiver_no)
+        where receiver_no = #{senderNo}
     </select>
     <insert id="sendMessage" parameterType="MessageRequestDTO">
         insert into
@@ -21,10 +27,17 @@
     </insert>
     <select id="messageDetail" parameterType="MessageRequestDTO" resultType="MessageResponseDTO">
         select
-            sender_no,receiver_no,content,send_date,receive_date
+            (select name as sender_name from member where no=sender_no) as sender_name,
+            sender_no,
+            receiver_no,
+            content,
+            send_date,
+            receive_date
         from
             message
         where
-            (sender_no=#{senderNo} and receiver_no=#{receiverNo})
+            (sender_no=#{senderNo} and receiver_no=#{receiverNo}) or (sender_no=#{receiverNo} and receiver_no=#{senderNo})
+        order by
+            send_date
     </select>
 </mapper>

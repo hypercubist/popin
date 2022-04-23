@@ -6,9 +6,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    이거 헷갈려서 여기에 뺌..
+
     <select multiple name="kakaomap" id="map" ></select>
-    <div>여기부터 검색시작</div>
 
     <form action="/search" th:object="${searchDTO}" method="post">
         <input type="text" th:field="*{addressName}" placeholder="주소 입력">
@@ -48,7 +47,7 @@
 
     $("#checkinDate").val(picker.startDate.format("YYYY-MM-DD"));
     $("#checkoutDate").val(picker.endDate.format("YYYY-MM-DD"));
-  };
+    };
    $("#dates").daterangepicker({
     alwaysShowCalendars: true,
     minDate: today,
@@ -83,6 +82,9 @@
                headers: { 'Authorization': 'KakaoAK 5515f022981cb25e056392bfba8e6b4a' },
                data : {query : $('#addressName').val() },
            success:function(data){
+               $('select[id=map]').on('change',function(){
+                    $('#addressName').val($(this).val());
+               });
                console.log(data);
                $('#map').empty();
                for(var i=0; i< data.documents.length; i++){
@@ -95,10 +97,7 @@
                 $('#coordY').val(data.documents[i].address.y);
                };
 
-               $('select[id=map]').on('change',function(){
-                    $('#addressName').val($(this).val());
 
-               });
            },
            error : function(e){
                console.log(e);

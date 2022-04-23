@@ -1,26 +1,43 @@
 package io.summer.popin.domain.search.controller;
 
+import io.summer.popin.domain.search.dto.Criteria;
 import io.summer.popin.domain.search.dto.SearchDTO;
 import io.summer.popin.domain.search.service.SearchService;
+import io.summer.popin.domain.search.vo.PageVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@SessionAttributes("searchDTO")
 public class SearchController {
 
     private final SearchService searchService;
 
-    @PostMapping("/search")
-    public String searchList(@ModelAttribute SearchDTO searchDTO, Model model){
-        log.info("SEARCH-TERM = {}", searchDTO);
-        model.addAttribute("searchList",searchService.placesSearch(searchDTO));
-        return "searchTest";
+    @ModelAttribute("searchDTO")
+    public SearchDTO test(){
+        return new SearchDTO();
     }
 
+    @PostMapping("/search")
+    public String searchListPost(@ModelAttribute("searchDTO") SearchDTO searchDTO, Model model, @RequestParam(defaultValue = "1") int pageNum){
+        Criteria criteria = new Criteria(pageNum, 10);
+        model.addAttribute("placesList",searchService.placesSearch(searchDTO,criteria));
+        model.addAttribute("pageMaker", new PageVO(criteria,searchService.placeCount(searchDTO)));
+        model.addAttribute("currentPageNum",pageNum);
+        return "html/search";
+    }
+
+    @GetMapping("/search")
+    public String searchListGet(@SessionAttribute("searchDTO") SearchDTO searchDTO,Model model, @RequestParam(defaultValue = "1") int pageNum){
+        Criteria criteria = new Criteria(pageNum,10);
+        model.addAttribute("placesList",searchService.placesSearch(searchDTO,criteria));
+        model.addAttribute("pageMaker", new PageVO(criteria,searchService.placeCount(searchDTO)));
+        model.addAttribute("currentPageNum",pageNum);
+        return "html/search";
+    }
 }

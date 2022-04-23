@@ -10,7 +10,7 @@
 자신 프로필 번호는 세션에서 가져온다
 
 <div>모든 메세지 리스트</div>
-<th:block th:each="dto, index : ${dto}">
+<th:block th:each="dto, index : ${messageDTO}">
     <div th:object="${dto}">
         보낸 사람 : <button th:text="*{senderNo}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}"></button><br>
         받는 사람 : <button th:text="*{receiverNo}" class="receiverNo" th:attr="value=*{receiverNo}"></button><br>
@@ -23,32 +23,26 @@
 <label><b>채팅방</b></label>
 <div id="messageDetail"></div>
 
-<input type="hidden" name="senderNo" id="sender">
-<input type="hidden"  name="receiverNo">
-
-
-
+<input type="text" name="senderNo" id="sender">
+<input type="text"  name="receiverNo">
 
 <div class="container">
     <div class="col-6">
-
-    </div>
-    <div>
-        <div id="msgArea" class="col"></div>
-        <div class="col-6">
-            <div class="input-group mb-3">
-
-                <div class="input-group-append">
-                    <input type="text" name="content" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" placeholder="내용 입력">
-                    <!--<input type="text" name="content" placeholder="내용입력" id="content">-->
-                    <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+        </div>
+               <div>
+                    <div id="msgArea" class="col"></div>
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-append">
+                                    <input type="text" name="content" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" placeholder="내용 입력">
+                                    <!--<input type="text" name="content" placeholder="내용입력" id="content">-->
+                                    <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
                     <button id="disconn">연결해제</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
       console.log("ws://"+location.host+"/ws/chat");
             $(document).ready(function(){

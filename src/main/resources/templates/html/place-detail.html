@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-search :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <title th:text="|#{application.name} - ${place.name}|">PLACE-DETAIL</title>
+    <!--현재 페이지 제목을 위 라인에 입력-->
+    <link rel="stylesheet" type="text/css" href="/src/plugins/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/src/styles/daterangepicker.css">
+    <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+    <!--현재 페이지 본문 내용을 section내부에 작성-->
+    <div class="pd-ltr-20 xs-pd-10-20">
+        <div class="min-height-200px">
+            <div class="product-wrap">
+                <div class="title-info pb-20">
+                    <h1 class="pb-10" th:text="${place.name}">
+                        장소 이름
+                    </h1>
+                    <!-- 제목 -->
+                    <div>
+                        <div>
+                            <i class="icon-copy ion-android-star"></i>
+                            <span th:text="${place.rating}">평점</span>
+                            <!-- 평점 -->
+                            <span>·</span>
+                            <span th:text="|후기 ${place.reviewCount}개|">후기 갯수</span>
+                            <!-- 후기 갯수 -->
+                            <span>·</span>
+                            <span th:text="|${place.region1depth}, ${place.region2depth}, ${place.region3depth}|">지역</span>
+                            <!-- 주소 1, 2 depth -->
+                        </div>
+                    </div>
+                </div>
+                <div class="product-detail-wrap mb-30">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                            <div class="product-slider slider-arrow">
+                                <div class="product-slide d-flex justify-content-center">
+                                    <img th:src="${thumbnailUrl}" alt="thumbnail_img" style="height:600px; object-fit:cover" class="rounded"/>
+                                </div>
+                                <th:block th:each="url : ${imageUrls}">
+                                    <div class="product-slide d-flex justify-content-center">
+                                        <img th:src="${url}" alt="place_imgs" style="height:600px; object-fit:cover" class="rounded"/>
+                                    </div>
+                                </th:block>
+                            </div>
+                            <div class="product-slider-nav">
+                                <div class="product-slide d-flex justify-content-center">
+                                    <img th:src="${thumbnailUrl}" alt="thumbnail_img" style="height:150px; object-fit:cover" class="rounded"/>
+                                </div>
+                                <th:block th:each="url : ${imageUrls}">
+                                    <div class="product-slide d-flex justify-content-center">
+                                        <img th:src="${url}" alt="place_imgs" style="height:150px; object-fit:cover" class="rounded"/>
+                                    </div>
+                                </th:block>
+                            </div>
+                            <div class="product-detail-desc pd-30 mt-30 card-box">
+                                <div class="pt-20 pb-10">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <img
+                                                        class="rounded"
+                                                        th:src="${hostProfileUrl}"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                    />
+                                                </div>
+
+                                                <div class="pl-20">
+                                                    <div th:text="${place.hostName}" style="font-size: 1.5rem; font-weight: 600">
+                                                        호스트 이름
+                                                    </div>
+                                                    <span th:text="|회원가입일: ${#temporals.year(place.hostJoinDate)}년 ${#temporals.month(place.hostJoinDate)}월|">회원가입일: 2020년 1월(로딩안됨)</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="pt-20">
+                                                <p th:text="${place.hostIntroduction}">
+                                                    호스트 소개
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div>
+                                                <div class="d-flex justify-content-around pb-20">
+                                                    <i th:if="${place.hostCertificated != 1}" class="icon-copy ion-person">본인 인증 완료</i>
+<!--                                                    if조건 반대로 바꿔야 함-->
+                                                </div>
+                                                <div>
+                                                    <button
+                                                            class="btn btn-primary btn-block"
+                                                            style="height: 45px"
+                                                    >
+                                                        <span>호스트에게 연락하기(링크없음)</span>
+                                                    </button>
+                                                </div>
+                                                <div class="pt-20">
+                                                    안전한 결제를 위해 POPIN 웹사이트나 앱 외부에서
+                                                    송금하거나 대화를 나누지 마세요.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div>
+                                    <div class="row pt-20 pb-20">
+                                        <div
+                                                class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                        >
+                                            <i
+                                                    class="icon-copy ion-flame"
+                                                    style="font-size: 2rem"
+                                            ></i>
+                                        </div>
+                                        <div class="col-md-11 col-sm-11">
+                                            <div th:text="|${place.hostName}님은 슈퍼호스트입니다|" style="font-size: 1.1rem; font-weight: 600">
+                                                GOODHOST님은 슈퍼호스트입니다
+                                            </div>
+                                            <div>
+                                                슈퍼호스트는 풍부한 경험과 높은 평점을 자랑하며
+                                                게스트가 숙소에서 편안히 머무를 수 있도록 최선을
+                                                다하는 호스트입니다.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-20">
+                                        <div
+                                                class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                        >
+                                            <i
+                                                    class="icon-copy ion-checkmark-round"
+                                                    style="font-size: 2rem"
+                                            ></i>
+                                        </div>
+<!--                                        <div class="col-md-11 col-sm-11">-->
+<!--                                            <div style="font-size: 1.1rem; font-weight: 600">-->
+<!--                                                수영장(로딩안됨)-->
+<!--                                            </div>-->
+<!--                                            <div>게스트가 자주 찾는 편의시설(로딩안됨)</div>-->
+<!--                                        </div>-->
+                                    </div>
+                                    <div class="row pb-10">
+                                        <div
+                                                class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                        >
+                                            <i
+                                                    class="icon-copy ion-android-calendar"
+                                                    style="font-size: 2rem"
+                                            ></i>
+                                        </div>
+                                        <div
+                                                class="col-md-11 col-sm-11 d-flex align-items-center"
+                                        >
+                                            <div style="font-size: 1.1rem; font-weight: 600">
+                                                5월 6일 전까지 무료 취소 가능(로딩안됨)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="pt-10 pb-10">
+                                    <div style="font-size: 1.5rem; font-weight: 600">
+                                        장소 안내 및 주의사항
+                                    </div>
+                                    <p th:text="${place.description}">
+                                        장소 설명
+                                    </p>
+                                </div>
+                                <hr />
+                                <div class="pt-10">
+                                    <div style="font-size: 1.5rem; font-weight: 600">
+                                        숙소 편의시설
+                                    </div>
+                                    <div>
+                                        <div class="row pt-10 pb-10">
+                                            <div
+                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                            >
+                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            </div>
+                                            <div
+                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
+                                            >
+                                                <div>해변과 인접 - 해변(로딩안됨)</div>
+                                            </div>
+                                        </div>
+                                        <div class="row pb-10">
+                                            <div
+                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                            >
+                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            </div>
+                                            <div
+                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
+                                            >
+                                                <div>주방(로딩안됨)</div>
+                                            </div>
+                                        </div>
+                                        <div class="row pb-10">
+                                            <div
+                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
+                                            >
+                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            </div>
+                                            <div
+                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
+                                            >
+                                                <div>무선 인터넷(로딩안됨)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 설명 -->
+                            </div>
+                            <div class="product-detail-desc pd-30 mt-30 mb-30 card-box">
+                                <div
+                                        class="pt-20"
+                                        style="font-size: 1.5rem; font-weight: 600"
+                                >
+                                    <i class="icon-copy ion-android-star"></i>
+                                    <span th:text="${place.rating}">평점</span>
+                                    <!-- 평점 -->
+                                    <span>·</span>
+                                    <span th:text="|후기 ${place.reviewCount}개|">후기 갯수</span>
+                                    <!-- 후기 갯수 링크로 후기위치이동 -->
+                                </div>
+
+                                <div class="pt-20">
+                                    <div class="mb-20">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img
+                                                        class="rounded"
+                                                        src="/vendors/images/photo3.jpg"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                />
+                                            </div>
+                                            <div class="pl-10 d-flex-r justify-content-center">
+                                                <div>성윤</div>
+                                                <div>2022년 3월</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">
+                                            진짜 만족한 숙소에요… 또 가고싶어요!❤️
+                                        </div>
+                                    </div>
+                                    <div class="mb-20">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img
+                                                        class="rounded"
+                                                        src="/vendors/images/photo2.jpg"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                />
+                                            </div>
+                                            <div class="pl-10 d-flex-r justify-content-center">
+                                                <div>건우</div>
+                                                <div>2022년 3월</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">하루 행복하게 보내고 갑니다!!</div>
+                                    </div>
+                                    <div class="mb-20">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img
+                                                        class="rounded"
+                                                        src="/vendors/images/photo5.jpg"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                />
+                                            </div>
+                                            <div class="pl-10 d-flex-r justify-content-center">
+                                                <div>현경</div>
+                                                <div>2022년 3월</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">
+                                            조용했다...바쁜 도시의 삶 속 찾은 여유.
+                                        </div>
+                                    </div>
+                                    <div class="mb-20">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img
+                                                        class="rounded"
+                                                        src="/vendors/images/photo1.jpg"
+                                                        alt=""
+                                                        style="width: 60px"
+                                                />
+                                            </div>
+                                            <div class="pl-10 d-flex-r justify-content-center">
+                                                <div>수빈</div>
+                                                <div>2022년 2월</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">
+                                            숙소도 크고,쾌적합니다:) 여름에 또 오고싶어요!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product-detail-desc pd-30 mt-30 mb-30 card-box">
+                                <div
+                                        class="pt-20"
+                                        style="font-size: 1.5rem; font-weight: 600"
+                                >
+                                    호스팅 지역
+                                </div>
+                                <div th:text="|${place.region1depth}, ${place.region2depth}, ${place.region3depth}|" class="pt-10">호스팅 지역</div>
+                                <!-- 여기에 지도 표시 -->
+                            </div>
+
+                            <div class="product-detail-desc pd-30 mt-30 mb-30 card-box">
+                                <div
+                                        class="pt-20"
+                                        style="font-size: 1.5rem; font-weight: 600"
+                                >
+                                    알아두어야 할 사항
+                                </div>
+                                <div class="row pt-20">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div style="font-weight: 600">이용규칙(로딩안됨)</div>
+                                        <div>체크인: 오후 4:00 이후</div>
+                                        <div>체크아웃: 오전 11:00</div>
+                                        <div>흡연 금지</div>
+                                        <div>반려동물 금지</div>
+                                        <div>파티나 이벤트 금지</div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div style="font-weight: 600">건강과 안전(로딩안됨)</div>
+                                        <div>POPIN의 강화된 청소 절차 준수에 동의했습니다.</div>
+                                        <div>
+                                            POPIN의 사회적 거리 두기 및 관련 가이드라인이
+                                            적용됩니다.
+                                        </div>
+                                        <div>일산화탄소 경보기</div>
+                                        <div>화재경보기</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div
+                                    class="product-detail-desc pd-30 card-box"
+                                    style="position: sticky; top: 30px"
+                            >
+                                <div class="pt-20">
+                    <span style="font-size: 1.5rem; font-weight: 600"
+                          th:text="|${place.hostName}이 호스팅하는 ${place.placeKind}|"
+                    >호스트님이 호스팅하는 장소</span
+                    >
+                                </div>
+                                <!-- 호스트이름 -->
+                                <div class="d-flex justify-content-between">
+                                    <span th:text="|최대인원${place.maxGuest}명|">최대 인원</span>
+                                    <div>
+                                        <i class="icon-copy ion-android-star"></i>
+                                        <span th:text="${place.rating}">평점</span>
+                                        <!-- 평점 -->
+                                        <span>·</span>
+                                        <span th:text="|후기 ${place.reviewCount}개|">후기 983개(로딩안됨)</span>
+                                        <!-- 후기 갯수 링크로 후기위치이동 -->
+                                    </div>
+                                </div>
+                                <div class="mt-30 mb-20">
+                    <span style="font-size: 1.5rem; font-weight: 600"
+                          th:text="|₩ ${place.priceHigh}|"
+                    >₩ 129,000</span
+                    >
+                                    <!-- 1 박 가격 price-high -->
+                                    <span>/ 박</span>
+                                </div>
+                                <div>
+                                    <form th:action th:object="${reservationData}" method="post">
+                                        <div class="form-group">
+                                            <label>체크인 - 체크아웃</label>
+                                            <input
+                                                    type="text"
+                                                    th:field="*{pickedDates}"
+                                                    placeholder="날짜 선택"
+                                                    class="form-control datetimepicker-range"
+                                                    readonly
+                                            />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>인원</label>
+                                            <input
+                                                    type="text"
+                                                    name="demo3_22"
+                                                    id="demo3_22"
+                                                    class="form-control"
+                                                    value="0"
+                                            />
+                                        </div>
+
+                                        <div class="row pb-30">
+                                            <div class="col-12">
+                                                <button
+                                                        type="submit"
+                                                        class="btn btn-primary btn-block"
+                                                >
+                                                    <span>예약하기</span>
+                                                </button>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-center pt-10">
+                                                <div>예약 확정 전에는 요금이 청구되지 않습니다.</div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" th:field="*{guestCount}">
+                                        <input type="hidden" th:field="*{pickedCheckinDate}">
+                                        <input type="hidden" th:field="*{pickedCheckoutDate}">
+                                        <input type="hidden" th:field="*{period}" readonly>
+                                        <input type="hidden" th:field="*{totalPrice}" readonly>
+                                    </form>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between pb-10">
+                                        <div>
+                                            <span th:text="|₩${place.priceHigh} X |"></span>
+                                            <span class="period"></span>
+                                            <span>박</span>
+                                        </div>
+                                        <div>
+                                            <span>₩</span>
+                                            <span class="totalPrice"></span>
+                                        </div>
+
+                                    </div>
+                                    <!-- 1박 당 가격 , 이용기간-->
+                                    <div class="d-flex justify-content-between pb-10">
+                                        <div>서비스 수수료</div>
+                                        <div>₩0</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-10">
+                                        <div>숙박세와 수수료</div>
+                                        <div>₩0</div>
+                                    </div>
+                                    <hr />
+                                    <div class="d-flex justify-content-between pb-10">
+                                        <div>총 합계</div>
+                                        <div>
+                                            <span>₩</span>
+                                            <span class="totalPrice"></span>
+                                        </div>
+
+                                        <!-- 계산 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/src/plugins/slick/slick.min.js"></script>
+<script src="/src/scripts/moment.js"></script>
+<script src="/src/scripts/daterangepicker.min.js"></script>
+<script th:inline="javascript">
+        jQuery(document).ready(function () {
+          jQuery(".product-slider").slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: true,
+            infinite: true,
+            speed: 1000,
+            fade: true,
+            asNavFor: ".product-slider-nav",
+          });
+          jQuery(".product-slider-nav").slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: ".product-slider",
+            dots: false,
+            infinite: true,
+            arrows: false,
+            speed: 1000,
+            centerMode: true,
+            focusOnSelect: true,
+          });
+          $("input[name='demo3_22']").TouchSpin({
+            initval: 1,
+          });
+
+          const oneDay = 1000 * 60 * 60 * 24;
+          const pricePerDay = [[${place.priceHigh}]];
+          const searchDTO = [[${searchDTO}]];
+          let invalidDates = [[${reservatedDates}]];
+
+          const setInvalidDate = (date) => {
+            return !invalidDates.every(
+              (bookedDate) =>
+                date._d < bookedDate.checkinDate || date._d >= bookedDate.checkoutDate
+            );
+          };
+
+          const bookedDateCheck = (date) => {
+            return invalidDates.every(
+              (bookedDate) =>
+                date < bookedDate.checkinDate || date >= bookedDate.checkoutDate
+            );
+          };
+
+          const getPeriod = (startDate, endDate) => {
+            return Math.round((endDate.getTime() - startDate.getTime()) / oneDay);
+          };
+
+          const handleDatePick = function (ev, picker) {
+            const start = new Date(
+              picker.startDate._d.getFullYear(),
+              picker.startDate._d.getMonth() + 1,
+              picker.startDate._d.getDate()
+            );
+            const end = new Date(
+              picker.endDate._d.getFullYear(),
+              picker.endDate._d.getMonth() + 1,
+              picker.endDate._d.getDate()
+            );
+            const period = getPeriod(start, end);
+            for (i = 0; i < period; i++) {
+              const date = new Date(start + oneDay * i);
+              if (!bookedDateCheck(date)) {
+                $("#dates").val("");
+                alert(
+                  "예약할 수 없는 날짜가 포함되어 있습니다. 일정을 다시 선택해주세요."
+                );
+                return;
+              }
+            }
+            $(".period").text(period);
+            $("#period").val(period);
+            $(".totalPrice").text(totalPrice);
+            $("#totalPrice").val(period * pricePerDay);
+            $("#pickedCheckinDate").val(picker.startDate.format("YYYY-MM-DD"));
+            $("#pickedCheckoutDate").val(picker.endDate.format("YYYY-MM-DD"));
+          };
+
+          const initReservationForm = () => {
+            let daterangepickerConfig = {
+              alwaysShowCalendars: true,
+              minDate: new Date(),
+              locale: {
+                format: "YYYY-MM-DD",
+                separator: " ~ ",
+                applyLabel: "확인",
+                cancelLabel: "취소",
+                daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
+                monthNames: [
+                  "1월",
+                  "2월",
+                  "3월",
+                  "4월",
+                  "5월",
+                  "6월",
+                  "7월",
+                  "8월",
+                  "9월",
+                  "10월",
+                  "11월",
+                  "12월",
+                ],
+              },
+            };
+            if (searchDTO.dates) {
+              const checkinDate = [[${#temporals.format(searchDTO.checkinDate, 'yyyy-MM-dd')}]];
+              const checkoutDate = [[${#temporals.format(searchDTO.checkoutDate, 'yyyy-MM-dd')}]];
+              const startArr = checkinDate.split("-");
+              const endArr = checkoutDate.split("-");
+              const start = new Date(...startArr);
+              const end = new Date(...endArr);
+              const period = getPeriod(start, end);
+              const totalPrice = period*pricePerDay;
+              $("#pickedCheckinDate").val(checkinDate);
+              $("#pickedCheckoutDate").val(checkoutDate);
+              daterangepickerConfig.startDate = checkinDate;
+              daterangepickerConfig.endDate = checkoutDate;
+              $("#period").val(period);
+              $(".period").text(period);
+              $("#totalPrice").val(totalPrice);
+              $(".totalPrice").text(totalPrice);
+            }
+
+            if(invalidDates.length>0){
+                invalidDates = invalidDates.map((item)=>{
+                  return {
+                    checkinDate: new Date(item.checkinDate.split("-")[0], item.checkinDate.split("-")[1]-1, item.checkinDate.split("-")[2]),
+                    checkoutDate: new Date(item.checkoutDate.split("-")[0], item.checkoutDate.split("-")[1]-1, item.checkoutDate.split("-")[2]),
+                  };
+                });
+                daterangepickerConfig.isInvalidDate = setInvalidDate;
+            }
+
+            $("#pickedDates").daterangepicker(daterangepickerConfig);
+
+            if (searchDTO.maxGuest) {
+              $("input[name='demo3_22']").val(searchDTO.maxGuest);
+              $("#guestCount").val(searchDTO.maxGuest);
+            }
+          };
+
+
+          initReservationForm();
+
+          $("#pickedDates").on("hide.daterangepicker", handleDatePick);
+        });
+
+</script>
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</body>
+</html>

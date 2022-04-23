@@ -17,6 +17,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -43,6 +44,9 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Value("${kakaolocal.restapi-key}")
     private String kakaolocalRestapiKey;
+
+    @Value("${cloud.aws.s3.bucket.url}")
+    private String awsS3BucketUrl;
 
     @Override
     public PlaceDetailResponseDTO getPlaceDetail(Long placeNo) {
@@ -97,7 +101,7 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Transactional
     @Override
-    public PlaceVO registerPlace(PlaceRegisterDTO registerDTO) {
+    public Long registerPlace(PlaceRegisterDTO registerDTO) {
 
         PlaceVO place = new PlaceVO();
 
@@ -145,20 +149,27 @@ public class PlaceServiceImpl implements PlaceService{
         place.setKitchenTools(registerDTO.getKitchenTools());
         place.setMaxGuest(registerDTO.getMaxGuest());
 
-        placeMapper.insertOne(place);
-        log.info("NO ={}", place.getHostNo());
+        if(placeMapper.insertOne(place) == 1) {
+            return place.getNo();
+        } else {
+            return null;
+        }
 
 
-        return null;
     }
 
     @Override
-    public List<MyPlaceDTO> getMyPlaces(Long hostNo) {
+    public List<MyPlaceDTO> getPlaces(Long hostNo) {
         return placeMapper.findPlaceListByHostNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), hostNo); //집 정보와 썸네일 한번에 가져오기
     }
 
     @Override
     public Integer getMyPlacesCount(Long hostNo) {
         return placeMapper.getPlacesCountByHostNo(hostNo);
+    }
+
+    @Override
+    public List<ReservatedDateDTO> getReservatedDates(Long placeNo) {
+        return placeMapper.findReservationByPlaceNo(placeNo);
     }
 }

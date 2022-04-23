@@ -16,7 +16,7 @@ public class MessageServiceImpl implements MessageService{
     private final MessageMapper messageMapper;
 
     @Override
-    public List<MessageResponseDTO> myMessageList(Integer senderNo) {
+    public List<MessageResponseDTO> myMessageList(Long senderNo) {
         return messageMapper.allMessage(senderNo);
     }
 
