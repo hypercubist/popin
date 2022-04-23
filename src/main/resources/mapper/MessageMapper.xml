@@ -4,18 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.message.dao.MessageMapper">
     <select id="allMessage" resultType="MessageResponseDTO">
-        select
-            (select name as sender_name from member where no=sender_no) as sender_name,
-            sender_no,
-            (select name as receiver_name from member where no=receiver_no) as receiver_name,
-            receiver_no,
-            max(send_date) as sendDate
-        from
-            message
-        where
-            sender_no in (select distinct sender_no from message where sender_no=#{senderNo} or receiver_no=#{senderNo})
-        group by
-            sender_no, receiver_no
+        select * from(
+            select
+                (select name as sender_name from member where no=sender_no) as sender_name,
+                sender_no,
+                (select name as receiver_name from member where no=receiver_no) as receiver_name,
+                receiver_no,
+                max(send_date) as sendDate
+            from
+                message
+            where
+                sender_no in (select distinct sender_no from message where sender_no=#{senderNo} or receiver_no=#{senderNo})
+            group by
+                sender_no, receiver_no)
+        where receiver_no = #{senderNo}
     </select>
     <insert id="sendMessage" parameterType="MessageRequestDTO">
         insert into
