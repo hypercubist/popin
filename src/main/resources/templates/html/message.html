@@ -93,7 +93,7 @@
             websocket.onclose = onClose;
             //나가기
             function disconnect(){
-                location.href="/message";
+                location.href="/messages";
                 websocket.send(username +":"+msg.value);
             }
 
@@ -145,7 +145,7 @@
             }
             })
         window.onload = function(){
-        ws = new WebSocket("ws://"+"localhost:8100"+"/message");
+        ws = new WebSocket("ws://"+"localhost:8100"+"/messages");
         ws.onmessage = function(msg){
             var data = JSON.parse(msg.data);
         }
@@ -165,7 +165,7 @@
             $('input[name=receiverNo]').attr(receiverInput);
             $('#sender').html($(this).data('nickname'));
             $.ajax({
-                url : "/message/detail",
+                url : "/messages/detail",
                 type : "get",
                 data : {
                     senderNo : $(this).val(),
@@ -187,7 +187,7 @@
 
         $('#button-send').on('click', function(){
             $.ajax({
-                url : "/message",
+                url : "/messages",
                 type : "post",
                 data : {
                     senderNo : $('input[name=senderNo]').val(),

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/message")
+@RequestMapping("/messages")
 public class MessageController {
 
     private final MessageService messageService;
@@ -27,7 +27,6 @@ public class MessageController {
         model.addAttribute("messageDTO", messageService.myMessageList(loginMember.getNo()));
         return "html/message";
     }
-
 
 
 }
