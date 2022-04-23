@@ -9,7 +9,10 @@
     <h1>place detail</h1>
     <h2 th:text="|*{region1depth}의 *{name}|">region1depth의 place-name</h2>
     <div th:text="*{rating}">평점</div>
-    <div th:text="|*{region1depth}, *{region2depth}, *{region3depth}|">광주광역시, 서구, 동천동</div>
+    <div>
+        <span th:text="|*{region1depth}, *{region2depth}|"></span>
+        <span th:if="*{region3depth != null}" th:text="|, *{region3depth}|"></span>
+    </div>
     <img th:src="${thumbnailUrl}"/>
     <div th:each="url : ${imageUrls}">
         <img th:src="${url}"/>

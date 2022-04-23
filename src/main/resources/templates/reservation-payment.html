@@ -15,8 +15,8 @@
         <hr>
         <form th:action th:object="${reservationData}" method="post">
             <input type="text" th:field="*{guestCount}" readonly>
-            <input type="text" th:field="*{checkinDate}" readonly>
-            <input type="text" th:field="*{checkoutDate}" readonly>
+            <input type="text" th:field="*{pickedCheckinDate}" readonly>
+            <input type="text" th:field="*{pickedCheckoutDate}" readonly>
             <input type="text" th:field="*{period}" readonly>
             <input type="text" th:field="*{totalPrice}" readonly>
             <input type="submit" value="결제하기">

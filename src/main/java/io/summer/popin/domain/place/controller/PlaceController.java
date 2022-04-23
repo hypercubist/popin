@@ -65,6 +65,7 @@ public class PlaceController {
     @PostMapping("/{placeNo}")
     public String reservationPage(@PathVariable Long placeNo, @ModelAttribute("reservationRequest") ReservationRequestDTO reservationRequestDTO, RedirectAttributes rttr) {
 
+        log.info("RESER={}", reservationRequestDTO);
         rttr.addFlashAttribute("place", placeService.getPlaceDetail(placeNo));
         rttr.addFlashAttribute("imageUrls", placeService.getImageUrls(placeNo));
         rttr.addFlashAttribute("reservationData", reservationRequestDTO);

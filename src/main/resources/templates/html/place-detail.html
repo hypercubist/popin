@@ -28,7 +28,8 @@
                             <span th:text="|후기 ${place.reviewCount}개|">후기 갯수</span>
                             <!-- 후기 갯수 -->
                             <span>·</span>
-                            <span th:text="|${place.region1depth}, ${place.region2depth}, ${place.region3depth}|">지역</span>
+                            <span th:text="|${place.region1depth}, ${place.region2depth}|"></span>
+                            <span th:if="${place.region3depth != null}" th:text="|, ${place.region3depth}|"></span>
                             <!-- 주소 1, 2 depth -->
                         </div>
                     </div>
@@ -488,7 +489,10 @@
                                 >
                                     호스팅 지역
                                 </div>
-                                <div th:text="|${place.region1depth}, ${place.region2depth}, ${place.region3depth}|" class="pt-10">호스팅 지역</div>
+                                <div class="pt-10">
+                                    <span th:text="|${place.region1depth}, ${place.region2depth}|"></span>
+                                    <span th:if="${place.region3depth != null}" th:text="|, ${place.region3depth}|"></span>
+                                </div>
                                 <!-- 여기에 지도 표시 -->
                             </div>
 
@@ -501,15 +505,15 @@
                                 </div>
                                 <div class="row pt-20">
                                     <div class="col-md-6 col-sm-12">
-                                        <div style="font-weight: 600">이용규칙(로딩안됨)</div>
-                                        <div>체크인: 오후 4:00 이후</div>
-                                        <div>체크아웃: 오전 11:00</div>
+                                        <div style="font-weight: 600">이용규칙</div>
+                                        <div th:text="|체크인: ${place.checkinTimeStart}시부터 ${place.checkinTimeEnd}시 까지|"></div>
+                                        <div th:text="|체크아웃: ${place.checkoutTimeStart}시부터 ${place.checkoutTimeEnd}시 까지|"></div>
                                         <div>흡연 금지</div>
                                         <div>반려동물 금지</div>
                                         <div>파티나 이벤트 금지</div>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
-                                        <div style="font-weight: 600">건강과 안전(로딩안됨)</div>
+                                        <div style="font-weight: 600">건강과 안전</div>
                                         <div>POPIN의 강화된 청소 절차 준수에 동의했습니다.</div>
                                         <div>
                                             POPIN의 사회적 거리 두기 및 관련 가이드라인이
@@ -574,6 +578,7 @@
                                                     id="demo3_22"
                                                     class="form-control"
                                                     value="0"
+                                                    data-btn="guest-count"
                                             />
                                         </div>
 
@@ -791,6 +796,11 @@
           initReservationForm();
 
           $("#pickedDates").on("hide.daterangepicker", handleDatePick);
+          $("input[name='demo3_22']").on("change", function(){
+            if($(this).attr("data-btn")=='guest-count'){
+                $("#guestCount").val($(this).val());
+            }
+          });
         });
 
 </script>

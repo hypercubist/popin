@@ -2,7 +2,6 @@ package io.summer.popin.domain.reservation.service;
 
 import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.model.ResourceKind;
-import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.reservation.dao.ReservationMapper;
 import io.summer.popin.domain.reservation.dto.ReservationForHostInfoDTO;
@@ -13,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
