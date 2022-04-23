@@ -20,7 +20,7 @@
                                 <div th:object="${dto}">
                                     <li>
                                         <img src="vendors/images/img.jpg" alt="">
-                                        <button th:text="*{senderName}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}, data-nickname=*{receiverName}" ></button> 님<br>
+                                        <button th:text="*{senderName}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}, data-nickname=*{senderName}" ></button> 님<br>
                                         <button th:text="*{receiverName}" class="receiverNo" th:attr="value=*{receiverNo}"></button> 에게<br>
                                         최근 <p th:text="*{sendDate}"></p>
                                         <hr>
@@ -31,6 +31,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden"  name="senderNo">
             <input type="hidden"  name="receiverNo">
             <!-- message other profile -->
             <div class="col-lg-9 col-md-8 col-sm-12">
@@ -74,6 +75,7 @@
 
 </section>
 <script>
+
       console.log("ws://"+location.host+"/ws/chat");
             $(document).ready(function(){
             //세션에서 아이디 가져오기
