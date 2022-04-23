@@ -17,11 +17,11 @@ public class ReservationRequestDTO {
     private Long placeNo;
     private Long GuestNo;
     private Integer guestCount;
-    private String dates;
+    private String pickedDates;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate checkinDate;
+    private LocalDate pickedCheckinDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate checkoutDate;
+    private LocalDate pickedCheckoutDate;
     private Integer period;
     private Integer totalPrice;
     private Integer statusCode;

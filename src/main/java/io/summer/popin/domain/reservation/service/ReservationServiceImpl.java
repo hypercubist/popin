@@ -37,8 +37,8 @@ public class ReservationServiceImpl implements ReservationService {
         ReservationVO reservationVO = new ReservationVO();
         reservationVO.setGuestNo(reservationRequestDTO.getGuestNo());
         reservationVO.setPlaceNo(reservationRequestDTO.getPlaceNo());
-        reservationVO.setCheckinDate(reservationRequestDTO.getCheckinDate());
-        reservationVO.setCheckoutDate(reservationRequestDTO.getCheckoutDate());
+        reservationVO.setCheckinDate(reservationRequestDTO.getPickedCheckinDate());
+        reservationVO.setCheckoutDate(reservationRequestDTO.getPickedCheckoutDate());
         reservationVO.setGuestCount(reservationRequestDTO.getGuestCount());
         reservationVO.setPeriod(reservationRequestDTO.getPeriod());
         reservationVO.setPrice(reservationRequestDTO.getTotalPrice());

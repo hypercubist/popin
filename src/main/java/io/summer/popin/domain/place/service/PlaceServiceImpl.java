@@ -167,4 +167,9 @@ public class PlaceServiceImpl implements PlaceService{
     public Integer getMyPlacesCount(Long hostNo) {
         return placeMapper.getPlacesCountByHostNo(hostNo);
     }
+
+    @Override
+    public List<ReservatedDateDTO> getReservatedDates(Long placeNo) {
+        return placeMapper.findReservationByPlaceNo(placeNo);
+    }
 }

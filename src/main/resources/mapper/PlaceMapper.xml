@@ -138,4 +138,13 @@
     <select id="getPlacesCountByHostNo" resultType="int">
         select count(*) from place where host_no=#{hostNo}
     </select>
+
+    <select id="findReservationByPlaceNo" resultType="ReservatedDateDTO">
+        select
+            checkin_date, checkout_date
+        from
+            reservation
+        where
+            place_no = #{placeNo}
+    </select>
 </mapper>
