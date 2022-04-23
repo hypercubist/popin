@@ -90,6 +90,7 @@ public class PlaceController {
                                 Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
+        log.info("PLACEREGISTERDTO = {}", registerDTO );
         KakaoLocalRoadAddressDTO roadAddress = placeService.getRoadAddress(registerDTO.getCoordX(), registerDTO.getCoordY());
 
         registerDTO.setRegion1Depth(roadAddress.getRegion_1depth_name());
