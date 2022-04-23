@@ -52,14 +52,14 @@ public class PlaceController {
                               @ModelAttribute("searchDTO") SearchDTO searchDTO,
                               Model model) {
 
-//        LocalDateTime checkinDate = LocalDateTime.of(2022, 4, 8, 0, 0);
-//        LocalDateTime checkoutDate = LocalDateTime.of(2022, 4, 9, 0, 0); //장소 리스트에서 모델로 받아올 정보임
-//        TempSearchRequestDTO searchDTO = new TempSearchRequestDTO(checkinDate, checkoutDate);
         PlaceDetailResponseDTO placeDetail = placeService.getPlaceDetail(placeNo);
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
         model.addAttribute("hostProfileUrl", memberService.getProfileImageUrl(placeDetail.getHostNo()));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
         model.addAttribute("thumbnailUrl", placeService.getThumbnailUrl(placeNo));
+        model.addAttribute("reservatedDates", placeService.getReservatedDates(placeNo));
+        log.info("RESERVATED ={}",placeService.getReservatedDates(placeNo) );
+
 
         return "html/place-detail";
     }

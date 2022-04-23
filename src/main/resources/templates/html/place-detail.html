@@ -497,16 +497,7 @@
           const oneDay = 1000 * 60 * 60 * 24;
           const pricePerDay = [[${place.priceHigh}]];
           const searchDTO = [[${searchDTO}]];
-          const invalidDates = [
-            {
-              checkinDate: new Date(2022, 05, 10),
-              checkoutDate: new Date(2022, 05, 15),
-            },
-            {
-              checkinDate: new Date(2022, 06, 1),
-              checkoutDate: new Date(2022, 06, 8),
-            },
-          ];
+          let invalidDates = [[${reservatedDates}]];
 
           const setInvalidDate = (date) => {
             return !invalidDates.every(
@@ -599,11 +590,17 @@
               $(".period").text(period);
               $("#totalPrice").val(totalPrice);
               $(".totalPrice").text(totalPrice);
-
-
             }
 
-            daterangepickerConfig.isInvalidDate = setInvalidDate;
+            if(invalidDates.length>0){
+                invalidDates = invalidDates.map((item)=>{
+                  return {
+                    checkinDate: new Date(item.checkinDate.split("-")[0], item.checkinDate.split("-")[1]-1, item.checkinDate.split("-")[2]),
+                    checkoutDate: new Date(item.checkoutDate.split("-")[0], item.checkoutDate.split("-")[1]-1, item.checkoutDate.split("-")[2]),
+                  };
+                });
+                daterangepickerConfig.isInvalidDate = setInvalidDate;
+            }
 
             $("#pickedDates").daterangepicker(daterangepickerConfig);
 
@@ -612,6 +609,7 @@
               $("#guestCount").val(searchDTO.maxGuest);
             }
           };
+
 
           initReservationForm();
 

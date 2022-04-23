@@ -24,4 +24,6 @@ public interface PlaceService {
     List<MyPlaceDTO> getPlaces(Long hostNo);
 
     Integer getMyPlacesCount(Long hostNo);
+
+    List<ReservatedDateDTO> getReservatedDates(Long placeNo);
 }
