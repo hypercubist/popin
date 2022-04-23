@@ -42,7 +42,9 @@
             p.main_Building_No,
             p.sub_Building_No,
             p.building_Name,
-            m.name as host_name
+            m.name as host_name,
+            m.introduction,
+            m.join_date
         from reservation r
             left outer join place p on (r.place_no = p.no)
             left outer join member m on (r.host_no = m.no)

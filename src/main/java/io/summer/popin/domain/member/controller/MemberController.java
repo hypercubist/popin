@@ -54,13 +54,9 @@ public class MemberController {
         @GetMapping("/members/update/{memberNo}")  //프로필 수정 폼
         public String showEditProfileForm(@PathVariable("memberNo") Long memberNo, Model model) {
 
-            ProfileResponseDTO profile = memberService.findProfileByMemberNo(memberNo);
-            String profileImgUrl = memberService.getProfileImageUrl(memberNo);
-            ProfileUpdateDTO profileUpdateDTO = memberService.getEditProfileFormData(memberNo);
-
-            model.addAttribute("profile", profile);
-            model.addAttribute("profileImgUrl", profileImgUrl);
-            model.addAttribute("profileUpdateForm", profileUpdateDTO);
+            model.addAttribute("profile",  memberService.findProfileByMemberNo(memberNo));
+            model.addAttribute("profileImgUrl", memberService.getProfileImageUrl(memberNo));
+            model.addAttribute("profileUpdateForm", memberService.getEditProfileFormData(memberNo));
             return "html/profile-update";
         }
 

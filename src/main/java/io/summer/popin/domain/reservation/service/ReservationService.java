@@ -14,9 +14,13 @@ public interface ReservationService {
 
     ReservationVO insertReservation(ReservationRequestDTO reservationRequestDTO);
 
+    List<String> getThumbnailUrl(Long reservationNo);
+
     List<String> getImageUrls(Long reservationNo);
 
     List<ReservationResponseDTO> getReservationsForGuest(SessionUserDTO loginMember);
 
     ReservationForHostInfoDTO getReservationsForHost(SessionUserDTO loginMember);
+
+    String getProfileImageUrl(Long reservationNo);
 }

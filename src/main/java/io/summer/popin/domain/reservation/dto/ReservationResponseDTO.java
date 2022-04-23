@@ -48,6 +48,9 @@ public class ReservationResponseDTO {
 
     //member
     private String hostName;
+    @DateTimeFormat(pattern = "yyyy-MM")
+    private LocalDate joinDate;
+    private String introduction;
 
     //url
     private String thumbnailUrl;

@@ -1,6 +1,7 @@
 package io.summer.popin.domain.reservation.controller;
 
 import io.summer.popin.domain.member.dto.SessionUserDTO;
+import io.summer.popin.domain.member.service.MemberService;
 import io.summer.popin.domain.place.dto.ReservationRequestDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayApproveResponseDTO;
 import io.summer.popin.domain.reservation.dto.KakaopayReadyResponseDTO;
@@ -26,6 +27,7 @@ import java.util.List;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final MemberService memberService;
     private final PaymentService paymentService;
 
     @GetMapping("/payment")
@@ -72,14 +74,13 @@ public class ReservationController {
 
     @GetMapping("/{reservationNo}")
     public String reservation(@PathVariable Long reservationNo, Model model) {
-        ReservationResponseDTO reservationDetail = reservationService.getReservationDetail(reservationNo);
-        List<String> imageUrls = reservationService.getImageUrls(reservationNo);
-        model.addAttribute("reservation", reservationDetail);
-        model.addAttribute("imageUrls", imageUrls);
-        log.info("RESERVATION = {}", reservationDetail);
-        log.info("URLS = {}", imageUrls);
 
-        return "reservation-detail";
+        model.addAttribute("reservation", reservationService.getReservationDetail(reservationNo));
+        model.addAttribute("profileImage", reservationService.getProfileImageUrl(reservationNo));
+        model.addAttribute("thumbnailUrl", reservationService.getThumbnailUrl(reservationNo));
+        model.addAttribute("imageUrls", reservationService.getImageUrls(reservationNo));
+
+        return "html/reservation-detail";
     }
 
     @GetMapping("/{reservationNo}/update")

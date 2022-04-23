@@ -53,6 +53,7 @@ public class PlaceController {
                               Model model) {
 
         PlaceDetailResponseDTO placeDetail = placeService.getPlaceDetail(placeNo);
+        model.addAttribute("placeNo", placeNo);
         model.addAttribute("place", placeService.getPlaceDetail(placeNo));
         model.addAttribute("hostProfileUrl", memberService.getProfileImageUrl(placeDetail.getHostNo()));
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
@@ -90,7 +91,6 @@ public class PlaceController {
                                 Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
         model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
-        log.info("PLACEREGISTERDTO = {}", registerDTO );
         KakaoLocalRoadAddressDTO roadAddress = placeService.getRoadAddress(registerDTO.getCoordX(), registerDTO.getCoordY());
 
         registerDTO.setRegion1Depth(roadAddress.getRegion_1depth_name());
@@ -120,10 +120,11 @@ public class PlaceController {
         return "redirect:/places/" + placeNo;
     }
 
-    @GetMapping("/{placeNo}/update")
-    public String placeUpdateForm(@PathVariable Long placeNo, Model model){
+//    @GetMapping("/{placeNo}/update")
+//    public String placeUpdateForm(@PathVariable Long placeNo, Model model, @ModelAttribute() PlaceUpdateDTO){
+//
+//
+//        return "html/place-update";
+//    }
 
-
-        return "place-update";
-    }
 }

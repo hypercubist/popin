@@ -7,14 +7,13 @@
     <link
             rel="stylesheet"
             type="text/css"
-            href="src/plugins/jquery-steps/jquery.steps.css"
+            href="/src/plugins/jquery-steps/jquery.steps.css"
     />
     <link
             rel="stylesheet"
             type="text/css"
-            href="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css"
+            href="/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css"
     />
-    <link rel="stylesheet" type="text/css" href="src/plugins/dropzone/src/dropzone.css">
     <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </head>
 <body>
@@ -27,29 +26,37 @@
                     <p class="mb-30">변경된 내용을 입력해주세요.</p>
                 </div>
                 <div class="wizard-content">
-                    <form class="tab-wizard wizard-circle wizard">
+                    <form class="tab-wizard wizard-circle wizard" th:action th:object="${placeUpdateForm}" method="post" enctype="multipart/form-data" id="registerForm">
+<!--                        <div th:if="${#fields.hasGlobalErrors()}">-->
+<!--                            <p class="field-error" th:each="err : ${#fields.globalErrors()}"-->
+<!--                               th:text="${err}">글로벌 오류 메시지</p>-->
+<!--                        </div>-->
                         <h5>이름 및 주소</h5>
                         <section>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>이름</label>
+                                        <label for="placeName">이름</label>
                                         <input
                                                 type="text"
                                                 class="form-control"
-                                                placeholder="변경된 장소의 이름을 작성해주세요"
+                                                th:errorclass="field-error"
+                                                placeholder="호스팅할 장소의 이름을 작성해주세요"
+                                                th:field="*{placeName}"
                                         />
+                                        <div class="field-error" th:errors="*{placeName}"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>장소 종류</label>
-                                        <select class="custom-select form-control">
-                                            <option value="">장소의 종류를 선택해주세요</option>
-                                            <option value="Amsterdam">India</option>
-                                            <option value="Berlin">UK</option>
-                                            <option value="Frankfurt">US</option>
+                                        <label for="placeKindCode">장소 종류</label>
+                                        <select class="custom-select form-control" th:field="*{placeKindCode}" th:errorclass="field-error">
+                                            <option selected value="">장소의 종류를 선택해주세요</option>
+                                            <th:block th:each="placeKind : ${placeKinds}">
+                                                <option th:value="${placeKind.no}" th:text="${placeKind.kind}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{placeKindCode}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -62,21 +69,24 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="maxGuest"
                                         />
+                                        <div class="field-error" th:errors="*{maxGuest}"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>주소</label>
                                         <input
-                                                id="addressName"
+                                                th:field="*{addressName}"
                                                 type="text"
                                                 class="form-control"
+                                                th:errorclass="field-error"
                                                 onclick="addressSearch()"
                                                 placeholder="클릭하여 주소 찾기"
                                                 readonly
                                         />
-                                        <!-- id는 fields로 수정 -->
+                                        <div class="field-error" th:errors="*{addressName}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -115,6 +125,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="roomCount"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -124,6 +135,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="bathroomCount"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -133,6 +145,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="bedSingle"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -142,6 +155,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="bedDouble"
                                         />
                                     </div>
                                 </div>
@@ -153,6 +167,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="bedQueen"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -162,6 +177,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="bedKing"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -171,6 +187,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="kitchen"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -180,6 +197,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="parking"
                                         />
                                     </div>
                                 </div>
@@ -191,6 +209,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="wifi"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -200,6 +219,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="balcony"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -209,6 +229,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="pool"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -218,6 +239,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="airConditioner"
                                         />
                                     </div>
                                 </div>
@@ -229,6 +251,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="bathtub"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -238,6 +261,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="crib"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -247,6 +271,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="tv"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -256,6 +281,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="coffeeMachine"
                                         />
                                     </div>
                                 </div>
@@ -267,6 +293,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="pc"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -276,6 +303,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="blackBoard"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -285,6 +313,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="beamProject"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -294,6 +323,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="balloon"
                                         />
                                     </div>
                                 </div>
@@ -305,6 +335,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="diningTable"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -314,6 +345,7 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="lamp"
                                         />
                                     </div>
                                     <div class="form-group">
@@ -323,9 +355,11 @@
                                                 type="text"
                                                 value="0"
                                                 name="demo3_22"
+                                                data-kind="kitchenTools"
                                         />
                                     </div>
                                 </div>
+
                             </div>
                         </section>
                         <!-- Step 4 -->
@@ -334,54 +368,94 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>체크인 시간(시작)</label>
-                                        <select class="form-control">
-                                            <option>Select Result</option>
-                                            <option>Selected</option>
-                                            <option>Rejected</option>
+                                        <label for="checkinTimeStart">체크인 시간(시작)</label>
+                                        <select th:field="*{checkinTimeStart}" th:errorclass="field-error" class="form-control">
+                                            <option selected value="">체크인 시작 시간</option>
+                                            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                                                <option th:text="|${num}시|" th:value="${num}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{checkinTimeStart}"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>체크인 시간(마감)</label>
-                                        <select class="form-control">
-                                            <option>Select Result</option>
-                                            <option>Selected</option>
-                                            <option>Rejected</option>
+                                        <label for="checkinTimeEnd">체크인 시간(마감)</label>
+                                        <select th:field="*{checkinTimeEnd}" th:errorclass="field-error" class="form-control">
+                                            <option selected value="">체크인 시작 시간</option>
+                                            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                                                <option th:text="|${num}시|" th:value="${num}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{checkinTimeEnd}"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>체크아웃 시간(시작)</label>
-                                        <select class="form-control">
-                                            <option>Select Result</option>
-                                            <option>Selected</option>
-                                            <option>Rejected</option>
+                                        <label for="checkoutTimeStart">체크아웃 시간(시작)</label>
+                                        <select th:field="*{checkoutTimeStart}" th:errorclass="field-error" class="form-control">
+                                            <option selected value="">체크인 시작 시간</option>
+                                            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                                                <option th:text="|${num}시|" th:value="${num}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{checkoutTimeStart}"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>체크아웃 시간(마감)</label>
-                                        <select class="form-control">
-                                            <option>Select Result</option>
-                                            <option>Selected</option>
-                                            <option>Rejected</option>
+                                        <label for="checkoutTimeEnd">체크아웃 시간(마감)</label>
+                                        <select th:field="*{checkoutTimeEnd}" th:errorclass="field-error" class="form-control">
+                                            <option selected value="">체크인 시작 시간</option>
+                                            <th:block th:each="num: ${#numbers.sequence(0,23)}">
+                                                <option th:text="|${num}시|" th:value="${num}"></option>
+                                            </th:block>
                                         </select>
+                                        <div class="field-error" th:errors="*{checkoutTimeEnd}"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>호스트 설명 및 주의사항(20자 이상 2000자 이내)</label>
-                                        <textarea class="form-control"></textarea>
+                                        <label for="description">호스트 설명 및 주의사항(20자 이상 2000자 이내)</label>
+                                        <textarea class="form-control"
+                                                  th:field="*{description}"
+                                                  th:errorclass="field-error">
+                                        </textarea>
+                                        <div class="field-error" th:errors="*{description}"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>이용가격</label>
+                                        <label for="priceHigh">이용가격</label>
                                         <input
                                                 type="text"
                                                 class="form-control"
+                                                th:field="*{priceHigh}"
+                                                th:errorclass="field-error"
                                                 placeholder="1박 당 가격 (원)"
                                         />
                                     </div>
                                 </div>
                             </div>
                         </section>
+                        <input type="hidden" th:field="*{maxGuest}">
+                        <input type="hidden" th:field="*{roomCount}">
+                        <input type="hidden" th:field="*{bathroomCount}">
+                        <input type="hidden" th:field="*{bedSingle}">
+                        <input type="hidden" th:field="*{bedDouble}">
+                        <input type="hidden" th:field="*{bedQueen}">
+                        <input type="hidden" th:field="*{bedKing}">
+                        <input type="hidden" th:field="*{kitchen}">
+                        <input type="hidden" th:field="*{parking}">
+                        <input type="hidden" th:field="*{wifi}">
+                        <input type="hidden" th:field="*{balcony}">
+                        <input type="hidden" th:field="*{pool}">
+                        <input type="hidden" th:field="*{airConditioner}">
+                        <input type="hidden" th:field="*{bathtub}">
+                        <input type="hidden" th:field="*{crib}">
+                        <input type="hidden" th:field="*{tv}">
+                        <input type="hidden" th:field="*{coffeeMachine}">
+                        <input type="hidden" th:field="*{pc}">
+                        <input type="hidden" th:field="*{blackBoard}">
+                        <input type="hidden" th:field="*{beamProject}">
+                        <input type="hidden" th:field="*{balloon}">
+                        <input type="hidden" th:field="*{diningTable}">
+                        <input type="hidden" th:field="*{lamp}">
+                        <input type="hidden" th:field="*{kitchenTools}">
+                        <input type="hidden" th:field="*{coordX}">
+                        <input type="hidden" th:field="*{coordY}">
                     </form>
                 </div>
             </div>
@@ -422,13 +496,30 @@
     </div>
     <!--현재 페이지 본문 내용을 section내부에 작성-->
 </section>
-<script src="src/plugins/jquery-steps/jquery.steps.js"></script>
-<script src="vendors/scripts/steps-setting.js"></script>
-<script src="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
-<script src="vendors/scripts/advanced-components.js"></script>
+<script src="/src/plugins/jquery-steps/jquery.steps.js"></script>
+<script src="/vendors/scripts/steps-setting.js"></script>
+<script src="/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+<script src="/vendors/scripts/advanced-components.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script th:inline="javascript" type="text/javascript" th:attr="src=${kakaoMapsSource}"></script>
-<script src="js/place-register.js"></script>
+<script src="/js/place-register.js"></script>
+<script>
+    $(function () {
+        $("input[name='demo3_22']").on("change", function() {
+          const selectedClassName = $(this).attr("data-kind");
+          const selectedClassValue = $(this).val();
+          $("input").each(function () {
+            if (selectedClassName == $(this).attr("name")) {
+              $(this).val(selectedClassValue);
+            }
+          });
+        });
+
+        $("#registerFormSubmitButton").on("click", function() {
+            $("#registerForm").submit();
+        })
+      });
+</script>
 
 <!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </body>
