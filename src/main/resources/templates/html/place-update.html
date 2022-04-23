@@ -2,7 +2,7 @@
 <html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <title>PLACE-REGISTER</title>
+    <title>PLACE-UPDATE</title>
     <!--현재 페이지 제목을 위 라인에 입력-->
     <link
             rel="stylesheet"
@@ -87,32 +87,19 @@
                         <!-- Step 2 -->
                         <h5>사진 업로드</h5>
                         <section>
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="clearfix mb-20">
-                                        <div class="pull-left">
-                                            <h5 class="h5">대표사진을 등록해주세요</h4>
-                                        </div>
-                                    </div>
-                                    <div class="dropzone" action="#" id="my-awesome-dropzone">
-                                        <div class="fallback">
-                                            <input type="file" name="file" />
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <h5 class="h5 pt-20">대표사진을 등록해주세요</h5>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="placeThumbnail" name="placeThumbnail"/>
+                                    <label class="custom-file-label">Choose file</label>
                                 </div>
-                                <div class="col-md-8 col-sm-12">
-                                    <div class="clearfix mb-20">
-                                        <div class="pull-left">
-                                            <h5 class="h5">호스팅 장소를 잘 표현할 수 있는 사진을 등록해주세요(3장 이상)</h4>
-                                        </div>
-                                    </div>
-                                    <div class="dropzone" action="#" id="my-awesome-dropzone">
-                                        <div class="fallback">
-                                            <input type="file" name="file" />
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <h5 class="h5 pt-20">호스팅 장소를 잘 표현할 수 있는 사진을 등록해주세요(3장 이상)</h5>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" multiple="multiple" id="imageFiles" name="imageFiles"/>
+                                    <label class="custom-file-label">Choose file</label>
                                 </div>
-
                             </div>
                             <div>❗ 변경할 사진을 등록하는 경우 기존에 등록된 사진은 삭제됩니다.</div>
                         </section>
@@ -415,7 +402,7 @@
                             <div class="mb-30 text-center">
                                 <img src="vendors/images/success.png" />
                             </div>
-                            등록이 완료되었습니다!
+                            변경이 완료되었습니다!
                         </div>
                         <div class="modal-footer justify-content-center">
                             <button
@@ -442,7 +429,6 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script th:inline="javascript" type="text/javascript" th:attr="src=${kakaoMapsSource}"></script>
 <script src="js/place-register.js"></script>
-<script src="src/plugins/dropzone/src/dropzone.js"></script>
 
 <!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </body>
