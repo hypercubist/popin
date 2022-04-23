@@ -147,4 +147,17 @@
         where
             place_no = #{placeNo}
     </select>
+
+    <select id="findReviewByPlaceNo" resultType="ReviewDTO">
+        select
+            guest_no,
+            (select name from member where no = r.guest_no) as guest_name,
+            (select url from url_resource where kind_code=1 and member_no = r.guest_no) as guest_thumbnail_url,
+            content,
+            writing_date
+        from
+            review r
+        where
+            place_no = #{placeNo}
+    </select>
 </mapper>

@@ -128,22 +128,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row pb-20">
-                                        <div
-                                                class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
-                                        >
-                                            <i
-                                                    class="icon-copy ion-checkmark-round"
-                                                    style="font-size: 2rem"
-                                            ></i>
-                                        </div>
-<!--                                        <div class="col-md-11 col-sm-11">-->
-<!--                                            <div style="font-size: 1.1rem; font-weight: 600">-->
-<!--                                                수영장(로딩안됨)-->
-<!--                                            </div>-->
-<!--                                            <div>게스트가 자주 찾는 편의시설(로딩안됨)</div>-->
-<!--                                        </div>-->
-                                    </div>
+
                                     <div class="row pb-10">
                                         <div
                                                 class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
@@ -157,7 +142,7 @@
                                                 class="col-md-11 col-sm-11 d-flex align-items-center"
                                         >
                                             <div style="font-size: 1.1rem; font-weight: 600">
-                                                5월 6일 전까지 무료 취소 가능(로딩안됨)
+                                                체크인 하루 전까지 무료 취소 가능
                                             </div>
                                         </div>
                                     </div>
@@ -178,40 +163,283 @@
                                     </div>
                                     <div>
                                         <div class="row pt-10 pb-10">
-                                            <div
-                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
-                                            >
-                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            <div th:if="${place.roomCount != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|방 ${place.roomCount}개|"></div>
+                                                </div>
                                             </div>
-                                            <div
-                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
-                                            >
-                                                <div>해변과 인접 - 해변(로딩안됨)</div>
+                                            <div th:if="${place.bathroomCount != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|욕실 ${place.bathroomCount}개|"></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row pb-10">
-                                            <div
-                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
-                                            >
-                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            <div th:if="${place.bedSingle != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|침대(싱글) ${place.bedSingle}개|"></div>
+                                                </div>
                                             </div>
-                                            <div
-                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
-                                            >
-                                                <div>주방(로딩안됨)</div>
+                                            <div th:if="${place.bedDouble != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|침대(더블) ${place.bedDouble}개|"></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row pb-10">
-                                            <div
-                                                    class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center"
-                                            >
-                                                <i class="icon-copy ion-checkmark-round"></i>
+                                            <div th:if="${place.bedQueen != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|침대(퀸) ${place.bedQueen}개|"></div>
+                                                </div>
                                             </div>
-                                            <div
-                                                    class="col-md-11 col-sm-11 d-flex align-items-center"
-                                            >
-                                                <div>무선 인터넷(로딩안됨)</div>
+                                            <div th:if="${place.bedKing != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|침대(킹) ${place.bedKing}개|"></div>
+                                                </div>
                                             </div>
+                                            <div th:if="${place.kitchen != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|주방 ${place.kitchen}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.parking != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|주차공간 ${place.parking}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.wifi != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|와이파이 ${place.wifi}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.balcony != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|발코니 ${place.balcony}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.pool != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|수영장 ${place.pool}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.airConditioner != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|에어컨 ${place.airConditioner}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.bathtub != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|욕조 ${place.bathtub}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.crib != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|요람 ${place.crib}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.tv != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|TV ${place.tv}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.coffeeMachine != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|커피머신 ${place.coffeeMachine}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.pc != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|PC ${place.pc}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.blackBoard != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|칠판 ${place.blackBoard}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.beamProject != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|빔프로젝트 ${place.beamProject}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.balloon != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|풍선 ${place.balloon}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.diningTable != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|식탁 ${place.diningTable}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.lamp != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|램프 ${place.lamp}개|"></div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${place.kitchenTools != null}" class="row col-md-6 col-sm-12 pb-10">
+                                                <div
+                                                        class="col-md-2 col-sm-2 d-flex justify-content-center align-items-center"
+                                                >
+                                                    <i class="icon-copy ion-checkmark-round"></i>
+                                                </div>
+                                                <div
+                                                        class="col-md-10 col-sm-10 d-flex align-items-center"
+                                                >
+                                                    <div th:text="|주방도구 ${place.kitchenTools}개|"></div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -231,79 +459,24 @@
                                 </div>
 
                                 <div class="pt-20">
-                                    <div class="mb-20">
+                                    <div th:each="review : ${reviews}" class="mb-20">
                                         <div class="d-flex">
                                             <div>
-                                                <img
-                                                        class="rounded"
-                                                        src="/vendors/images/photo3.jpg"
-                                                        alt=""
-                                                        style="width: 60px"
-                                                />
+                                                <a th:href="@{/members/{memberNo}(memberNo=${review.guestNo})}">
+                                                    <img
+                                                            class="rounded"
+                                                            th:src="${review.guestThumbnailUrl}"
+                                                            alt=""
+                                                            style="width: 60px"
+                                                    />
+                                                </a>
                                             </div>
                                             <div class="pl-10 d-flex-r justify-content-center">
-                                                <div>성윤</div>
-                                                <div>2022년 3월</div>
+                                                <div th:text="${review.guestName}"></div>
+                                                <div th:text="${#temporals.format(review.writingDate, 'yyyy년 MM월')}"></div>
                                             </div>
                                         </div>
-                                        <div class="pt-10">
-                                            진짜 만족한 숙소에요… 또 가고싶어요!❤️
-                                        </div>
-                                    </div>
-                                    <div class="mb-20">
-                                        <div class="d-flex">
-                                            <div>
-                                                <img
-                                                        class="rounded"
-                                                        src="/vendors/images/photo2.jpg"
-                                                        alt=""
-                                                        style="width: 60px"
-                                                />
-                                            </div>
-                                            <div class="pl-10 d-flex-r justify-content-center">
-                                                <div>건우</div>
-                                                <div>2022년 3월</div>
-                                            </div>
-                                        </div>
-                                        <div class="pt-10">하루 행복하게 보내고 갑니다!!</div>
-                                    </div>
-                                    <div class="mb-20">
-                                        <div class="d-flex">
-                                            <div>
-                                                <img
-                                                        class="rounded"
-                                                        src="/vendors/images/photo5.jpg"
-                                                        alt=""
-                                                        style="width: 60px"
-                                                />
-                                            </div>
-                                            <div class="pl-10 d-flex-r justify-content-center">
-                                                <div>현경</div>
-                                                <div>2022년 3월</div>
-                                            </div>
-                                        </div>
-                                        <div class="pt-10">
-                                            조용했다...바쁜 도시의 삶 속 찾은 여유.
-                                        </div>
-                                    </div>
-                                    <div class="mb-20">
-                                        <div class="d-flex">
-                                            <div>
-                                                <img
-                                                        class="rounded"
-                                                        src="/vendors/images/photo1.jpg"
-                                                        alt=""
-                                                        style="width: 60px"
-                                                />
-                                            </div>
-                                            <div class="pl-10 d-flex-r justify-content-center">
-                                                <div>수빈</div>
-                                                <div>2022년 2월</div>
-                                            </div>
-                                        </div>
-                                        <div class="pt-10">
-                                            숙소도 크고,쾌적합니다:) 여름에 또 오고싶어요!
-                                        </div>
+                                        <div th:text="${review.content}" class="pt-10"></div>
                                     </div>
                                 </div>
                             </div>
@@ -541,7 +714,7 @@
             }
             $(".period").text(period);
             $("#period").val(period);
-            $(".totalPrice").text(totalPrice);
+            $(".totalPrice").text(period * pricePerDay);
             $("#totalPrice").val(period * pricePerDay);
             $("#pickedCheckinDate").val(picker.startDate.format("YYYY-MM-DD"));
             $("#pickedCheckoutDate").val(picker.endDate.format("YYYY-MM-DD"));
@@ -591,6 +764,10 @@
               $("#totalPrice").val(totalPrice);
               $(".totalPrice").text(totalPrice);
             }
+            $("#period").val(0);
+            $(".period").text(0);
+            $("#totalPrice").val(0);
+            $(".totalPrice").text(0);
 
             if(invalidDates.length>0){
                 invalidDates = invalidDates.map((item)=>{

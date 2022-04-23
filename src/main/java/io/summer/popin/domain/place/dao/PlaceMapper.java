@@ -5,6 +5,7 @@ import io.summer.popin.domain.place.dto.PlaceKindDTO;
 import io.summer.popin.domain.place.dto.MyPlaceDTO;
 import io.summer.popin.domain.place.dto.ReservatedDateDTO;
 import io.summer.popin.domain.place.vo.PlaceVO;
+import io.summer.popin.domain.review.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +25,6 @@ public interface PlaceMapper {
     int getPlacesCountByHostNo(long hostNo);
 
     ArrayList<ReservatedDateDTO> findReservationByPlaceNo(long placeNo);
+
+    ArrayList<ReviewDTO> findReviewByPlaceNo(long placeNo);
 }
