@@ -26,8 +26,8 @@
                 <trim prefix="and">
                     <if test="searchDTO.checkinDate != null">
                         <![CDATA[
-                        ((checkout_date <= #{searchDTO.checkinDate} and checkout_date < #{searchDTO.checkoutDate})
-                        or (checkin_date > #{searchDTO.checkinDate} and checkin_date >= #{searchDTO.checkoutDate}))
+                        ((checkout_date <= #{searchDTO.checkinDate}) and (checkout_date < #{searchDTO.checkoutDate}))
+                        or ((checkin_date > #{searchDTO.checkinDate}) and (checkin_date >= #{searchDTO.checkoutDate}))
                     ]]>
                 </if>
                 </trim>

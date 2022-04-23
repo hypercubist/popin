@@ -28,5 +28,4 @@ public class MessageController {
         return "html/message";
     }
 
-
 }
