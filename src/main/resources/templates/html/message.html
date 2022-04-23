@@ -79,7 +79,7 @@
       console.log("ws://"+location.host+"/ws/chat");
             $(document).ready(function(){
             //세션에서 아이디 가져오기
-            const username = '';
+            const username = [[${session.loginMember.no}]];
             //연결 해제
             $("#disconn").on("click", (e) => {
                 disconnect();
@@ -113,7 +113,7 @@
             }
             //채팅창에 들어왔을 때
             function onOpen(evt) {
-                var str = username + ": 님이 입장하셨습니다.";
+                <!--var str = username + ": 님이 입장하셨습니다.";-->
                 websocket.send(str);
             }
             function onMessage(msg) {
@@ -178,9 +178,9 @@
                 $('#userMessage').empty();
                 for(var i =0; i<list.length;i++){
                     if(list[i].senderNo == [[${session.loginMember.no}]]){
-                         $('#userMessage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
-                    }else{
                          $('#userMessage').append("<li class='clearfix'><span class='chat-img'><img src='vendors/images/chat-img1.jpg' alt=''></span><div class='chat-body clearfix'><p style='display : inline-block'>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
+                    }else{
+                         $('#userMessage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
                     }
                 };
                 $('#userMessage').scrollTop($('#userMessage')[0].scrollHeight);
