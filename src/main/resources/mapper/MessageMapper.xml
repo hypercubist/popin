@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.summer.popin.domain.message.dao.MessageMapper">
-    <select id="allMessage" resultType="MessageResponseDTO" parameterType="int">
+    <select id="allMessage" resultType="MessageResponseDTO">
         select
             (select name as sender_name from member where no=sender_no) as sender_name,
             sender_no,
