@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MessageService {
 
-    public List<MessageResponseDTO> myMessageList(Integer senderNo);
+    public List<MessageResponseDTO> myMessageList(Long senderNo);
 
     public boolean sendMessage(MessageRequestDTO dto);
 

@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface MessageMapper {
 
-    public List<MessageResponseDTO> allMessage(Integer senderNo);
+    public List<MessageResponseDTO> allMessage(Long senderNo);
 
     public boolean sendMessage(MessageRequestDTO dto);
 

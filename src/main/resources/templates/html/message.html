@@ -20,10 +20,10 @@
                                 <div th:object="${dto}">
                                     <li>
                                         <img src="vendors/images/img.jpg" alt="">
-                                         보낸 사람 : <button th:text="*{name}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}"></button><br>
-                                         받는 사람 : <button th:text="*{name}" class="receiverNo" th:attr="value=*{receiverNo}"></button><br>
-                                         최근 받은 시간 : <div th:text="*{sendDate}"></div>
-                                         <hr>
+                                        <button th:text="*{senderName}" class="senderNo" th:attr="data-receiverno=*{receiverNo}, value=*{senderNo}, data-nickname=*{receiverName}" ></button> 님<br>
+                                        <button th:text="*{receiverName}" class="receiverNo" th:attr="value=*{receiverNo}"></button> 에게<br>
+                                        최근 <p th:text="*{sendDate}"></p>
+                                        <hr>
                                     </li>
                                 </div>
                             </th:block>
@@ -42,7 +42,7 @@
                                     <img src="vendors/images/profile-photo.jpg" alt="">
                                 </div>
                                 <div class="chat-profile-name">
-                                    <h3><input type="text" name="senderNo" id="sender"></h3>
+                                    <h3 id="sender"></h3>
                                     <span>New York, USA</span>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
       console.log("ws://"+location.host+"/ws/chat");
             $(document).ready(function(){
             //세션에서 아이디 가져오기
-            const username = '1번님';
+            const username = '';
             //연결 해제
             $("#disconn").on("click", (e) => {
                 disconnect();
@@ -152,6 +152,7 @@
 }
 
         $('.senderNo').on('click',function(){
+
             var senderInput ={
                 'value' : $(this).val(),
                 'readonly' : true
@@ -162,6 +163,7 @@
             };
             $('input[name=senderNo]').attr(senderInput);
             $('input[name=receiverNo]').attr(receiverInput);
+            $('#sender').html($(this).data('nickname'));
             $.ajax({
                 url : "/message/detail",
                 type : "get",
@@ -173,7 +175,7 @@
                 console.log(list);
                 $('#userMessage').empty();
                 for(var i =0; i<list.length;i++){
-                    if(list[i].senderNo == 1){
+                    if(list[i].senderNo == [[${session.loginMember.no}]]){
                          $('#userMessage').append("<li class='clearfix admin_chat'><span class='chat-img'><img src='vendors/images/chat-img2.jpg' alt=''></span><div class='chat-body clearfix'><p>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
                     }else{
                          $('#userMessage').append("<li class='clearfix'><span class='chat-img'><img src='vendors/images/chat-img1.jpg' alt=''></span><div class='chat-body clearfix'><p style='display : inline-block'>"+list[i].content+"</p><div class='chat_time'>시간</div></div></li>");
