@@ -33,7 +33,7 @@ public class ReservationController {
     @GetMapping("/payment")
     public String requestReservation() {
 
-        return "reservation-payment";
+        return "html/reservation-confirm";
     }
 
     @PostMapping("/payment")
