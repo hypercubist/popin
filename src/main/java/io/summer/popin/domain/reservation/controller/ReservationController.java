@@ -79,7 +79,7 @@ public class ReservationController {
         model.addAttribute("profileImage", reservationService.getProfileImageUrl(reservationNo));
         model.addAttribute("thumbnailUrl", reservationService.getThumbnailUrl(reservationNo));
         model.addAttribute("imageUrls", reservationService.getImageUrls(reservationNo));
-
+        log.info("thumbnailUrl {}", reservationService.getThumbnailUrl(reservationNo));
         return "html/reservation-detail";
     }
 

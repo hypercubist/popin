@@ -36,8 +36,8 @@ public class ReservationResponseDTO {
     private Integer checkoutTimeStart;
     private Integer checkoutTimeEnd;
     private String addressName;
-    private Integer coordX;
-    private Integer coordY;
+    private Double coordX;
+    private Double coordY;
     private String region1depth;
     private String region2depth;
     private String region3depth;
