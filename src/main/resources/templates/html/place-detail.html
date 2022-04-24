@@ -532,10 +532,13 @@
                                     style="position: sticky; top: 30px"
                             >
                                 <div class="pt-20">
-                    <span style="font-size: 1.5rem; font-weight: 600"
-                          th:text="|${place.hostName}이 호스팅하는 ${place.placeKind}|"
-                    >호스트님이 호스팅하는 장소</span
-                    >
+                                    <div>
+                                        <a th:href="@{|/places/${placeNo}/update|}">프로필 수정하기</a>
+                                    </div>
+                            <span style="font-size: 1.5rem; font-weight: 600"
+                                  th:text="|${place.hostName}이 호스팅하는 ${place.placeKind}|"
+                            >호스트님이 호스팅하는 장소</span
+                            >
                                 </div>
                                 <!-- 호스트이름 -->
                                 <div class="d-flex justify-content-between">

@@ -13,6 +13,14 @@
         where
             kind_code =#{resourceKind} and place_no=#{placeNo}
     </select>
+    <select id="findThumbnailUrlByReservationNo" resultType="string">
+        select
+            url
+        from
+            url_resource
+        where
+            kind_code=#{resourceKind} and place_no = (select place_no from reservation where no = #{reservationNo})
+    </select>
 
     <select id="findUrlByReservationNo" resultType="string">
         select
@@ -55,4 +63,13 @@
 
         </where>
     </delete>
+
+    <select id="findProfileUrlByReservationNo" resultType="String">
+        select
+            url
+        from
+            url_resource
+        where
+            kind_code=#{resourceKind} and member_no = (select host_no from reservation where no=#{reservationNo})
+    </select>
 </mapper>

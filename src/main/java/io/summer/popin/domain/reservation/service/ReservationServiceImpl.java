@@ -47,6 +47,11 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public List<String> getThumbnailUrl(Long reservationNo) {
+        return urlMapper.findThumbnailUrlByReservationNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), reservationNo);
+    }
+
+    @Override
     public List<String> getImageUrls(Long reservationNo) {
         return urlMapper.findUrlByReservationNo(ResourceKind.PLACE.ordinal(),reservationNo);
     }
@@ -62,6 +67,16 @@ public class ReservationServiceImpl implements ReservationService {
 
         return reservationMapper.getCountByHostNo(loginMember.getNo());
 
+    }
+
+    @Override
+    public String getProfileImageUrl(Long reservationNo) {
+
+        List<String> urls = urlMapper.findProfileUrlByReservationNo(ResourceKind.PROFILE.ordinal(), reservationNo);
+        if (urls.isEmpty()) {
+            return "/img/profile_default.png";
+        }
+        return urls.get(0);
     }
 
 }

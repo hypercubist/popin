@@ -156,8 +156,6 @@ public class PlaceServiceImpl implements PlaceService{
         } else {
             return null;
         }
-
-
     }
 
     @Override
