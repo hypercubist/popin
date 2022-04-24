@@ -69,7 +69,7 @@ public class PlaceController {
         rttr.addFlashAttribute("place", placeService.getPlaceDetail(placeNo));
         rttr.addFlashAttribute("imageUrls", placeService.getImageUrls(placeNo));
         rttr.addFlashAttribute("reservationData", reservationRequestDTO);
-        return "redirect:/reservation/payment";
+        return "redirect:/reservations/payment";
     }
 
     @GetMapping("/register")

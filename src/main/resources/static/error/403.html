@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <title>403</title>
+  <!--현재 페이지 제목을 위 라인에 입력-->
+  <link rel="stylesheet" href="">
+  <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+  <!--현재 페이지 본문 내용을 section내부에 작성-->
+  <div class="error-page d-flex align-items-center flex-wrap justify-content-center pd-20">
+    <div class="pd-10">
+      <div class="error-page-wrap text-center">
+        <h1>403</h1>
+        <h3>Error: 403 Forbidden</h3>
+        <p>Sorry, access to this resource on the server is denied.<br>Either check the URL</p>
+        <div class="pt-20 mx-auto max-width-200">
+          <a href="index.html" class="btn btn-primary btn-block btn-lg">Back To Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script></script>
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</body>
+</html>

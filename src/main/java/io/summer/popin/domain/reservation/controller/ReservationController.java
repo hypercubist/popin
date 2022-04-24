@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @SessionAttributes({"reservationData", "readyDTO"})
-@RequestMapping("/reservation")
+@RequestMapping("/reservations")
 @Controller
 public class ReservationController {
 
@@ -55,7 +55,7 @@ public class ReservationController {
         ReservationVO reservationVO = reservationService.insertReservation(reservationRequestDTO);
         Long reservationNo = reservationVO.getNo();
         sessionStatus.setComplete();
-        return "redirect:/reservation/" + reservationNo;
+        return "redirect:/reservations/" + reservationNo;
     }
 
     @GetMapping("/payment/cancel")
