@@ -77,6 +77,9 @@ public class ReservationServiceImpl implements ReservationService {
     public String getProfileImageUrl(Long reservationNo) {
 
         List<String> urls = urlMapper.findProfileUrlByReservationNo(ResourceKind.PROFILE.ordinal(), reservationNo);
+        if (urls.isEmpty()) {
+            return "/img/profile_default.png";
+        }
         return urls.get(0);
     }
 
