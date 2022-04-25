@@ -131,7 +131,7 @@
                     <a
                             id="reservation-btn"
                             class="btn btn-primary btn-block"
-                            th:href="@{/messages/(hostNo=${place.hostNo})}">
+                            th:href="@{/messages/(hostNo=*{hostNo})}">
                       <span>호스트에게 연락하기</span>
                     </a>
                   </div>
