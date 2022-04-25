@@ -27,7 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/members").authenticated()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/places/**", "/reservations/**").hasRole(MemberClass.GUEST.getTitle())
+                .antMatchers("/places/**", "/places", "reservations/**", "/statistics").hasRole(MemberClass.HOST.getTitle())
+                .antMatchers("/**").hasRole(MemberClass.ADMINISTRATOR.getTitle())
+                .antMatchers("/", "/auth/**", "/js/**", "/css/**", "/img/**", "/src/**",
+                                    "/vendors/**","/members/*","/members/update","/reviews", "/search",
+                                        "/messages/**" , "/message/**", "/favorites").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()  // 로그인 페이지 커스텀
