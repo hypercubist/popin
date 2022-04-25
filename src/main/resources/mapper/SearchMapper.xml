@@ -8,29 +8,46 @@
             *
         from(
             select
-                p.no as placeNo,rownum rn ,p.name as placeName, p.region_1depth ,p.region_2depth,p.region_3depth ,
-                pk.kind as place_kind, rating, (select count(*) from review where place_no=p.no) as review_count, p.price_high as price,
-                (region_1depth||' '||region_2depth||' '||region_3depth)as location, (select checkin_date from reservation where p.no=place_no) checkin_date, (select checkout_date from reservation where p.no=place_no) checkout_date,
-                coord_x, coord_y,p.max_guest
+                p.no as placeNo,
+                rownum rn,
+                p.name as placeName,
+                p.region_1depth,
+                p.region_2depth,
+                p.region_3depth,
+                pk.kind as place_kind,
+                rating,
+                (select count(*) from review where place_no=p.no) as review_count,
+                p.price_high as price,
+                (region_1depth||' '||region_2depth||' '||region_3depth)as location,
+                p.coord_x,
+                p.coord_y,
+                p.max_guest
             from
-                place p left outer join place_kind pk on p.place_kind_code = pk.no, reservation
+                place p
+                    left outer join place_kind pk on p.place_kind_code = pk.no
             <where>
-                <trim prefix="and (" suffix=")">
-                    <if test="searchDTO.region1depth != null">
-                        region_1depth = #{searchDTO.region1depth}
-                    </if>
-                    <if test="searchDTO.region2depth != null">
-                        and region_2depth = #{searchDTO.region2depth}
-                    </if>
-                </trim>
-                <trim prefix="and">
-                    <if test="searchDTO.checkinDate != null">
-                        <![CDATA[
-                        (((select checkout_date from reservation where p.no=place_no) <= #{searchDTO.checkinDate}) and ((select checkout_date from reservation where p.no=place_no) < #{searchDTO.checkoutDate}))
-                        or (((select checkin_date from reservation where p.no=place_no) > #{searchDTO.checkinDate}) and ((select checkin_date from reservation where p.no=place_no) >= #{searchDTO.checkoutDate}))
+                <if test="searchDTO.region1depth != null">
+                    region_1depth = #{searchDTO.region1depth}
+                </if>
+                <if test="searchDTO.region2depth != null">
+                    and region_2depth = #{searchDTO.region2depth}
+                </if>
+                <if test="searchDTO.checkinDate != null">
+                    <![CDATA[
+                    and
+                    0=
+                    (select
+                         count(*)
+                     from
+                         reservation
+                     where
+                         p.no=place_no
+                         and
+                         ((checkin_date <= #{searchDTO.checkinDate} and checkout_date > #{searchDTO.checkinDate}) or (checkin_date < #{searchDTO.checkoutDate} and checkout_date >= #{searchDTO.checkoutDate}))
+                    )
                     ]]>
                 </if>
-                </trim>
+
                 <if test="searchDTO.maxGuest != null">
                     <![CDATA[
                     and max_guest >= #{searchDTO.maxGuest}
@@ -49,26 +66,32 @@
     </select>
     <select id="placeCount" resultType="int">
         select
-            count(*)
+        count(*)
         from
-            place p left outer join place_kind pk on p.place_kind_code = pk.no left outer join reservation r on (r.place_no=p.no)
+        place p left outer join place_kind pk on p.place_kind_code = pk.no
         <where>
-            <trim prefix="and (" suffix=")">
-                <if test="region1depth != null">
-                    region_1depth = #{region1depth}
-                </if>
-                <if test="region2depth != null">
-                    and region_2depth = #{region2depth}
-                </if>
-            </trim>
-            <trim prefix="and">
-                <if test="checkinDate != null">
-                    <![CDATA[
-                        ((checkout_date <= #{checkinDate} and checkout_date < #{checkoutDate})
-                        or (checkin_date > #{checkinDate} and checkin_date >= #{checkoutDate}))
+            <if test="region1depth != null">
+                region_1depth = #{region1depth}
+            </if>
+            <if test="region2depth != null">
+                and region_2depth = #{region2depth}
+            </if>
+            <if test="checkinDate != null">
+                <![CDATA[
+                    and
+                    0=
+                    (select
+                         count(*)
+                     from
+                         reservation
+                     where
+                         p.no=place_no
+                         and
+                         ((checkin_date <= #{checkinDate} and checkout_date > #{checkinDate}) or (checkin_date < #{checkoutDate} and checkout_date >= #{checkoutDate}))
+                    )
                     ]]>
-                </if>
-            </trim>
+            </if>
+
             <if test="maxGuest != null">
                 <![CDATA[
                     and max_guest >= #{maxGuest}
