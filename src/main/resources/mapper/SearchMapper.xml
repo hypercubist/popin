@@ -26,8 +26,8 @@
                 <trim prefix="and">
                     <if test="searchDTO.checkinDate != null">
                         <![CDATA[
-                        ((checkout_date <= #{searchDTO.checkinDate}) and (checkout_date < #{searchDTO.checkoutDate}))
-                        or ((checkin_date > #{searchDTO.checkinDate}) and (checkin_date >= #{searchDTO.checkoutDate}))
+                        (((select checkout_date from reservation where p.no=place_no) <= #{searchDTO.checkinDate}) and ((select checkout_date from reservation where p.no=place_no) < #{searchDTO.checkoutDate}))
+                        or (((select checkin_date from reservation where p.no=place_no) > #{searchDTO.checkinDate}) and ((select checkin_date from reservation where p.no=place_no) >= #{searchDTO.checkoutDate}))
                     ]]>
                 </if>
                 </trim>
