@@ -39,7 +39,9 @@
                                     >
                                         <div>
                                             <div style="font-weight: 600">날짜</div>
-                                            <div>5월 10일 ~ 11일</div>
+                                            <span th:text="${#temporals.format(reservationData.pickedCheckinDate,'MM월 dd일')}"></span>
+                                            <span> ~ </span>
+                                            <span th:text="${#temporals.format(reservationData.pickedCheckoutDate,'MM월 dd일')}"></span>
                                         </div>
                                         <div>수정</div>
                                     </div>
@@ -48,7 +50,7 @@
                                     >
                                         <div>
                                             <div style="font-weight: 600">게스트</div>
-                                            <div>게스트 2명</div>
+                                            <div th:text="|게스트 ${reservationData.guestCount}명|">게스트 2명</div>
                                         </div>
                                         <div>수정</div>
                                     </div>
@@ -63,7 +65,7 @@
                                     </div>
                                     <div>
                                         <img
-                                                src="img\payment_icon_yellow_medium.png"
+                                                src="/img/payment_icon_yellow_medium.png"
                                                 alt="kakaopay-icon"
                                         />
                                     </div>
@@ -78,13 +80,8 @@
                                     </div>
                                     <div>
                                         <p style="font-weight: 600">
-                                            5월 5일 오후 4:00 전까지 무료로 예약을 취소할 수
+                                            체크인 하루 전까지 무료로 예약을 취소할 수
                                             있습니다.
-                                        </p>
-                                        <p>
-                                            그 후에는 5월 10일 오후 4:00 전에 예약을 취소하면 첫 1박
-                                            요금 및 서비스 수수료를 제외한 요금의 50%가 환불됩니다.
-                                            자세히 알아보기
                                         </p>
                                         <p>
                                             코로나19로 인한 여행 문제에는 정상참작이 가능한 상황
@@ -97,13 +94,21 @@
                                     <div>
                                         <p style="font-size: 0.7rem">
                                             아래 버튼을 선택하면 호스트가 설정한 숙소 이용규칙,
-                                            에어비앤비 재예약 및 환불 정책에 동의하며, 피해에 대한
+                                            POPIN 재예약 및 환불 정책에 동의하며, 피해에 대한
                                             책임이 본인에게 있을 경우 POPIN이 결제 수단으로 청구의
                                             조치를 취할 수 있다는 사실에 동의하는 것입니다.
                                         </p>
                                     </div>
                                     <div>
-                                        <button class="btn btn-primary">확인 및 결제</button>
+                                        <form th:action th:object="${reservationData}" method="post">
+                                            <input type="hidden" th:field="*{guestCount}" readonly>
+                                            <input type="hidden" th:field="*{pickedCheckinDate}" readonly>
+                                            <input type="hidden" th:field="*{pickedCheckoutDate}" readonly>
+                                            <input type="hidden" th:field="*{period}" readonly>
+                                            <input type="hidden" th:field="*{totalPrice}" readonly>
+                                            <button type="submit" class="btn btn-primary">확인 및 결제</button>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +122,7 @@
                                 <div class="row pt-20 pb-20">
                                     <div class="col-md-5 col-sm-12">
                                         <img
-                                                src="src\images\img4.jpg"
+                                                th:src="${thumbnailUrl}"
                                                 alt="place-thumbnail"
                                                 class="rounded"
                                         />
@@ -126,17 +131,14 @@
                                             class="col-md-7 col-sm-12 d-flex flex-column justify-content-between"
                                     >
                                         <div>
-                                            <div style="font-size: 0.8rem; opacity: 0.8">펜션</div>
-                                            <div style="font-size: 0.7rem">
-                                                2인실룸 인피니티리조트 스쿠버다이빙 서핑 스노쿨링
-                                                바로앞 해변
-                                            </div>
+                                            <div th:text="${place.placeKind}" style="font-size: 0.8rem; opacity: 0.8"></div>
+                                            <div th:text="${place.name}" style="font-size: 0.7rem"></div>
                                         </div>
 
                                         <div style="font-size: 0.7rem">
                                             <i class="icon-copy ion-android-star"></i>
-                                            <span>4.89</span>
-                                            <span>(후기 232개)</span>
+                                            <span th:text="${place.rating}">4.89</span>
+                                            <span th:text="|(후기 ${place.reviewCount}개)|">(후기 232개)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -149,14 +151,14 @@
                                         요금 세부정보
                                     </div>
                                     <div class="d-flex justify-content-between">
-                                        <span>₩123,500 x 1박</span>
-                                        <span>₩123,500</span>
+                                        <span th:text="|₩${place.priceHigh} X ${reservationData.period}박|">₩123,500 x 1박</span>
+                                        <span th:text="|₩${reservationData.totalPrice}|">₩123,500</span>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="d-flex justify-content-between">
                                     <span>총 합계 (KRW)</span>
-                                    <span>₩123,500</span>
+                                    <span th:text="|₩${reservationData.totalPrice}|">₩123,500</span>
                                 </div>
                             </div>
                         </div>

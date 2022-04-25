@@ -26,12 +26,12 @@
                             </div>
                             <div>
                                 <div>
-                                    <span th:text="${list.region2depth}"></span>의<span th:text="${list.placeKind}"></span>전체</br>
+                                    <a th:href="@{/places/{placeNo}(placeNo = ${list.placeNo})}"><span th:text="${list.region2depth}"></span>의<span th:text="${list.placeKind}"></span>전체</br></a>
                                 </div>
                                 <div>
                                     <span th:text="${list.placeName}"></span>
                                 </div>
-                                <div>
+                                <div style="pb-30">
                                     최대인원 <span th:text="${list.maxGuest}"></span> 명
                                 </div>
                                 <div>

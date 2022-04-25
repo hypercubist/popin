@@ -68,7 +68,7 @@ public class PlaceController {
 
         log.info("RESER={}", reservationRequestDTO);
         rttr.addFlashAttribute("place", placeService.getPlaceDetail(placeNo));
-        rttr.addFlashAttribute("imageUrls", placeService.getImageUrls(placeNo));
+        rttr.addFlashAttribute("thumbnailUrl", placeService.getThumbnailUrl(placeNo));
         rttr.addFlashAttribute("reservationData", reservationRequestDTO);
         return "redirect:/reservations/payment";
     }

@@ -29,7 +29,8 @@ public class HomeController {
 
     @GetMapping("/html-test")
     public String test(@ModelAttribute SearchDTO searchDTO){
-        return "html/reviews";
+
+        return "html/reservation-confirm";
     }
 
 

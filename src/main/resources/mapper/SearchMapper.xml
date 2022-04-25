@@ -8,12 +8,12 @@
             *
         from(
             select
-                rownum rn ,p.name as placeName, p.region_1depth ,p.region_2depth,p.region_3depth ,
+                p.no as placeNo,rownum rn ,p.name as placeName, p.region_1depth ,p.region_2depth,p.region_3depth ,
                 pk.kind as place_kind, rating, (select count(*) from review where place_no=p.no) as review_count, p.price_high as price,
-                (region_1depth||' '||region_2depth||' '||region_3depth)as location, r.checkin_date,r.checkout_date,
+                (region_1depth||' '||region_2depth||' '||region_3depth)as location, (select checkin_date from reservation where p.no=place_no) checkin_date, (select checkout_date from reservation where p.no=place_no) checkout_date,
                 coord_x, coord_y,p.max_guest
             from
-                place p left outer join place_kind pk on p.place_kind_code = pk.no left outer join reservation r on (r.place_no=p.no)
+                place p left outer join place_kind pk on p.place_kind_code = pk.no, reservation
             <where>
                 <trim prefix="and (" suffix=")">
                     <if test="searchDTO.region1depth != null">
@@ -40,7 +40,6 @@
                 and ROWNUM>0 and ROWNUM <= (#{criteria.pageNum} * #{criteria.amount})
                 ]]>
             </where>
-                order by r.checkin_date
                 )
         <where>
                 <![CDATA[
