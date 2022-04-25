@@ -14,4 +14,6 @@ public interface ReviewMapper {
     List<ReviewReservationDTO> getReviewFormDataByMemberNo(Long memberNo);
 
     List<MyReviewDTO> getReviewsByMemberNo(Long memberNo);
+
+    int insertOne(ReviewWriteFormDTO reviewWriteForm);
 }

@@ -59,7 +59,7 @@ public class PlaceController {
         model.addAttribute("imageUrls", placeService.getImageUrls(placeNo));
         model.addAttribute("thumbnailUrl", placeService.getThumbnailUrl(placeNo));
         model.addAttribute("reservatedDates", placeService.getReservatedDates(placeNo));
-//        model.addAttribute("reviews", placeService.getReviews(placeNo));
+        model.addAttribute("reviews", placeService.getReviews(placeNo));
         return "html/place-detail";
     }
 
