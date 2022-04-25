@@ -17,124 +17,133 @@
             <div class="pd-20">
                 <h5 class="pb-20">후기쓰기</h5>
                 <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
-                        <div class="da-card">
-                            <div class="da-card-photo">
-                                <img src="vendors/images/photo1.jpg" alt="" />
-                                <div class="da-overlay">
-                                    <div class="da-social">
-                                        <ul class="clearfix">
-                                            <li>
-                                                <a
-                                                        href="#"
-                                                        class="btn-block"
-                                                        data-toggle="modal"
-                                                        data-target="#Medium-modal"
-                                                        type="button"
-                                                >
-                                                    <i class="icon-copy ion-android-create"></i
-                                                    ></a>
-                                            </li>
-                                        </ul>
+                    <th:block th:each="reviewForm : ${reviewForms}">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
+                            <div class="da-card">
+                                <div class="da-card-photo">
+                                    <img th:src="${reviewForm.placeThumbnail}" alt="place_thumbnail" />
+                                    <div class="da-overlay">
+                                        <div class="da-social">
+                                            <ul class="clearfix">
+                                                <li>
+                                                    <a
+                                                            href="#"
+                                                            class="btn-block"
+                                                            data-toggle="modal"
+                                                            th:data-target="|#Medium-modal${reviewForm.placeNo}|"
+                                                            type="button"
+                                                    >
+                                                        <i class="icon-copy ion-android-create"></i
+                                                        ></a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="da-card-content">
-                                <h5 class="h5 mb-10">해가 잘드는 집</h5>
-                                <p class="mb-0">5월 12일 ~ 16일</p>
-                                <p class="mb-0">광주광역시, 서구</p>
+                                <div class="da-card-content">
+                                    <h5 class="h5 mb-10" th:text="${reviewForm.placeName}">해가 잘드는 집</h5>
+                                    <p class="mb-0" th:text="|${#temporals.format(reviewForm.checkinDate, 'MM월 dd일')} ~ ${#temporals.format(reviewForm.checkoutDate, 'dd일')}|">5월 12일 ~ 16일</p>
+                                    <p class="mb-0" th:text="|${reviewForm.region1depth}, ${reviewForm.region2depth}|">광주광역시, 서구</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </th:block>
                 </div>
             </div>
 
             <div class="pd-20">
                 <h5 class="pb-20">내가 작성한 후기</h5>
                 <div>
-                    <div class="d-flex">
-                        <div class="pr-20">
-                            <img
-                                    src="src/images/photo3.jpg"
-                                    alt=""
-                                    class="rounded"
-                                    style="height: 70px"
-                            />
-                        </div>
-                        <div class="d-flex flex-column justify-content-around">
-                            <div style="font-weight: 600">
-                                광주광역시 서구, 3월 12일 ~ 13일
+                    <th:block th:each="myReview : ${myReviews}">
+                        <div class="d-flex">
+                            <div class="pr-20">
+                                <img
+                                        th:src="${myReview.hostProfileUrl}"
+                                        alt="host_profile.img"
+                                        class="rounded"
+                                        style="height: 70px"
+                                />
                             </div>
-                            <div>안락하고 깨끗했어요!</div>
+                            <div class="d-flex flex-column justify-content-around">
+                                <div style="font-weight: 600" th:text="|${myReview.region1depth} ${myReview.region2depth}, ${#temporals.format(myReview.checkinDate, 'MM월 dd일')} ~ ${#temporals.format(myReview.checkoutDate, 'dd일')}|">
+                                    광주광역시 서구, 5월 12일 ~ 13일
+                                </div>
+                                <div th:text="${myReview.content}">안락하고 깨끗했어요!</div>
+                            </div>
                         </div>
-                    </div>
+                    </th:block>
                 </div>
             </div>
         </div>
 
-        <div
-                class="modal fade"
-                id="Medium-modal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="myLargeModalLabel"
-                aria-hidden="true"
-        >
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myLargeModalLabel">후기 작성</h4>
-                        <button
-                                type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-hidden="true"
-                        >
-                            ×
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="">
-                            <div class="form-group">
-                                <label for="">별점</label>
-                                <div class="d-flex">
-                                    <div style="color: lightgray; font-size: 1.2rem">
-                                        <i id="star1" class="icon-copy ion-android-star"></i>
-                                        <i id="star2" class="icon-copy ion-android-star"></i>
-                                        <i id="star3" class="icon-copy ion-android-star"></i>
-                                        <i id="star4" class="icon-copy ion-android-star"></i>
-                                        <i id="star5" class="icon-copy ion-android-star"></i>
+        <th:block th:each="reviewForm : ${reviewForms}">
+            <div
+                    class="modal fade"
+                    th:id="|Medium-modal${reviewForm.placeNo}|"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="myLargeModalLabel"
+                    aria-hidden="true"
+            >
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myLargeModalLabel">후기 작성</h4>
+                            <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-hidden="true"
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action method="post" th:object="${reviewWriteForm}" >
+                                <div class="form-group">
+                                    <label for="">별점</label>
+                                    <div class="d-flex">
+                                        <div style="color: lightgray; font-size: 1.2rem">
+                                            <i id="star1" class="icon-copy ion-android-star"></i>
+                                            <i id="star2" class="icon-copy ion-android-star"></i>
+                                            <i id="star3" class="icon-copy ion-android-star"></i>
+                                            <i id="star4" class="icon-copy ion-android-star"></i>
+                                            <i id="star5" class="icon-copy ion-android-star"></i>
+                                        </div>
+                                        <input
+                                                id="rating"
+                                                type="text"
+                                                value=""
+                                                readonly
+                                                class="pl-10"
+                                                style="border: 0px; font-size: 1.2rem; font-weight: 600"
+                                                th:field="*{rating}"
+                                        />
                                     </div>
-                                    <input
-                                            id="rating"
-                                            type="text"
-                                            value=""
-                                            readonly
-                                            class="pl-10"
-                                            style="border: 0px; font-size: 1.2rem; font-weight: 600"
-                                    />
                                 </div>
-                            </div>
-                            <hr />
-                            <div class="form-group">
-                                <label>내용</label>
-                                <textarea class="form-control"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button
-                                type="button"
-                                class="btn btn-secondary"
-                                data-dismiss="modal"
-                        >
-                            취소
-                        </button>
-                        <button type="button" class="btn btn-primary">저장</button>
+                                <hr />
+                                <div class="form-group">
+                                    <label>내용</label>
+                                    <textarea class="form-control" th:field="*{content}"></textarea>
+                                </div>
+                                <input type="hidden" th:value="${reviewForm.placeNo}">
+                                <input type="hidden" th:field="*{reservationNo}" th:value="${reviewForm.reservationNo}">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-dismiss="modal"
+                            >
+                                취소
+                            </button>
+                            <button type="button" class="btn btn-primary">저장</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </th:block>
     </div>
 
 </section>
