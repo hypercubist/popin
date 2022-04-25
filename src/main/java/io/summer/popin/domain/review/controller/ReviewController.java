@@ -32,12 +32,13 @@ public class ReviewController {
         return "html/reviews";
     }
 
-//    @PostMapping
-//    public String addReview(@SessionAttribute("loginMember") SessionUserDTO loginMember, @ModelAttribute("reviewWriteForm") ReviewWriteFormDTO reviewWriteFormDTO) {
-//        Long guestNo = loginMember.getNo();
-//
-//
-//        return
-//    }
+    @PostMapping
+    public String addReview(@SessionAttribute("loginMember") SessionUserDTO loginMember, @ModelAttribute("reviewWriteForm") ReviewWriteFormDTO reviewWriteForm) {
+
+        reviewWriteForm.setGuestNo(loginMember.getNo());
+        reviewService.saveReview(reviewWriteForm);
+
+        return "redirect:/html/reviews";
+    }
 
 }

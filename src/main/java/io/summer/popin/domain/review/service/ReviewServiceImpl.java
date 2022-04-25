@@ -34,4 +34,10 @@ public class ReviewServiceImpl implements ReviewService {
         }
         return reviews;
     }
+
+    @Override
+    public int saveReview(ReviewWriteFormDTO reviewWriteForm) {
+
+        return reviewMapper.insertOne(reviewWriteForm);
+    }
 }

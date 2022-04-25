@@ -33,4 +33,11 @@
         where
             re.guest_no=#{memberNo} and r.checkout_date <![CDATA[<]]> sysdate
     </select>
+
+    <insert id="insertOne">
+        insert into
+            review (no, place_no, guest_no, rating, content, reservation_no)
+        values
+            (seq_review.nextval, #{placeNo}, #{guestNo}, #{rating}, #{content}, #{reservationNo})
+    </insert>
 </mapper>
