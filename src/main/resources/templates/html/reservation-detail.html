@@ -128,18 +128,16 @@
                 <hr />
                 <div class="row pt-20 pb-10">
                   <div class="col-md-6 col-sm-12">
-                    <button
+                    <a
                             id="reservation-btn"
-                            type="submit"
                             class="btn btn-primary btn-block"
-                    >
+                            th:href="@{/messages/(hostNo=${place.hostNo})}">
                       <span>호스트에게 연락하기</span>
-                    </button>
+                    </a>
                   </div>
                   <div class="col-md-6 col-sm-12">
                     <button
                             id="reservation-btn"
-                            type="submit"
                             class="btn btn-danger btn-block"
                     >
                       <span>예약 취소</span>

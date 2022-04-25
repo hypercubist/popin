@@ -92,12 +92,12 @@
 <!--                                                    if조건 반대로 바꿔야 함-->
                                                 </div>
                                                 <div>
-                                                    <button
-                                                            class="btn btn-primary btn-block"
-                                                            style="height: 45px"
-                                                    >
-                                                        <span>호스트에게 연락하기(링크없음)</span>
-                                                    </button>
+                                                    <a
+                                                        class="btn btn-primary btn-block"
+                                                        style="height: 45px"
+                                                        th:href="@{/messages/(hostNo=${place.hostNo})}">
+                                                        <span>호스트에게 연락하기</span>
+                                                    </a>
                                                 </div>
                                                 <div class="pt-20">
                                                     안전한 결제를 위해 POPIN 웹사이트나 앱 외부에서
