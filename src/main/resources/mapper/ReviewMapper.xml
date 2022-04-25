@@ -17,7 +17,7 @@
             reservation r
                     left outer join place p on (r.place_no = p.no)
         where
-            r.guest_no=#{memberNo} and r.checkout_date <![CDATA[<]]> sysdate
+            r.guest_no=#{memberNo}
     </select>
     <select id="getReviewsByMemberNo" resultType="MyReviewDTO">
         select
