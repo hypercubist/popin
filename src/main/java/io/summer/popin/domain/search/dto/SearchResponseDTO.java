@@ -10,7 +10,7 @@ import lombok.ToString;
 public class SearchResponseDTO {
 
     private String placeName;
-
+    private Integer placeNo; //장소 번호
     private String region1depth;
     private String region2depth;
     private String region3depth;
