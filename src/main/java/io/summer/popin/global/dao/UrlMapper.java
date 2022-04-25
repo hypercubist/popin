@@ -11,7 +11,7 @@ public interface UrlMapper {
 
     List<String> findUrlByPlaceNo(@Param("resourceKind") int resourceKind, @Param("placeNo") long placeNo);
 
-    List<String> findThumbnailUrlByReservationNo(@Param("resourceKind") int resourceKind,  @Param("reservationNo") long reservationNo);
+    String findThumbnailUrlByReservationNo(@Param("resourceKind") int resourceKind,  @Param("reservationNo") long reservationNo);
 
     List<String> findUrlByReservationNo(@Param("resourceKind") int resourceKind, @Param("reservationNo") long reservationNo);
 

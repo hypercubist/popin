@@ -47,7 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<String> getThumbnailUrl(Long reservationNo) {
+    public String getThumbnailUrl(Long reservationNo) {
         return urlMapper.findThumbnailUrlByReservationNo(ResourceKind.PLACE_THUMBNAIL.ordinal(), reservationNo);
     }
 
