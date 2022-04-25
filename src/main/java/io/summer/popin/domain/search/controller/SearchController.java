@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +28,10 @@ public class SearchController {
 
     @PostMapping("/search")
     public String searchListPost(@ModelAttribute("searchDTO") SearchDTO searchDTO, Model model, @RequestParam(defaultValue = "1") int pageNum){
+        Map<String,String> coord = new HashMap<String,String>();
+        coord.put("coordX",searchDTO.getCoordX());
+        coord.put("coordY",searchDTO.getCoordY());
+        model.addAttribute("coord",coord);
         Criteria criteria = new Criteria(pageNum, 10);
         model.addAttribute("placesList",searchService.placesSearch(searchDTO,criteria));
         model.addAttribute("pageMaker", new PageVO(criteria,searchService.placeCount(searchDTO)));

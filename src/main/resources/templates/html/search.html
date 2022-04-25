@@ -21,12 +21,12 @@
                         <div class="d-flex p-10">
                             <div>
                                 <div>
-                                    <img class="rounded" src="vendors/images/img3.jpg" alt="Card image cap" style="width:300px;height:200px;">
+                                    <a th:href="@{/places/{placeNo}(placeNo = ${list.placeNo})}"><img class="rounded" src="vendors/images/img3.jpg" alt="Card image cap" style="width:300px;height:200px;"></a>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <a th:href="@{/places/{placeNo}(placeNo = ${list.placeNo})}"><span th:text="${list.region2depth}"></span>의<span th:text="${list.placeKind}"></span>전체</br></a>
+                                    <span th:text="${list.region2depth}"></span>의<span th:text="${list.placeKind}"></span>전체</br>
                                 </div>
                                 <div>
                                     <span th:text="${list.placeName}"></span>
@@ -75,11 +75,11 @@
 <!--    <script src="js/search.js"></script>-->
     <script th:inline="javascript">
     var placesList = [[${placesList}]];
-
+    console.log([[${coord}]]);
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
-        center: new kakao.maps.LatLng(placesList[0].coordY, placesList[0].coordX), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng([[${coord.get("coordY")}]], [[${coord.get("coordX")}]]), // 지도의 중심좌표
+        level: 8 // 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
