@@ -31,6 +31,6 @@
                 left outer join place p on (re.place_no = p.no)
                 left outer join reservation r on (re.reservation_no = r.no)
         where
-            re.guest_no=#{memberNo}
+            re.guest_no=#{memberNo} and r.checkout_date <![CDATA[<]]> sysdate
     </select>
 </mapper>
