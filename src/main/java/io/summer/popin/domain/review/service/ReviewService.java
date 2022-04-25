@@ -1,11 +1,15 @@
 package io.summer.popin.domain.review.service;
 
 import io.summer.popin.domain.review.dto.MyReviewDTO;
-import io.summer.popin.domain.review.dto.ReviewWriteFormDTO;
+import io.summer.popin.domain.review.dto.ReviewReservationDTO;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 public interface ReviewService {
 
-    ReviewWriteFormDTO getReviewsForm(Long memberNo);
+    List<ReviewReservationDTO> getReviewsForm(Long memberNo);
 
-    MyReviewDTO getReviews(Long memberNo);
+    List<MyReviewDTO> getReviews(Long memberNo);
+
 }

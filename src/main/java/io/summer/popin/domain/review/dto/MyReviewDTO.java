@@ -23,6 +23,6 @@ public class MyReviewDTO {
     private LocalDate checkoutDate;
 
     //review
-    private String comments;
+    private String content;
 
 }

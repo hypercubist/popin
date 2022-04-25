@@ -4,7 +4,7 @@ import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.place.dao.PlaceMapper;
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.vo.PlaceVO;
-import io.summer.popin.domain.review.dto.ReviewDTO;
+import io.summer.popin.domain.review.dto.MyReviewDTO;
 import io.summer.popin.global.dao.UrlMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -173,13 +171,13 @@ public class PlaceServiceImpl implements PlaceService{
         return placeMapper.findReservationByPlaceNo(placeNo);
     }
 
-    public List<ReviewDTO> getReviews(Long placeNo){
-        List<ReviewDTO> reviews = placeMapper.findReviewByPlaceNo(placeNo);
-        for (ReviewDTO review : reviews) {
-            if (review.getGuestThumbnailUrl().isEmpty()) {
-                review.setGuestThumbnailUrl("/img/profile_default.png");
-            }
-        }
-        return reviews;
-    }
+//    public List<MyReviewDTO> getReviews(Long placeNo){
+//        List<MyReviewDTO> reviews = placeMapper.findReviewByPlaceNo(placeNo);
+//        for (MyReviewDTO review : reviews) {
+//            if (review.getGuestThumbnailUrl().isEmpty()) {
+//                review.setGuestThumbnailUrl("/img/profile_default.png");
+//            }
+//        }
+//        return reviews;
+//    }
 }

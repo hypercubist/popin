@@ -1,8 +1,7 @@
 package io.summer.popin.domain.place.service;
 
 import io.summer.popin.domain.place.dto.*;
-import io.summer.popin.domain.place.vo.PlaceVO;
-import io.summer.popin.domain.review.dto.ReviewDTO;
+import io.summer.popin.domain.review.dto.MyReviewDTO;
 
 import java.util.List;
 
@@ -28,5 +27,5 @@ public interface PlaceService {
 
     List<ReservatedDateDTO> getReservatedDates(Long placeNo);
 
-    List<ReviewDTO> getReviews(Long placeNo);
+//    List<MyReviewDTO> getReviews(Long placeNo);
 }

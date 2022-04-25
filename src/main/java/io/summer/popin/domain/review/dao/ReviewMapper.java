@@ -1,13 +1,17 @@
 package io.summer.popin.domain.review.dao;
 
 import io.summer.popin.domain.review.dto.MyReviewDTO;
+import io.summer.popin.domain.review.dto.ReviewReservationDTO;
 import io.summer.popin.domain.review.dto.ReviewWriteFormDTO;
 import lombok.Data;
+import org.apache.ibatis.annotations.Mapper;
 
-@Data
+import java.util.List;
+
+@Mapper
 public interface ReviewMapper {
 
-    ReviewWriteFormDTO getReviewFormDataByMemberNo(Long memberNo);
+    List<ReviewReservationDTO> getReviewFormDataByMemberNo(Long memberNo);
 
-    MyReviewDTO getReviewsByMemberNo(Long memberNo);
+    List<MyReviewDTO> getReviewsByMemberNo(Long memberNo);
 }
