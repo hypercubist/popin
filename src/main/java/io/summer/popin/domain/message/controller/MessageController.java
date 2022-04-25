@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import javax.servlet.http.HttpSession;
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -22,7 +20,7 @@ public class MessageController {
 
     //메세지화면 view
     @GetMapping
-    public String messageView(Model model, HttpSession session, @SessionAttribute("loginMember") SessionUserDTO loginMember){
+    public String messageView(Model model,@SessionAttribute("loginMember") SessionUserDTO loginMember){
         log.info("SESSION-DATA ={}",loginMember.getNo());
         model.addAttribute("messageDTO", messageService.myMessageList(loginMember.getNo()));
         return "html/message";
