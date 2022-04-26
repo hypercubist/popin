@@ -5,11 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-    <div th:object="${reservationsForHost}">
-        <div th:text="*{hostingNowCount}">현재 호스팅중</div>
-        <div th:text="*{willCheckIn}">체크인 예정</div>
-        <div th:text="*{willCheckOut}">체크아웃 예정</div>
-        <div th:text="*{cancelled}">취소된 예약</div>
-    </div>
+    <th:block th:each="reservationForHost : ${reservationsForHost}">
+        <div th:object="${reservationForHost}">
+            <div th:text="*{hostingNowCount}">현재 호스팅중</div>
+            <div th:text="*{willCheckIn}">체크인 예정</div>
+            <div th:text="*{willCheckOut}">체크아웃 예정</div>
+            <div th:text="*{cancelled}">취소된 예약</div>
+        </div>
+    </th:block>
 </body>
 </html>

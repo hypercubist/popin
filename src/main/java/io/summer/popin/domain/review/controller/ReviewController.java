@@ -36,9 +36,10 @@ public class ReviewController {
     public String addReview(@SessionAttribute("loginMember") SessionUserDTO loginMember, @ModelAttribute("reviewWriteForm") ReviewWriteFormDTO reviewWriteForm) {
 
         reviewWriteForm.setGuestNo(loginMember.getNo());
+        log.info("reviewWriteForm = {}", reviewWriteForm);
         reviewService.saveReview(reviewWriteForm);
 
-        return "redirect:/html/reviews";
+        return "redirect:/reviews";
     }
 
 }

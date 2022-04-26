@@ -102,7 +102,7 @@ public class ReservationController {
     @GetMapping("/host")
     public String reservations_host(@SessionAttribute("loginMember") SessionUserDTO loginMember, Model model) {
 
-        ReservationForHostInfoDTO reservationsForHost = reservationService.getReservationsForHost(loginMember);
+        List<ReservationForHostInfoDTO> reservationsForHost = reservationService.getReservationsForHost(loginMember);
         model.addAttribute("reservationsForHost", reservationsForHost);
         log.info("HOSTRESERVATIONS = {}", reservationsForHost);
         return "reservation-for-host";
