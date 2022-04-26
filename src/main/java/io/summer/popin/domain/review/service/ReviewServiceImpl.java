@@ -27,6 +27,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<MyReviewDTO> getReviews(Long memberNo) {
         List<MyReviewDTO> reviews =  reviewMapper.getReviewsByMemberNo(memberNo);
+        log.info("REVIEWS ={}", reviews);
         for (MyReviewDTO review : reviews) {
             if (review.getHostProfileUrl() == null) {
                 review.setHostProfileUrl("/img/profile_default.png");

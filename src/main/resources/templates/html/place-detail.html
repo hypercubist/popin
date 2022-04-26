@@ -751,7 +751,7 @@
                 ],
               },
             };
-            if (searchDTO.dates) {
+            if (searchDTO.checkinDate) {
               const checkinDate = [[${#temporals.format(searchDTO.checkinDate, 'yyyy-MM-dd')}]];
               const checkoutDate = [[${#temporals.format(searchDTO.checkoutDate, 'yyyy-MM-dd')}]];
               const startArr = checkinDate.split("-");
