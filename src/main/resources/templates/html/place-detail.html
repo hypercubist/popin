@@ -532,9 +532,6 @@
                                     style="position: sticky; top: 30px"
                             >
                                 <div class="pt-20">
-                                    <div>
-                                        <a th:href="@{|/places/${placeNo}/update|}">프로필 수정하기</a>
-                                    </div>
                             <span style="font-size: 1.5rem; font-weight: 600"
                                   th:text="|${place.hostName}이 호스팅하는 ${place.placeKind}|"
                             >호스트님이 호스팅하는 장소</span
@@ -771,11 +768,13 @@
               $(".period").text(period);
               $("#totalPrice").val(totalPrice);
               $(".totalPrice").text(totalPrice);
+            }else{
+                $("#period").val(0);
+                $(".period").text(0);
+                $("#totalPrice").val(0);
+                $(".totalPrice").text(0);
             }
-            $("#period").val(0);
-            $(".period").text(0);
-            $("#totalPrice").val(0);
-            $(".totalPrice").text(0);
+
 
             if(invalidDates.length>0){
                 invalidDates = invalidDates.map((item)=>{
