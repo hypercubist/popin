@@ -55,7 +55,7 @@
                 <h5 class="pb-20">내가 작성한 후기</h5>
                 <div>
                     <th:block th:each="myReview : ${myReviews}">
-                        <div class="d-flex">
+                        <div class="d-flex pb-20">
                             <div class="pr-20">
                                 <img
                                         th:src="${myReview.hostProfileUrl}"
@@ -111,11 +111,11 @@
                                             <i class="star5 icon-copy ion-android-star"></i>
                                         </div>
                                         <input
-                                                id="rating"
                                                 type="text"
-                                                value=""
                                                 readonly
+                                                value=""
                                                 class="pl-10"
+                                                th:field="*{rating}"
                                                 style="border: 0px; font-size: 1.2rem; font-weight: 600"
                                         />
                                     </div>

@@ -19,5 +19,5 @@ public interface ReservationMapper {
 
     List<ReservationResponseDTO> findListByGuestNo(@Param("resourceKind")int resourceKind, @Param("memberNo")long memberNo);
 
-    ReservationForHostInfoDTO getCountByHostNo(Long no);
+    List<ReservationForHostInfoDTO> getCountByHostNo(Long no);
 }

@@ -63,7 +63,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationForHostInfoDTO getReservationsForHost(SessionUserDTO loginMember) {
+    public List<ReservationForHostInfoDTO> getReservationsForHost(SessionUserDTO loginMember) {
 
         return reservationMapper.getCountByHostNo(loginMember.getNo());
 

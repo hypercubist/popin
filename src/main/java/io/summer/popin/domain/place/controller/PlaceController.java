@@ -64,7 +64,8 @@ public class PlaceController {
     }
 
     @PostMapping("/{placeNo}")
-    public String reservationPage(@PathVariable Long placeNo, @ModelAttribute("reservationRequest") ReservationRequestDTO reservationRequestDTO, RedirectAttributes rttr) {
+    public String reservationPage(@PathVariable Long placeNo,
+                                  @ModelAttribute("reservationRequest") ReservationRequestDTO reservationRequestDTO, RedirectAttributes rttr) {
 
         log.info("RESER={}", reservationRequestDTO);
         rttr.addFlashAttribute("place", placeService.getPlaceDetail(placeNo));

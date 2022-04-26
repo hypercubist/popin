@@ -20,7 +20,7 @@ public interface ReservationService {
 
     List<ReservationResponseDTO> getReservationsForGuest(SessionUserDTO loginMember);
 
-    ReservationForHostInfoDTO getReservationsForHost(SessionUserDTO loginMember);
+    List<ReservationForHostInfoDTO> getReservationsForHost(SessionUserDTO loginMember);
 
     String getProfileImageUrl(Long reservationNo);
 }
