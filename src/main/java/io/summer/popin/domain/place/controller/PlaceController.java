@@ -43,7 +43,7 @@ public class PlaceController {
 
         model.addAttribute("myPlaces", placeService.getPlaces(hostNo));
         model.addAttribute("myPlacesCount", placeService.getMyPlacesCount(hostNo));
-        return "my-places";
+        return "html/my-places";
     }
 
     @GetMapping("/{placeNo}")

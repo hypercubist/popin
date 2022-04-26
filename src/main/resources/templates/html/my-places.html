@@ -2,7 +2,7 @@
 <html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <title>새로운 제목</title>
+    <title>MY-PLACES</title>
     <!--현재 페이지 제목을 위 라인에 입력-->
     <link rel="stylesheet" href="">
     <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
@@ -11,7 +11,7 @@
 <section>
     <div class="pd-ltr-20 xs-pd-20-10">
         <div class="pd-30 bg-white border-radius-4 box-shadow mb-30">
-            <h3 class="pt-30">나의 장소</h3>
+            <h3 class="pt-30">내가 호스팅 하는 장소</h3>
 
             <div class="tab pt-30">
                 <ul class="nav nav-pills" role="tablist">
@@ -49,118 +49,65 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="open" role="tabpanel">
                         <div class="pd-20 row">
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
-                                <div class="da-card">
-                                    <div class="da-card-photo">
-                                        <img src="vendors/images/photo1.jpg" alt="" />
-                                        <div class="da-overlay">
-                                            <div class="da-social">
-                                                <ul class="clearfix">
-                                                    <li>
-                                                        <a href="#"
-                                                        ><i class="icon-copy ion-android-search"></i
-                                                        ></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                        ><i class="icon-copy ion-android-create"></i
-                                                        ></a>
-                                                    </li>
-                                                </ul>
+                            <th:block th:each="myPlace : ${myPlaces}">
+                                <th:block th:if="${myPlace.placeStatus} == 2">
+                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-30" th:object="${myPlace}">
+                                        <div class="da-card">
+                                            <div class="da-card-photo">
+                                                <a th:href="@{|/places/*{placeNo}|}">
+                                                    <img th:src="*{thumbnailUrl}" alt="place_thumbnail" />
+                                                </a>
+                                            </div>
+                                            <div class="da-card-content">
+                                                <h5 class="h5 mb-10" th:text="*{placeName}" >해가 잘드는 집</h5>
+                                                <p class="mb-0" th:text="|*{region1depth}, *{region2depth}|">광주광역시, 서구</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="da-card-content">
-                                        <h5 class="h5 mb-10">해가 잘드는 집</h5>
-                                        <p class="mb-0">광주광역시, 서구</p>
-                                    </div>
-                                </div>
-                            </div>
+                                </th:block>
+                            </th:block>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="closed" role="tabpanel">
                         <div class="pd-20 row">
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
-                                <div class="da-card">
-                                    <div class="da-card-photo">
-                                        <img src="vendors/images/photo1.jpg" alt="" />
-                                        <div class="da-overlay">
-                                            <div class="da-social">
-                                                <ul class="clearfix">
-                                                    <li>
-                                                        <a href="#"
-                                                        ><i class="icon-copy ion-android-search"></i
-                                                        ></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                        ><i class="icon-copy ion-android-create"></i
-                                                        ></a>
-                                                    </li>
-                                                </ul>
+                            <th:block th:each="myPlace : ${myPlaces}">
+                                <th:block th:if="${myPlace.placeStatus} == 3">
+                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-30" th:object="${myPlace}">
+                                        <div class="da-card">
+                                            <div class="da-card-photo">
+                                                <a th:href="@{|/places/*{placeNo}|}">
+                                                    <img th:src="*{thumbnailUrl}" alt="place_thumbnail" />
+                                                </a>
+                                            </div>
+                                            <div class="da-card-content">
+                                                <h5 class="h5 mb-10" th:text="*{placeName}" >해가 잘드는 집</h5>
+                                                <p class="mb-0" th:text="|*{region1depth}, *{region2depth}|">광주광역시, 서구</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="da-card-content">
-                                        <h5 class="h5 mb-10">해가 잘드는 집</h5>
-                                        <p class="mb-0">광주광역시, 서구</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
-                                <div class="da-card">
-                                    <div class="da-card-photo">
-                                        <img src="vendors/images/photo1.jpg" alt="" />
-                                        <div class="da-overlay">
-                                            <div class="da-social">
-                                                <ul class="clearfix">
-                                                    <li>
-                                                        <a href="#"
-                                                        ><i class="icon-copy ion-android-search"></i
-                                                        ></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                        ><i class="icon-copy ion-android-create"></i
-                                                        ></a>
-                                                    </li>
-                                                </ul>
+                                </th:block>
+                            </th:block>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pending" role="tabpanel">
+                        <div class="pd-20 row">
+                            <th:block th:each="myPlace : ${myPlaces}">
+                                <th:block th:if="${myPlace.placeStatus} == 0">
+                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-30" th:object="${myPlace}">
+                                        <div class="da-card">
+                                            <div class="da-card-photo">
+                                                <a th:href="@{|/places/*{placeNo}|}">
+                                                    <img th:src="*{thumbnailUrl}" alt="place_thumbnail" />
+                                                </a>
+                                            </div>
+                                            <div class="da-card-content">
+                                                <h5 class="h5 mb-10" th:text="*{placeName}" >해가 잘드는 집</h5>
+                                                <p class="mb-0" th:text="|*{region1depth}, *{region2depth}|">광주광역시, 서구</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="da-card-content">
-                                        <h5 class="h5 mb-10">해가 잘드는 집</h5>
-                                        <p class="mb-0">광주광역시, 서구</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
-                                <div class="da-card">
-                                    <div class="da-card-photo">
-                                        <img src="vendors/images/photo1.jpg" alt="" />
-                                        <div class="da-overlay">
-                                            <div class="da-social">
-                                                <ul class="clearfix">
-                                                    <li>
-                                                        <a href="#"
-                                                        ><i class="icon-copy ion-android-search"></i
-                                                        ></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                        ><i class="icon-copy ion-android-create"></i
-                                                        ></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="da-card-content">
-                                        <h5 class="h5 mb-10">해가 잘드는 집</h5>
-                                        <p class="mb-0">광주광역시, 서구</p>
-                                    </div>
-                                </div>
-                            </div>
+                                </th:block>
+                            </th:block>
                         </div>
                     </div>
                 </div>
