@@ -1,5 +1,9 @@
   $(function () {
         $("#btn-anywhere").on("click", function () {
+          $("#region1depth").val("경북");
+          $("#region2depth").val("경주시");
+          $("#coordX").val("129.22478171309");
+          $("#coordY").val("35.8562184605051");
           $("#search-form").submit();
         });
         $("#btn-seoul").on("click", function () {
