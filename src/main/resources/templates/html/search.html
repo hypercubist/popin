@@ -4,82 +4,91 @@
 
 <head>
     <title>SEARCH</title>
-        <!--현재 페이지 제목을 위 라인에 입력-->
+    <!--현재 페이지 제목을 위 라인에 입력-->
 
     <link rel="stylesheet" href="css/search.css">
-        <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+    <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 
 </head>
 <body>
-    <section>
-        <!--현재 페이지 본문 내용을 section내부에 작성-->
-        <div class="pt-20 pb-10">
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="overflow:scroll;">
-                    <div th:each="list : ${placesList}">
-                        <hr>
-                        <div class="d-flex p-10">
+<section>
+    <!--현재 페이지 본문 내용을 section내부에 작성-->
+    <div class="">
+        <div class="row">
+            <div class="col-sm-6" style="overflow:scroll;">
+                <th:block th:each="img , idx: ${imgUrl}">
+                    <div class="row my-2">
+                        <div class="col-sm-4">
+                            <a th:href="@{/places/{placeNo}(placeNo = ${placesList[idx.index].placeNo})}"> <img class="rounded"
+                                 th:src="${imgUrl[idx.index] != null} ? ${imgUrl[idx.index]} : '/img/profile_default.png'"
+                                 alt="Card image cap" style="width:300px;height:200px;"> </a>
+                        </div>
+                        <div class="col-sm-8">
                             <div>
                                 <div>
-                                    <img class="rounded" src="vendors/images/img3.jpg" alt="Card image cap" style="width:300px;height:200px;">
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <a th:href="@{/places/{placeNo}(placeNo = ${list.placeNo})}"><span th:text="${list.region2depth}"></span>의<span th:text="${list.placeKind}"></span>전체</br></a>
+                                    <span th:text="${placesList[idx.index].region2depth}"></span>의<span
+                                        th:text="${placesList[idx.index].placeKind}"></span>전체</br>
                                 </div>
                                 <div>
-                                    <span th:text="${list.placeName}"></span>
+                                    <span th:text="${placesList[idx.index].placeName}"></span>
                                 </div>
                                 <div style="pb-30">
-                                    최대인원 <span th:text="${list.maxGuest}"></span> 명
+                                    최대인원 <span th:text="${placesList[idx.index].maxGuest}"></span> 명
                                 </div>
                                 <div>
                                     <i class="icon-copy ion-android-star" style="color:red;"></i>
-                                    (후기<span th:text="${list.reviewCount}"></span>개)
-                                    <span th:text="${list.thumbnailUrl}"></span>
+                                    (후기<span th:text="${placesList[idx.index].reviewCount}"></span>개)
+                                    <span th:text="${placesList[idx.index].thumbnailUrl}"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <div id="map" style="width:850px;height:900px;position:sticky; top:0px;"></div>
-                </div>
+                </th:block>
+
+
+                <hr>
+            </div>
+            <div class="col-sm-6" id="map">
+
             </div>
         </div>
 
-        <ul class="pagination pl-30" style="text-align:center;border-radius:15%;">
-            <li class="page-li-item" th:if="${pageMaker.prev}">
-                <a class="page-link pageMaker-css"  th:href="@{/search(pageNum = ${pageMaker.startPage-1})}"> < </a>
-            </li>
-            <th:block th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}">
-                <li class="page-li-item pageMaker-css"
-                    th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}"
-                    th:each="pageButton : ${#numbers.sequence(start, end)}">
-                    <th:block th:if="${pageButton}==${currentPageNum}">
-                        <a class="page-link pageMaker-css-now" id="current-page-number" th:href="@{/search?pageNum={page} (page = ${pageButton})}" th:text=${pageButton}></a>
-                    </th:block>
-                    <th:block th:if="${pageButton}!=${currentPageNum}">
-                        <a class="page-link pageMaker-css" th:href="@{/search?pageNum={page} (page = ${pageButton})}" th:text=${pageButton}></a>
-                    </th:block>
-                </li>
-            </th:block >
-            <li class="page-li-item pageMaker-css" th:if="${pageMaker.next}">
-                <a class="page-link pageMaker-css"  th:href="@{/search(pageNum = ${pageMaker.endPage+1})}"> > </a>
-            </li>
-        </ul>
-    </section>
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=aa2b69d2598e27e91f88388229304afe"></script>
-<!--    <script src="js/search.js"></script>-->
-    <script th:inline="javascript">
-    var placesList = [[${placesList}]];
+    </div>
 
+
+    <ul class="pagination pl-30" style="text-align:center;border-radius:15%;">
+        <li class="page-li-item" th:if="${pageMaker.prev}">
+            <a class="page-link pageMaker-css" th:href="@{/search(pageNum = ${pageMaker.startPage-1})}"> < </a>
+        </li>
+        <th:block th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}">
+            <li class="page-li-item pageMaker-css"
+                th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}"
+                th:each="pageButton : ${#numbers.sequence(start, end)}">
+                <th:block th:if="${pageButton}==${currentPageNum}">
+                    <a class="page-link pageMaker-css-now" id="current-page-number"
+                       th:href="@{/search?pageNum={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+                </th:block>
+                <th:block th:if="${pageButton}!=${currentPageNum}">
+                    <a class="page-link pageMaker-css" th:href="@{/search?pageNum={page} (page = ${pageButton})}"
+                       th:text=${pageButton}></a>
+                </th:block>
+            </li>
+        </th:block>
+        <li class="page-li-item pageMaker-css" th:if="${pageMaker.next}">
+            <a class="page-link pageMaker-css" th:href="@{/search(pageNum = ${pageMaker.endPage+1})}"> > </a>
+        </li>
+    </ul>
+</section>
+<script type="text/javascript"
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=aa2b69d2598e27e91f88388229304afe"></script>
+<!--    <script src="js/search.js"></script>-->
+<script th:inline="javascript">
+    var placesList = [[${placesList}]];
+    console.log([[${coord}]]);
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
-        center: new kakao.maps.LatLng(placesList[0].coordY, placesList[0].coordX), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng([[${coord.get("coordY")}]], [[${coord.get("coordX")}]]), // 지도의 중심좌표
+        level: 8 // 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -158,7 +167,11 @@ for (var i = 0; i < positions.length; i ++) {
 }
 */
 
-    </script>
-        <!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+
+
+
+
+</script>
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </body>
 </html>
