@@ -15,4 +15,5 @@ public interface SearchMapper {
 
     public int placeCount(SearchDTO searchDTO);
 
+    public List<String> findUrlByMemberNo(List<Long> placeNoArr);
 }

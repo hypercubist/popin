@@ -92,4 +92,19 @@
             </if>
         </where>
     </select>
+
+    <select id="findUrlByMemberNo" resultType="String">
+        select
+            u.url
+        from
+            url_resource u
+            left outer join place p on (p.no=u.place_no)
+        where
+            kind_code=3 and u.place_no in
+        <foreach collection="list" item="placeNoArr" separator="," open="(" close=")">
+            #{placeNoArr}
+        </foreach>
+
+    </select>
+
 </mapper>

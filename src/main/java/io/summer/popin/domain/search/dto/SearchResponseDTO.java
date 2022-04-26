@@ -4,13 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Setter
 @Getter
 @ToString
 public class SearchResponseDTO {
 
     private String placeName;
-    private Integer placeNo; //장소 번호
+    private List<Long> placeNoArr;
+    private Long placeNo; //장소 번호
     private String region1depth;
     private String region2depth;
     private String region3depth;
