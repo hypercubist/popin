@@ -2,7 +2,7 @@
 <html th:replace="~{layout/layout-search :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <title th:text="|#{application.name} - ${place.name}|">PLACE-DETAIL</title>
+    <title th:text="${place.name}">PLACE-DETAIL</title>
     <!--현재 페이지 제목을 위 라인에 입력-->
     <link rel="stylesheet" type="text/css" href="/src/plugins/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="/src/styles/daterangepicker.css">

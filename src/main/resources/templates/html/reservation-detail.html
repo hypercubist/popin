@@ -2,7 +2,7 @@
 <html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-  <title>RESERVATION-DETAIL</title>
+  <title th:text="|예약번호 : ${reservation.orderId}|">RESERVATION-DETAIL</title>
   <!--현재 페이지 제목을 위 라인에 입력-->
   <link rel="stylesheet" type="text/css" href="/src/plugins/slick/slick.css" />
   <link rel="stylesheet" href="/css/place-detail.css">
