@@ -26,13 +26,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/members").authenticated()
-                .antMatchers("/places/**", "/reservations/**").hasRole(MemberClass.GUEST.getTitle())
-                .antMatchers("/places/**", "/places", "reservations/**", "/statistics").hasRole(MemberClass.HOST.getTitle())
-                .antMatchers("/**").hasRole(MemberClass.ADMINISTRATOR.getTitle())
-                .antMatchers("/", "/auth/**", "/js/**", "/css/**", "/img/**", "/src/**",
+                .antMatchers("/members", "/members/update","/places","/places/register",
+                                        "/places/*/update","/reservations/**", "/reviews","/messages",
+                                        "/message/**", "/favorites/**").authenticated()
+                .antMatchers().hasRole(MemberClass.GUEST.getTitle())
+                .antMatchers("/places/*/update", "reservations/host", "/statistics").hasRole(MemberClass.HOST.getTitle())
+                .antMatchers("/**","reservations/host","/statistics","/places/*/update").hasRole(MemberClass.ADMINISTRATOR.getTitle())
+                .antMatchers("/**", "/auth/**", "/js/**", "/css/**", "/img/**", "/src/**",
                                     "/vendors/**","/members/*","/members/update","/reviews", "/search",
-                                        "/messages/**" , "/message/**", "/favorites").permitAll()
+                                        "/messages/**" , "/message/**", "/favorites", "/places/**","/reservations/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()  // 로그인 페이지 커스텀
