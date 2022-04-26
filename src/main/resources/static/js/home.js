@@ -32,7 +32,7 @@
           $("#coordY").val("35.8713802646197");
           $("#search-form").submit();
         });
-        $("#btn-gyeonju").on("click", function () {
+        $("#btn-gyeongju").on("click", function () {
           $("#region1depth").val("경북");
           $("#region2depth").val("경주시");
           $("#coordX").val("129.22478171309");
