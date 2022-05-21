@@ -8,7 +8,7 @@
                     <img src="/img/popin-logo.png" alt="popin-logo">
                 </a>
                 <!--Search Form-->
-                <form class="nav-item col-md-8" action="/search" th:object="${searchDTO}" method="post">
+                <form id="search-form" class="nav-item col-md-8" action="/search" th:object="${searchDTO}" method="post">
                     <div class="form-row">
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
@@ -61,12 +61,14 @@
                                 <a class="dropdown-item" href="/members">프로필</a>
                                 <a class="dropdown-item" href="/messages">메시지</a>
                                 <a class="dropdown-item" href="/reservations/guest">여행</a>
+                                <a class="dropdown-item" href="/reviews">후기</a>
                                 <a class="dropdown-item" href="/logout">로그아웃</a>
                             </div>
                             <div th:if="${session.loginMember.role eq 'ROLE_HOST'}" class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                 <a class="dropdown-item" href="/members">프로필</a>
                                 <a class="dropdown-item" href="/messages">메시지</a>
                                 <a class="dropdown-item" href="/reservations/guest">여행</a>
+                                <a class="dropdown-item" href="/reviews">후기</a>
                                 <a class="dropdown-item" href="/logout">로그아웃</a>
                                 <hr>
                                 <a class="dropdown-item" href="/places">장소 관리</a>
@@ -77,6 +79,7 @@
                                 <a class="dropdown-item" href="/members">프로필</a>
                                 <a class="dropdown-item" href="/messages">메시지</a>
                                 <a class="dropdown-item" href="/reservations/guest">여행</a>
+                                <a class="dropdown-item" href="/reviews">후기</a>
                                 <a class="dropdown-item" href="/logout">로그아웃</a>
                                 <hr>
                                 <a class="dropdown-item" href="/places">장소 관리</a>
@@ -114,12 +117,14 @@
                                 <a class="dropdown-item" href="/members">프로필</a>
                                 <a class="dropdown-item" href="/messages">메시지</a>
                                 <a class="dropdown-item" href="/reservations/guest">여행</a>
+                                <a class="dropdown-item" href="/reviews">후기</a>
                                 <a class="dropdown-item" href="/logout">로그아웃</a>
                             </div>
                             <div th:if="${session.loginMember.role eq 'ROLE_HOST'}" class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                 <a class="dropdown-item" href="/members">프로필</a>
                                 <a class="dropdown-item" href="/messages">메시지</a>
                                 <a class="dropdown-item" href="/reservations/guest">여행</a>
+                                <a class="dropdown-item" href="/reviews">후기</a>
                                 <a class="dropdown-item" href="/logout">로그아웃</a>
                                 <hr>
                                 <a class="dropdown-item" href="/places">장소 관리</a>
@@ -130,6 +135,7 @@
                                 <a class="dropdown-item" href="/members">프로필</a>
                                 <a class="dropdown-item" href="/messages">메시지</a>
                                 <a class="dropdown-item" href="/reservations/guest">여행</a>
+                                <a class="dropdown-item" href="/reviews">후기</a>
                                 <a class="dropdown-item" href="/logout">로그아웃</a>
                                 <hr>
                                 <a class="dropdown-item" href="/places">장소 관리</a>
@@ -141,7 +147,7 @@
                         </div>
                     </div>
                 </div>
-                <div th:if="${session.loginMember == null}">
+                <div th:if="${session.loginMember == null}" class="nav-item col-md-2" >
                     <a th:href="@{/login-page}"class="btn btn-primary">로그인</a>
                 </div>
             </nav>

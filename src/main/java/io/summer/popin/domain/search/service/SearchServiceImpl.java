@@ -34,7 +34,12 @@ public class SearchServiceImpl implements SearchService{
     }
 
     public List<String> placeUrl(List<Long> placeNoArr){
-        return searchMapper.findUrlByMemberNo(placeNoArr);
+        if(placeNoArr.size()>0){
+            return searchMapper.findUrlByMemberNo(placeNoArr);
+        }else {
+            return null;
+        }
+
     }
 
 

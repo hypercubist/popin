@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org" lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
-    <title>SEARCH</title>
+    <title>검색한 장소</title>
     <!--현재 페이지 제목을 위 라인에 입력-->
 
     <link rel="stylesheet" href="css/search.css">
@@ -13,48 +13,62 @@
 <body>
 <section>
     <!--현재 페이지 본문 내용을 section내부에 작성-->
-    <div class="">
-        <div class="row">
-            <div class="col-sm-6" style="overflow:scroll;">
-                <th:block th:each="img , idx: ${imgUrl}">
-                    <div class="row my-2">
-                        <div class="col-sm-4">
-                            <a th:href="@{/places/{placeNo}(placeNo = ${placesList[idx.index].placeNo})}"> <img class="rounded"
-                                 th:src="${imgUrl[idx.index] != null} ? ${imgUrl[idx.index]} : '/img/profile_default.png'"
-                                 alt="Card image cap" style="width:300px;height:200px;"> </a>
-                        </div>
-                        <div class="col-sm-8">
-                            <div>
-                                <div>
-                                    <span th:text="${placesList[idx.index].region2depth}"></span>의<span
-                                        th:text="${placesList[idx.index].placeKind}"></span>전체</br>
-                                </div>
-                                <div>
-                                    <span th:text="${placesList[idx.index].placeName}"></span>
-                                </div>
-                                <div style="pb-30">
-                                    최대인원 <span th:text="${placesList[idx.index].maxGuest}"></span> 명
-                                </div>
-                                <div>
-                                    <i class="icon-copy ion-android-star" style="color:red;"></i>
-                                    (후기<span th:text="${placesList[idx.index].reviewCount}"></span>개)
-                                    <span th:text="${placesList[idx.index].thumbnailUrl}"></span>
-                                </div>
-                            </div>
-                        </div>
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="blog-wrap">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="blog-list">
+                        <ul>
+                            <th:block th:each="img , idx: ${imgUrl}">
+                                <li>
+                                    <div class="row no-gutters">
+                                        <div class="col-lg-6 col-md-12 col-sm-12">
+                                            <a th:href="@{/places/{placeNo}(placeNo = ${placesList[idx.index].placeNo})}">
+                                                <div class="blog-img">
+                                                    <img
+                                                        th:src="${imgUrl[idx.index] != null} ? ${imgUrl[idx.index]} : '/img/profile_default.png'"
+                                                        alt="place-thumbnail"
+                                                        class="bg_img"
+                                                    />
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12">
+                                            <div class="blog-caption">
+                                                <div th:text="|${placesList[idx.index].region2depth}의 ${placesList[idx.index].placeKind}|"></div>
+                                                <h4>
+                                                    <a th:href="@{/places/{placeNo}(placeNo = ${placesList[idx.index].placeNo})}"
+                                                       th:text="${placesList[idx.index].placeName}"
+                                                    >Lorem ipsum dolor sit amet, consectetur
+                                                        adipisicing elit</a
+                                                    >
+                                                </h4>
+                                                <div class="blog-by">
+                                                    <div th:text="|최대인원 ${placesList[idx.index].maxGuest}명|"></div>
+                                                    <div>
+                                                        <i class="icon-copy ion-android-star" style="color:red;"></i>
+                                                        <span th:text="|후기${placesList[idx.index].reviewCount}개|"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </th:block>
+                        </ul>
                     </div>
-                </th:block>
-
-
-                <hr>
-            </div>
-            <div class="col-sm-6" id="map">
-
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-0">
+                    <div
+                        id="map"
+                        class="product-detail-desc pd-30"
+                        style="position: sticky; top: 20px; height:85vh"
+                    >
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-
 
     <ul class="pagination pl-30" style="text-align:center;border-radius:15%;">
         <li class="page-li-item" th:if="${pageMaker.prev}">
