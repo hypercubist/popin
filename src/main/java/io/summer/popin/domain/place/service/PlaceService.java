@@ -16,8 +16,6 @@ public interface PlaceService {
 
     List<PlaceKindDTO> getPlaceKinds();
 
-    String getKakaoMapsSource();
-
     KakaoLocalRoadAddressDTO getRoadAddress(Double coordX, Double coordY);
 
     Long registerPlace(PlaceRegisterDTO registerDTO);

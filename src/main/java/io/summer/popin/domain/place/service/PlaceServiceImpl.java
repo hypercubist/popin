@@ -28,14 +28,7 @@ public class PlaceServiceImpl implements PlaceService{
     private final PlaceMapper placeMapper;
     private final UrlMapper urlMapper;
 
-    @Value("${kakaomaps.host}")
-    private String kakaomapHost;
 
-    @Value("${kakaomaps.appkey}")
-    private String kakaomapsAppKey;
-
-    @Value("${kakaomaps.library}")
-    private String kakaomapsLibrary;
 
     @Value("${kakaolocal.host}")
     private String kakaolocalHost;
@@ -70,10 +63,6 @@ public class PlaceServiceImpl implements PlaceService{
         return placeMapper.findKindMap();
     }
 
-    @Override
-    public String getKakaoMapsSource() {
-        return kakaomapHost+kakaomapsAppKey+kakaomapsLibrary;
-    }
 
     @Override
     public KakaoLocalRoadAddressDTO getRoadAddress(Double coordX, Double coordY) {

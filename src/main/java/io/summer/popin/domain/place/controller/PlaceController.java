@@ -8,6 +8,7 @@ import io.summer.popin.domain.place.service.PlaceService;
 import io.summer.popin.domain.search.dto.SearchDTO;
 import io.summer.popin.global.dto.UrlResourceDTO;
 import io.summer.popin.global.service.AwsS3Service;
+import io.summer.popin.global.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,7 @@ public class PlaceController {
     private final PlaceService placeService;
     private final MemberService memberService;
     private final AwsS3Service awsS3Service;
+    private final UrlService urlService;
 
     @ModelAttribute("searchDTO")
     public SearchDTO test(){
@@ -78,7 +80,7 @@ public class PlaceController {
     public String placeRegisterForm(@ModelAttribute("registerForm") PlaceRegisterDTO registerDTO, Model model) {
 
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
-        model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
+        model.addAttribute("kakaoMapsSource", urlService.getKakaoMapsSource());
 
         return "html/place-register";
     }
@@ -90,7 +92,7 @@ public class PlaceController {
                                 BindingResult bindingResult,
                                 Model model, @SessionAttribute("loginMember")SessionUserDTO loginMember) {
         model.addAttribute("placeKinds", placeService.getPlaceKinds());
-        model.addAttribute("kakaoMapsSource", placeService.getKakaoMapsSource());
+        model.addAttribute("kakaoMapsSource", urlService.getKakaoMapsSource());
         KakaoLocalRoadAddressDTO roadAddress = placeService.getRoadAddress(registerDTO.getCoordX(), registerDTO.getCoordY());
 
         registerDTO.setRegion1Depth(roadAddress.getRegion_1depth_name());
