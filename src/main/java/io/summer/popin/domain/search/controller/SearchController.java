@@ -1,10 +1,8 @@
 package io.summer.popin.domain.search.controller;
 
-import io.summer.popin.domain.member.service.MemberService;
 import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.search.dto.Criteria;
 import io.summer.popin.domain.search.dto.SearchDTO;
-import io.summer.popin.domain.search.dto.SearchRequestDTO;
 import io.summer.popin.domain.search.dto.SearchResponseDTO;
 import io.summer.popin.domain.search.service.SearchService;
 import io.summer.popin.domain.search.vo.PageVO;
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -34,9 +31,9 @@ public class SearchController {
     public SearchDTO test(){
         return new SearchDTO();
     }
-
+/*
     @GetMapping("/search")
-    public String searchListGet(@SessionAttribute("searchDTO") SearchDTO searchDTO,Model model, @RequestParam(defaultValue = "1") int pageNum){
+    public String searchListGet(@SessionAttribute("searchDTO") SearchDTO searchDTO, Model model, @RequestParam(defaultValue = "1") int pageNum){
         Criteria criteria = new Criteria(pageNum,10);
         model.addAttribute("placesList",searchService.placesSearch(searchDTO,criteria));
         model.addAttribute("pageMaker", new PageVO(criteria,searchService.placeCount(searchDTO)));
@@ -44,8 +41,9 @@ public class SearchController {
         model.addAttribute("kakaoMapsSource", urlService.getKakaoMapsSource());
         return "html/search";
     }
+*/
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public String searchListPost(@ModelAttribute("searchDTO") SearchDTO searchDTO, Model model, @RequestParam(defaultValue = "1") int pageNum){
         Map<String,String> coord = new HashMap<String,String>();
         coord.put("coordX",searchDTO.getCoordX());
