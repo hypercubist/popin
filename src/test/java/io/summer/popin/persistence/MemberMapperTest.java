@@ -14,10 +14,10 @@ public class MemberMapperTest {
     @Autowired
     private MemberMapper memberMapper;
 
-    @Test
+   /* @Test
     public void testFindByNo(){
         log.info("TEST: MemberVO = {}", memberMapper.findProfileByMemberNo(1L));
-    }
+    }*/
 
 
 }
