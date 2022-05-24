@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.summer.popin.domain.management.dao.ManagementMapper">
+    <select id="getMemberTotalCount" resultType="int">
+        select count(*) from member
+    </select>
+    <select id="getTodayJoinCount" resultType="int">
+        select count(*) from member where join_date = sysdate
+    </select>
+
+    <select id="getPlaceCountByStatus" parameterType="PlaceStatus" resultType="int">
+        select count(*) from place
+        <where>
+            <if test="status != null">
+                and status_code = (select no from place_status where status = #{status})
+            </if>
+        </where>
+    </select>
+
+    <select id="getTodayReservedCount" resultType="int">
+        select count(*) from reservation where reservation_date = sysdate
+    </select>
+    <select id="getBeforeCheckinCount" resultType="int">
+        <![CDATA[
+            select count(*) from reservation where checkin_date > sysdate
+        ]]>
+    </select>
+    <select id="getNowStayingCount" resultType="int">
+        <![CDATA[
+            select count(*) from reservation where checkin_date <= sysdate and checkout_date > sysdate
+        ]]>
+    </select>
+</mapper>

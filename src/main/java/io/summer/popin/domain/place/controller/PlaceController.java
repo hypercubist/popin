@@ -2,7 +2,6 @@ package io.summer.popin.domain.place.controller;
 
 import io.summer.popin.domain.member.dto.SessionUserDTO;
 import io.summer.popin.domain.member.service.MemberService;
-import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.place.dto.*;
 import io.summer.popin.domain.place.service.PlaceService;
 import io.summer.popin.domain.search.dto.SearchDTO;
