@@ -32,4 +32,13 @@
             select count(*) from reservation where checkin_date <= sysdate and checkout_date > sysdate
         ]]>
     </select>
+    <select id="getMemberClassList" resultType="string">
+        select class from member_class
+    </select>
+    <select id="getPlaceStatusList" resultType="string">
+        select status from place_status
+    </select>
+    <select id="getReservationStatusList" resultType="string">
+        select status from reservation_status
+    </select>
 </mapper>

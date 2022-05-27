@@ -1,10 +1,8 @@
 package io.summer.popin.domain.search.controller;
 
-import io.summer.popin.domain.member.service.MemberService;
 import io.summer.popin.domain.model.ResourceKind;
 import io.summer.popin.domain.search.dto.Criteria;
 import io.summer.popin.domain.search.dto.SearchDTO;
-import io.summer.popin.domain.search.dto.SearchRequestDTO;
 import io.summer.popin.domain.search.dto.SearchResponseDTO;
 import io.summer.popin.domain.search.service.SearchService;
 import io.summer.popin.domain.search.vo.PageVO;
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller

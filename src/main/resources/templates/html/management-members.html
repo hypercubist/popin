@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <title>관리자 페이지</title>
+  <!--현재 페이지 제목을 위 라인에 입력-->
+  <link rel="stylesheet" href="">
+  <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+  <!--현재 페이지 본문 내용을 section내부에 작성-->
+  <!--    <div th:text="|pending count : ${pendingCount}|"></div>-->
+
+  <div>
+    <div th:text="|total: ${memberCount.memberTotalCount}|"></div>
+    <div th:text="|today: ${memberCount.todayJoinCount}|"></div>
+  </div>
+
+  <form th:action th:object="${searchForm}">
+    <input type="text" th:field="*{searchTerm}">
+    <select th:field="*{status}">
+      <option value="">회원등급</option>
+      <th:block th:each="class : ${memberClass}">
+        <option th:value="${class}" th:text="${class}"></option>
+      </th:block>
+    </select>
+    <input type="submit" value="검색">
+  </form>
+
+  <a href="/management">관리자 페이지 홈</a>
+
+</section>
+<script></script>
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</body>
+</html>

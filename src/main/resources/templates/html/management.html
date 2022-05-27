@@ -17,6 +17,18 @@
         <div th:text="|Activated: ${placeCount.placeActivatedCount}|"></div>
         <div th:text="|Deactivated: ${placeCount.placeDeactivatedCount}|"></div>
     </div>
+    <div>
+        <div th:text="|total: ${memberCount.memberTotalCount}|"></div>
+        <div th:text="|today: ${memberCount.todayJoinCount}|"></div>
+    </div>
+    <div>
+        <div th:text="|today: ${reservationCount.todayReservedCount}|"></div>
+        <div th:text="|beforeCheckin: ${reservationCount.beforeCheckinCount}|"></div>
+        <div th:text="|nowStaying: ${reservationCount.nowStayingCount}|"></div>
+    </div>
+    <a href="/management/places">숙소관리</a>
+    <a href="/management/members">멤버관리</a>
+    <a href="/management/reservations">예약관리</a>
 
 </section>
 <script></script>
