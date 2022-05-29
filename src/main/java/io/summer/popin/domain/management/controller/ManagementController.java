@@ -14,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,12 +47,13 @@ public class ManagementController {
 
     @GetMapping("/members")
     public String memberManagement(@ModelAttribute("searchForm") ManagementSearchRequestDTO managementSearchRequestDTO,
-                                   Model model,
-                                   Criteria cri) {
+                                   @ModelAttribute("cri") Criteria cri,
+                                   Model model) {
+        log.info("CRITERIA : {}", cri);
         MemberCountDTO memberCountDTO = managementService.getMemberCount();
         model.addAttribute("memberCount", memberCountDTO);
         model.addAttribute("memberClass", memberManagementService.getMemberClassList());
-        model.addAttribute("page", new PageDTO(cri, 123));
+        model.addAttribute("page", new PageDTO(cri, memberCountDTO.getMemberTotalCount()));
         model.addAttribute("memberList", memberManagementService.getMemberList(cri));
         return "html/management-members";
     }

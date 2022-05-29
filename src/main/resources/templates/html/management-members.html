@@ -68,23 +68,34 @@
         <div class="blog-pagination">
           <div class="btn-toolbar justify-content-center mb-15">
             <div class="btn-group">
-              <a href="#" class="btn btn-outline-primary prev" th:if="${page.prev}"><i class="fa fa-angle-double-left"></i></a>
-              <a href="#" th:each="num: ${#numbers.sequence()}"></a>
-              <a href="#" class="btn btn-outline-primary">1</a>
-              <a href="#" class="btn btn-outline-primary">2</a>
-              <span class="btn btn-primary current">3</span>
-              <a href="#" class="btn btn-outline-primary">4</a>
-              <a href="#" class="btn btn-outline-primary">5</a>
-              <a href="#" class="btn btn-outline-primary next" th:if="${page.next}><i class="fa fa-angle-double-right"></i></a>
+              <a th:href="${page.startPage -1}" class="btn btn-outline-primary prev" th:if="${page.prev}"><i class="fa fa-angle-double-left"></i></a>
+              <th:block th:each="num: ${#numbers.sequence(page.startPage, page.endPage)}" >
+                <span th:if="${page.cri.pageNum}==${num}" th:text="${num}" class="btn btn-primary current"></span>
+                <a th:if="${page.cri.pageNum}!=${num}" th:href="${num}" th:text="${num}" class="btn btn-outline-primary"></a>
+              </th:block>
+              <a th:href="${page.endPage +1}" class="btn btn-outline-primary next" th:if="${page.next}"><i class="fa fa-angle-double-right"></i></a>
             </div>
           </div>
         </div>
+        <form th:action id="criteria" th:object=${cri} method="get">
+          <input type="hidden" th:field="*{pageNum}" th:value="${page.cri.pageNum}">
+          <input type="hidden" th:field="*{amount}" th:value="${page.cri.amount}">
+        </form>
       </div>
     </div>
   </div>
 
 </section>
-<script></script>
+<script>
+  $(function () {
+    $(".blog-pagination a").on("click", function (e) {
+      e.preventDefault();
+      $("#criteria").find("input[name='pageNum']").val($(this).attr("href"));
+      $("#criteria").submit();
+    });
+  });
+
+</script>
 <!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
 </body>
 </html>
