@@ -1,6 +1,6 @@
 package io.summer.popin.domain.search.vo;
 
-import io.summer.popin.domain.search.dto.Criteria;
+import io.summer.popin.global.vo.Criteria;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

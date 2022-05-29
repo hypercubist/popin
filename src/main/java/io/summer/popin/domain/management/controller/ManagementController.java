@@ -8,6 +8,8 @@ import io.summer.popin.domain.management.service.ManagementService;
 import io.summer.popin.domain.management.service.MemberManagementService;
 import io.summer.popin.domain.management.service.PlaceManagementService;
 import io.summer.popin.domain.management.service.ReservationManagementService;
+import io.summer.popin.global.dto.PageDTO;
+import io.summer.popin.global.vo.Criteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -47,10 +49,14 @@ public class ManagementController {
     }
 
     @GetMapping("/members")
-    public String memberManagement(@ModelAttribute("searchForm") ManagementSearchRequestDTO managementSearchRequestDTO, Model model) {
+    public String memberManagement(@ModelAttribute("searchForm") ManagementSearchRequestDTO managementSearchRequestDTO,
+                                   Model model,
+                                   Criteria cri) {
         MemberCountDTO memberCountDTO = managementService.getMemberCount();
         model.addAttribute("memberCount", memberCountDTO);
         model.addAttribute("memberClass", memberManagementService.getMemberClassList());
+        model.addAttribute("page", new PageDTO(cri, 123));
+        model.addAttribute("memberList", memberManagementService.getMemberList(cri));
         return "html/management-members";
     }
 

@@ -2,7 +2,7 @@ package io.summer.popin.domain.search.service;
 
 import io.summer.popin.domain.search.dto.SearchResponseDTO;
 import io.summer.popin.domain.search.dao.SearchMapper;
-import io.summer.popin.domain.search.dto.Criteria;
+import io.summer.popin.global.vo.Criteria;
 import io.summer.popin.domain.search.dto.SearchDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

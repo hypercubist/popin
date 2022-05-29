@@ -1,4 +1,4 @@
-package io.summer.popin.domain.search.dto;
+package io.summer.popin.global.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

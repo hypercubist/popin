@@ -2,7 +2,7 @@ package io.summer.popin.domain.search.dao;
 
 import io.summer.popin.domain.search.dto.SearchDTO;
 import io.summer.popin.domain.search.dto.SearchResponseDTO;
-import io.summer.popin.domain.search.dto.Criteria;
+import io.summer.popin.global.vo.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

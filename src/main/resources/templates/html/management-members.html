@@ -30,6 +30,59 @@
 
   <a href="/management">관리자 페이지 홈</a>
 
+  <div class="pd-ltr-20 xs-pd-20-10">
+    <div class="min-height-200px">
+      <div class="pd-20 card-box mb-30">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">회원번호</th>
+            <th scope="col">이름</th>
+            <th scope="col">이메일</th>
+            <th scope="col">휴대폰번호</th>
+            <th scope="col">회원구분</th>
+            <th scope="col">가입일자</th>
+            <th scope="col">회원탈퇴</th>
+          </tr>
+          </thead>
+          <tbody>
+            <th:block th:each="member, data : ${memberList}">
+              <tr>
+                <th scope="row" th:text="${data.count}"></th>
+                <td th:text="${member.no}"></td>
+                <td th:text="${member.name}"></td>
+                <td th:text="${member.email}"></td>
+                <td th:text="${member.phoneNumber}"></td>
+                <td>
+                  <a th:text="${member.memberClass}" th:href="@{/management/members/{memberNo}(memberNo=${member.no})}"></a>
+                </td>
+                <td th:text="${member.joinDate}"></td>
+                <td>
+                  <a th:href="@{/management/members/{memberNo}(memberNo=${member.no})}">❌</a>
+                </td>
+              </tr>
+            </th:block>
+          </tbody>
+        </table>
+        <div class="blog-pagination">
+          <div class="btn-toolbar justify-content-center mb-15">
+            <div class="btn-group">
+              <a href="#" class="btn btn-outline-primary prev" th:if="${page.prev}"><i class="fa fa-angle-double-left"></i></a>
+              <a href="#" th:each="num: ${#numbers.sequence()}"></a>
+              <a href="#" class="btn btn-outline-primary">1</a>
+              <a href="#" class="btn btn-outline-primary">2</a>
+              <span class="btn btn-primary current">3</span>
+              <a href="#" class="btn btn-outline-primary">4</a>
+              <a href="#" class="btn btn-outline-primary">5</a>
+              <a href="#" class="btn btn-outline-primary next" th:if="${page.next}><i class="fa fa-angle-double-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
 <script></script>
 <!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->

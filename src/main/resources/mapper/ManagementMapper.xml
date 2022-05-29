@@ -41,4 +41,19 @@
     <select id="getReservationStatusList" resultType="string">
         select status from reservation_status
     </select>
+
+
+    <select id="getMemberList" resultType="ManagementMemberResponseDTO">
+        <![CDATA[
+            select mr.*
+            from
+                (
+                    select rownum rn,
+                            m.no, m.name, m.email, m.phone_number, m.join_date,
+                            (select class from member_class where no = m.class_code) as member_class
+                    from (select * from member) m
+                ) mr
+            where rn > (#{pageNum}-1)*#{amount} and rn <= #{pageNum}*#{amount}
+        ]]>
+    </select>
 </mapper>
