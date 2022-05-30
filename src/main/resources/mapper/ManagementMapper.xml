@@ -43,17 +43,41 @@
     </select>
 
 
-    <select id="getMemberList" resultType="ManagementMemberResponseDTO">
+    <select id="getMemberList" parameterType="Criteria" resultType="ManagementMemberResponseDTO">
+        select mr.*
+        from
+            (
+                select rownum rn,
+                        m.no, m.name, m.email, m.phone_number, m.join_date,
+                        (select class from member_class where no = m.class_code) as member_class
+                from
+                    (
+                        select * from member
+                        <where>
+                            <if test="className != null and className != ''">
+                                and class_code = (select no from member_class where class = #{className})
+                            </if>
+                            <if test="searchTerm != null and searchTerm != ''">
+                                and (name like '%'||#{searchTerm}||'%' or email like '%'||#{searchTerm}||'%')
+                            </if>
+                        </where>
+                    ) m
+
+            ) mr
         <![CDATA[
-            select mr.*
-            from
-                (
-                    select rownum rn,
-                            m.no, m.name, m.email, m.phone_number, m.join_date,
-                            (select class from member_class where no = m.class_code) as member_class
-                    from (select * from member) m
-                ) mr
             where rn > (#{pageNum}-1)*#{amount} and rn <= #{pageNum}*#{amount}
         ]]>
+    </select>
+
+    <select id="getSearchMemberCount" resultType="int">
+        select count(*) from member
+        <where>
+            <if test="className != null and className != ''">
+                and class_code = (select no from member_class where class = #{className})
+            </if>
+            <if test="searchTerm != null and searchTerm != ''">
+                and (name like '%'||#{searchTerm}||'%' or email like '%'||#{searchTerm}||'%')
+            </if>
+        </where>
     </select>
 </mapper>

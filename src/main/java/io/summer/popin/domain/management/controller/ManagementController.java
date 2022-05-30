@@ -3,8 +3,6 @@ package io.summer.popin.domain.management.controller;
 import io.summer.popin.domain.management.dto.MemberCountDTO;
 import io.summer.popin.domain.management.dto.PlaceCountDTO;
 import io.summer.popin.domain.management.dto.ReservationCountDTO;
-import io.summer.popin.domain.management.dto.ManagementSearchRequestDTO;
-import io.summer.popin.domain.management.service.ManagementService;
 import io.summer.popin.domain.management.service.MemberManagementService;
 import io.summer.popin.domain.management.service.PlaceManagementService;
 import io.summer.popin.domain.management.service.ReservationManagementService;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ManagementController {
 
-    private final ManagementService managementService;
     private final MemberManagementService memberManagementService;
     private final PlaceManagementService placeManagementService;
     private final ReservationManagementService reservationManagementService;
@@ -30,9 +27,9 @@ public class ManagementController {
     @GetMapping
     public String management(Model model) {
 
-        MemberCountDTO memberCountDTO = managementService.getMemberCount();
-        PlaceCountDTO placeCountDTO = managementService.getPlaceCount();
-        ReservationCountDTO reservationCountDTO = managementService.getReservationCount();
+        MemberCountDTO memberCountDTO = memberManagementService.getMemberCount();
+        PlaceCountDTO placeCountDTO = placeManagementService.getPlaceCount();
+        ReservationCountDTO reservationCountDTO = reservationManagementService.getReservationCount();
 
         model.addAttribute("memberCount", memberCountDTO);
         model.addAttribute("placeCount", placeCountDTO);
@@ -46,30 +43,28 @@ public class ManagementController {
     }
 
     @GetMapping("/members")
-    public String memberManagement(@ModelAttribute("searchForm") ManagementSearchRequestDTO managementSearchRequestDTO,
-                                   @ModelAttribute("cri") Criteria cri,
+    public String memberManagement(@ModelAttribute("criteria") Criteria cri,
                                    Model model) {
-        log.info("CRITERIA : {}", cri);
-        MemberCountDTO memberCountDTO = managementService.getMemberCount();
+        MemberCountDTO memberCountDTO = memberManagementService.getMemberCount();
         model.addAttribute("memberCount", memberCountDTO);
         model.addAttribute("memberClass", memberManagementService.getMemberClassList());
-        model.addAttribute("page", new PageDTO(cri, memberCountDTO.getMemberTotalCount()));
         model.addAttribute("memberList", memberManagementService.getMemberList(cri));
+        model.addAttribute("page", new PageDTO(cri, memberManagementService.getSearchMemberCount(cri)));
         return "html/management-members";
     }
 
 
     @GetMapping("/places")
-    public String placeManagement(@ModelAttribute("searchForm") ManagementSearchRequestDTO managementSearchRequestDTO, Model model) {
-        PlaceCountDTO placeCountDTO = managementService.getPlaceCount();
+    public String placeManagement(Model model) {
+        PlaceCountDTO placeCountDTO = placeManagementService.getPlaceCount();
         model.addAttribute("placeCount", placeCountDTO);
         model.addAttribute("placeStatus", placeManagementService.getPlaceStatusList());
         return "html/management-places";
     }
 
     @GetMapping("/reservations")
-    public String reservationManagement(@ModelAttribute("searchForm") ManagementSearchRequestDTO managementSearchRequestDTO, Model model) {
-        ReservationCountDTO reservationCountDTO = managementService.getReservationCount();
+    public String reservationManagement(Model model) {
+        ReservationCountDTO reservationCountDTO = reservationManagementService.getReservationCount();
         model.addAttribute("reservationCount", reservationCountDTO);
         model.addAttribute("reservationStatus", reservationManagementService.getReservationStatusList());
         return "html/management-reservations";
