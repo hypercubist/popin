@@ -19,6 +19,9 @@ public class PageDTO {
 
     public PageDTO(Criteria cri, int total) {
         this.cri = cri;
+        if (total == 0) {
+            total = 1;
+        }
         this.total = total;
 
         this.endPage = (int)(Math.ceil(cri.getPageNum() / 10.0)) * 10;

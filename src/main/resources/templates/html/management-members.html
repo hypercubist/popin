@@ -18,19 +18,19 @@
   </div>
 
   <form th:action id="searchForm">
-    <input type="text" name="searchTerm" placeholder="이름 또는 이메일 검색">
+    <input type="text" name="searchTerm" placeholder="이름 또는 이메일 검색" th:value="${page.cri.searchTerm}">
     <select name="className">
       <option value="">회원등급</option>
       <th:block th:each="class : ${memberClass}">
-        <option th:value="${class}" th:text="${class}"></option>
+        <option th:value="${class}" th:text="${class}" th:selected="${class} == ${page.cri.className}"></option>
       </th:block>
     </select>
     <input class="btn btn-primary" type="button" id="searchFormBtn" value="검색">
   </form>
 
   <form th:action id="criteria" th:object=${criteria} method="get">
-    <input type="hidden" th:field="*{searchTerm}">
-    <input type="hidden" th:field="*{className}">
+    <input type="hidden" th:field="*{searchTerm}" th:value="${page.cri.searchTerm}">
+    <input type="hidden" th:field="*{className}" th:value="${page.cri.className}">
     <input type="hidden" th:field="*{pageNum}" th:value="${page.cri.pageNum}">
     <input type="hidden" th:field="*{amount}" th:value="${page.cri.amount}">
   </form>
@@ -98,6 +98,7 @@
     });
     $("#searchFormBtn").on("click", function(e){
       e.preventDefault();
+      $("#criteria").find("input[name='pageNum']").val(1);
       $("#criteria").find("input[name='searchTerm']").val($("#searchForm").find("input[name='searchTerm']").val());
       $("#criteria").find("input[name='className']").val($("#searchForm").find("select[name='className']").val());
       $("#criteria").submit();
