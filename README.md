@@ -171,7 +171,10 @@ application.yml
                     
                 - error
 
-https://www.notion.so/ERD-e478d0e0cfc643d8a482d529eea7fa6c#724135056ff64e15bf2943d587a2b305
+# ERD
+
+![title](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e8e55049-2c23-456c-9968-6fd25a7852bf/popin.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220723%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220723T162446Z&X-Amz-Expires=86400&X-Amz-Signature=3c95c818af4b23f5c52d4bee42347c536dfa3aa5ca0306b93ab522554a2461de&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22popin.png%22&x-id=GetObject)   
+
 
 # URL 설계
 
