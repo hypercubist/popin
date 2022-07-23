@@ -1,7 +1,7 @@
 # 프로젝트 소개
 누구나 숙소를 등록하고 예약할 수 있는 에어비엔비를 모티브로 한 웹사이트
 
-site : http:www.popin.kr
+site : http://www.popin.kr
 
 # 개발환경
 
