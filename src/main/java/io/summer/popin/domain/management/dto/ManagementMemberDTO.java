@@ -11,10 +11,10 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @NoArgsConstructor
-public class ManagementMemberResponseDTO {
+public class ManagementMemberDTO {
 
     private Integer rn;
-    private Integer no;
+    private Long no;
     private String name;
     private String email;
     private String phoneNumber;

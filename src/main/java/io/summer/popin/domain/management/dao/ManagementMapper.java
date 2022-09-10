@@ -1,6 +1,6 @@
 package io.summer.popin.domain.management.dao;
 
-import io.summer.popin.domain.management.dto.ManagementMemberResponseDTO;
+import io.summer.popin.domain.management.dto.ManagementMemberDTO;
 import io.summer.popin.domain.model.PlaceStatus;
 import io.summer.popin.global.vo.Criteria;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,7 +22,10 @@ public interface ManagementMapper {
     List<String> getMemberClassList();
     List<String> getPlaceStatusList();
     List<String> getReservationStatusList();
-    List<ManagementMemberResponseDTO> getMemberList(Criteria cri);
+    List<ManagementMemberDTO> getMemberList(Criteria cri);
+    ManagementMemberDTO getMember(Long memberNo);
 
+    int deleteMember(Long memberNo);
+    int updateMember(ManagementMemberDTO managementMemberDTO);
 
 }

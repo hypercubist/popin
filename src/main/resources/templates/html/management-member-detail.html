@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout-main :: layout(~{::link}, ~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <title>새로운 제목</title>
+    <!--현재 페이지 제목을 위 라인에 입력-->
+    <link rel="stylesheet" href="">
+    <!--현재 페이지에서 단독으로 사용할 css 파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</head>
+<body>
+<section>
+    <!--현재 페이지 본문 내용을 section내부에 작성-->
+    <form th:action th:object="${memberDetail}" method="post">
+        <input type="text" th:field="*{no}" readonly>
+        <input type="text" th:field="*{name}" readonly>
+        <input type="text" th:field="*{email}" readonly>
+        <input type="text" th:field="*{phoneNumber}" readonly>
+        <input type="text" th:field="*{joinDate}" readonly>
+        <select th:field="*{memberClass}">
+            <option th:each="class : ${memberClassList}"
+                    th:value="${class}"
+                    th:text="${class}"></option>
+        </select>
+    </form>
+    <button class="btn btn-info">변경</button>
+    <button class="btn btn-primary">삭제</button>
+
+
+</section>
+<script>
+<!--     $(".deleteBtn").on("click", function(e){-->
+<!--      e.preventDefault();-->
+<!--      alert("정말 삭제하시겠습니까?");-->
+<!--      var memberNo = $(this).attr("href");-->
+<!--      $.ajax({-->
+<!--        url: "/management/members/"+memberNo,-->
+<!--        method: "DELETE",-->
+<!--        success: function(res){-->
+<!--          console.log(res);-->
+<!--        }-->
+<!--      });-->
+<!--    });-->
+</script>
+<!--현재 페이지에서 단독으로 사용할 script파일 링크를 위 라인에 입력, 링크 여러개 입력 가능-->
+</body>
+</html>

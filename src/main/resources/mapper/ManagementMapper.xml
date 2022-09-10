@@ -43,7 +43,7 @@
     </select>
 
 
-    <select id="getMemberList" parameterType="Criteria" resultType="ManagementMemberResponseDTO">
+    <select id="getMemberList" parameterType="Criteria" resultType="ManagementMemberDTO">
         select mr.*
         from
             (
@@ -69,6 +69,13 @@
         ]]>
     </select>
 
+    <select id="getMember" resultType="ManagementMemberDTO">
+        select no, name, phone_number, join_date,
+                (select class from member_class where no = class_code) as member_class
+        from member
+        where no = #{memberNo}
+    </select>
+
     <select id="getSearchMemberCount" resultType="int">
         select count(*) from member
         <where>
@@ -80,4 +87,12 @@
             </if>
         </where>
     </select>
+
+    <delete id="deleteMember">
+        delete from member where no = #{memberNo}
+    </delete>
+
+    <update id="updateMember">
+        update member set (class_code = #{memberClass}) where no = #{memberNo}
+    </update>
 </mapper>
